@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="前几天看了一本JSP-Struts2相关的书，按照步骤来还是出现了几个问题 二月 16, 2017 12:33:07 上午 org.apache.catalina.core.AprLifecycleListener init信息: The APR based Apache Tomcat Native library which allows optimal performance in produ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单利用Struts2实现用户登录&#x2F;测身材">
+<meta property="og:url" content="http://erbi.me/260/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="前几天看了一本JSP-Struts2相关的书，按照步骤来还是出现了几个问题 二月 16, 2017 12:33:07 上午 org.apache.catalina.core.AprLifecycleListener init信息: The APR based Apache Tomcat Native library which allows optimal performance in produ">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/20170216004237.jpg">
+<meta property="og:image" content="http://qn.199604.com/20170216004253.jpg">
+<meta property="og:image" content="http://qn.199604.com/20170216004325.jpg">
+<meta property="og:image" content="http://qn.199604.com/20170216004305.jpg">
+<meta property="article:published_time" content="2017-02-15T16:49:33.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:14.509Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="jsp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/20170216004237.jpg">
+
+
+<link rel="canonical" href="http://erbi.me/260/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;260&#x2F;&quot;,&quot;path&quot;:&quot;260&#x2F;&quot;,&quot;title&quot;:&quot;简单利用Struts2实现用户登录&#x2F;测身材&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>简单利用Struts2实现用户登录/测身材 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%981%EF%BC%9ATomcat%E5%90%AF%E5%8A%A8%E6%97%B6%E5%87%BA%E7%8E%B0%E7%9A%84Error-filterStart%E9%94%99%E8%AF%AF"><span class="nav-number">1.</span> <span class="nav-text">问题1：Tomcat启动时出现的Error filterStart错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%982%EF%BC%9A%E5%85%B3%E4%BA%8EContext-startup-failed-due-to-previous-errors"><span class="nav-number">2.</span> <span class="nav-text">问题2：关于Context []startup failed due to previous errors</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%BA%AB%E6%9D%90%E4%BD%93%E5%9E%8B%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">测身材体型的应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">正常！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">你的体型偏瘦！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">你的体型：苗条！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">你的体型：轻度肥胖！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">你的体型：重度肥胖！</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">8.1.</span> <span class="nav-text">系统登录：</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/260/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          简单利用Struts2实现用户登录/测身材
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-02-16 00:49:33" itemprop="dateCreated datePublished" datetime="2017-02-16T00:49:33+08:00">2017-02-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:14" itemprop="dateModified" datetime="2021-06-10T09:36:14+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>前几天看了一本JSP-Struts2相关的书，按照步骤来还是出现了几个问题</p>
+<p>二月 16, 2017 12:33:07 上午 org.apache.catalina.core.AprLifecycleListener init<br>信息: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: C:\Program Files\Java\jre7\bin;C:\Program Files\Apache Software Foundation\Tomcat 6.0\bin<br>二月 16, 2017 12:33:07 上午 org.apache.coyote.http11.Http11Protocol init<br>信息: Initializing Coyote HTTP/1.1 on http-8080<br>二月 16, 2017 12:33:07 上午 org.apache.catalina.startup.Catalina load<br>信息: Initialization processed in 352 ms<br>二月 16, 2017 12:33:07 上午 org.apache.catalina.core.StandardService start<br>信息: Starting service Catalina<br>二月 16, 2017 12:33:07 上午 org.apache.catalina.core.StandardEngine start<br>信息: Starting Servlet Engine: Apache Tomcat/6.0.16<br>二月 16, 2017 12:33:09 上午 com.opensymphony.xwork2.util.logging.commons.CommonsLogger info<br>信息: Parsing configuration file [struts-default.xml]<br>二月 16, 2017 12:33:09 上午 com.opensymphony.xwork2.util.logging.commons.CommonsLogger error<br>严重: Dispatcher initialization failed<br>Unable to load configuration. - bean - jar:file:/C:/Program%20Files/Apache%20Software%20Foundation/Tomcat%206.0/webapps/sshTest/WEB-INF/lib/struts2-core-2.3.31.jar!/struts-default.xml:65:72<br>at com.opensymphony.xwork2.config.ConfigurationManager.getConfiguration(ConfigurationManager.java:58)<br>at org.apache.struts2.dispatcher.Dispatcher.init_PreloadConfiguration(Dispatcher.java:374)<br>at org.apache.struts2.dispatcher.Dispatcher.init(Dispatcher.java:418)<br>at org.apache.struts2.dispatcher.FilterDispatcher.init(FilterDispatcher.java:190)<br>at org.apache.catalina.core.ApplicationFilterConfig.getFilter(ApplicationFilterConfig.java:275)<br>at org.apache.catalina.core.ApplicationFilterConfig.setFilterDef(ApplicationFilterConfig.java:397)<br>at org.apache.catalina.core.ApplicationFilterConfig.<init>(ApplicationFilterConfig.java:108)<br>at org.apache.catalina.core.StandardContext.filterStart(StandardContext.java:3709)<br>at org.apache.catalina.core.StandardContext.start(StandardContext.java:4356)<br>at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:791)<br>at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:771)<br>at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:525)<br>at org.apache.catalina.startup.HostConfig.deployDirectory(HostConfig.java:924)<br>at org.apache.catalina.startup.HostConfig.deployDirectories(HostConfig.java:887)<br>at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:492)<br>at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1147)<br>at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:311)<br>at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)<br>at org.apache.catalina.core.ContainerBase.start(ContainerBase.java:1053)<br>at org.apache.catalina.core.StandardHost.start(StandardHost.java:719)<br>at org.apache.catalina.core.ContainerBase.start(ContainerBase.java:1045)<br>at org.apache.catalina.core.StandardEngine.start(StandardEngine.java:443)<br>at org.apache.catalina.core.StandardService.start(StandardService.java:516)<br>at org.apache.catalina.core.StandardServer.start(StandardServer.java:710)<br>at org.apache.catalina.startup.Catalina.start(Catalina.java:578)<br>at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)<br>at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)<br>at java.lang.reflect.Method.invoke(Unknown Source)<br>at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)<br>at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)<br>Caused by: Unable to load bean: type: class:com.opensymphony.xwork2.ObjectFactory - bean - jar:file:/C:/Program%20Files/Apache%20Software%20Foundation/Tomcat%206.0/webapps/sshTest/WEB-INF/lib/struts2-core-2.3.31.jar!/struts-default.xml:65:72<br>at com.opensymphony.xwork2.config.providers.XmlConfigurationProvider.register(XmlConfigurationProvider.java:221)<br>at org.apache.struts2.config.StrutsXmlConfigurationProvider.register(StrutsXmlConfigurationProvider.java:101)<br>at com.opensymphony.xwork2.config.impl.DefaultConfiguration.reloadContainer(DefaultConfiguration.java:169)<br>at com.opensymphony.xwork2.config.ConfigurationManager.getConfiguration(ConfigurationManager.java:55)<br>… 30 more<br>Caused by: Bean type class com.opensymphony.xwork2.ObjectFactory with the name struts has already been loaded by bean - jar:file:/C:/Program%20Files/Apache%20Software%20Foundation/Tomcat%206.0/webapps/sshTest/WEB-INF/lib/struts2-core-2.1.8.1.jar!/struts-default.xml:30:124 - bean - jar:file:/C:/Program%20Files/Apache%20Software%20Foundation/Tomcat%206.0/webapps/sshTest/WEB-INF/lib/struts2-core-2.3.31.jar!/struts-default.xml:65:72<br>at com.opensymphony.xwork2.config.providers.XmlConfigurationProvider.register(XmlConfigurationProvider.java:205)<br>… 33 more</p>
+<p>二月 16, 2017 12:33:09 上午 org.apache.catalina.core.StandardContext filterStart<br>严重: Exception starting filter struts2<br>Unable to load configuration. - bean - jar:file:/C:/Program%20Files/Apache%20Software%20Foundation/Tomcat%206.0/webapps/sshTest/WEB-INF/lib/struts2-core-2.3.31.jar!/struts-default.xml:65:72<br>at org.apache.struts2.dispatcher.Dispatcher.init(Dispatcher.java:431)<br>at org.apache.struts2.dispatcher.FilterDispatcher.init(FilterDispatcher.java:190)<br>at org.apache.catalina.core.ApplicationFilterConfig.getFilter(ApplicationFilterConfig.java:275)<br>at org.apache.catalina.core.ApplicationFilterConfig.setFilterDef(ApplicationFilterConfig.java:397)<br>at org.apache.catalina.core.ApplicationFilterConfig.<init>(ApplicationFilterConfig.java:108)<br>at org.apache.catalina.core.StandardContext.filterStart(StandardContext.java:3709)<br>at org.apache.catalina.core.StandardContext.start(StandardContext.java:4356)<br>at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:791)<br>at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:771)<br>at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:525)<br>at org.apache.catalina.startup.HostConfig.deployDirectory(HostConfig.java:924)<br>at org.apache.catalina.startup.HostConfig.deployDirectories(HostConfig.java:887)<br>at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:492)<br>at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1147)<br>at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:311)<br>at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)<br>at org.apache.catalina.core.ContainerBase.start(ContainerBase.java:1053)<br>at org.apache.catalina.core.StandardHost.start(StandardHost.java:719)<br>at org.apache.catalina.core.ContainerBase.start(ContainerBase.java:1045)<br>at org.apache.catalina.core.StandardEngine.start(StandardEngine.java:443)<br>at org.apache.catalina.core.StandardService.start(StandardService.java:516)<br>at org.apache.catalina.core.StandardServer.start(StandardServer.java:710)<br>at org.apache.catalina.startup.Catalina.start(Catalina.java:578)<br>at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)<br>at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)<br>at java.lang.reflect.Method.invoke(Unknown Source)<br>at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:288)<br>at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:413)<br>Caused by: Unable to load configuration. - bean - jar:file:/C:/Program%20Files/Apache%20Software%20Foundation/Tomcat%206.0/webapps/sshTest/WEB-INF/lib/struts2-core-2.3.31.jar!/struts-default.xml:65:72<br>at com.opensymphony.xwork2.config.ConfigurationManager.getConfiguration(ConfigurationManager.java:58)<br>at org.apache.struts2.dispatcher.Dispatcher.init_PreloadConfiguration(Dispatcher.java:374)<br>at org.apache.struts2.dispatcher.Dispatcher.init(Dispatcher.java:418)<br>… 28 more<br>Caused by: Unable to load bean: type: class:com.opensymphony.xwork2.ObjectFactory - bean - jar:file:/C:/Program%20Files/Apache%20Software%20Foundation/Tomcat%206.0/webapps/sshTest/WEB-INF/lib/struts2-core-2.3.31.jar!/struts-default.xml:65:72<br>at com.opensymphony.xwork2.config.providers.XmlConfigurationProvider.register(XmlConfigurationProvider.java:221)<br>at org.apache.struts2.config.StrutsXmlConfigurationProvider.register(StrutsXmlConfigurationProvider.java:101)<br>at com.opensymphony.xwork2.config.impl.DefaultConfiguration.reloadContainer(DefaultConfiguration.java:169)<br>at com.opensymphony.xwork2.config.ConfigurationManager.getConfiguration(ConfigurationManager.java:55)<br>… 30 more<br>Caused by: Bean type class com.opensymphony.xwork2.ObjectFactory with the name struts has already been loaded by bean - jar:file:/C:/Program%20Files/Apache%20Software%20Foundation/Tomcat%206.0/webapps/sshTest/WEB-INF/lib/struts2-core-2.1.8.1.jar!/struts-default.xml:30:124 - bean - jar:file:/C:/Program%20Files/Apache%20Software%20Foundation/Tomcat%206.0/webapps/sshTest/WEB-INF/lib/struts2-core-2.3.31.jar!/struts-default.xml:65:72<br>at com.opensymphony.xwork2.config.providers.XmlConfigurationProvider.register(XmlConfigurationProvider.java:205)<br>… 33 more</p>
+<p>二月 16, 2017 12:33:09 上午 org.apache.catalina.core.StandardContext start<br>严重: Error filterStart<br>二月 16, 2017 12:33:09 上午 org.apache.catalina.core.StandardContext start<br>严重: Context [/sshTest] startup failed due to previous errors<br>二月 16, 2017 12:33:10 上午 org.apache.coyote.http11.Http11Protocol start<br>信息: Starting Coyote HTTP/1.1 on http-8080<br>二月 16, 2017 12:33:10 上午 org.apache.jk.common.ChannelSocket init<br>信息: JK: ajp13 listening on /0.0.0.0:8009<br>二月 16, 2017 12:33:10 上午 org.apache.jk.server.JkMain start<br>信息: Jk running ID=0 time=0/46  config=null<br>二月 16, 2017 12:33:10 上午 org.apache.catalina.startup.Catalina start<br>信息: Server startup in 2658 ms</p>
+<p>新手处理问题、老鸟或者大神可以忽略喔</p>
+<h1 id="问题1：Tomcat启动时出现的Error-filterStart错误"><a href="#问题1：Tomcat启动时出现的Error-filterStart错误" class="headerlink" title="问题1：Tomcat启动时出现的Error filterStart错误"></a>问题1：Tomcat启动时出现的Error filterStart错误</h1><p>出现这个问题,大家都是出找g女或者b仔、但是来来回回都是国人那些复杂的问题 我也是先按照网上的答案1，检查配置文件，反复检查若干遍之后，确认的确没有问题。 再按照网上的答案2，把“commons-fileupload-1.2.2.jar”和“commons-io-2.0.1.jar”包放到lib下，不过启动时还是出现相同的错误。 其实这需要去看报错的代码去分析！因为Error filterStart报错的原因实在太多了 1.xml配置失误 2.filter中某段代码未实例化 <strong>3.相应的包重复出现/相应的包包在部署是没有被包含/或者包对应的版本不对！（我就是出现struts2包和xwork包的版本不对）</strong> 4.类文件没有部署到tomcat下面，clean掉整个工程，重新编译，部署，启动tomcat.</p>
+<h1 id="问题2：关于Context-startup-failed-due-to-previous-errors"><a href="#问题2：关于Context-startup-failed-due-to-previous-errors" class="headerlink" title="问题2：关于Context []startup failed due to previous errors"></a>问题2：关于Context []startup failed due to previous errors</h1><p>可能出错的地方： 1.web.xml文件 web应用部署描述符，里面的部署的xml文件或者类，如果这些找不到就会发生startup failed due to previous errors错误。 2.如果在应用spring的话，在配置文件applicationContext.xml中定义的类、xml文件找不到也会报这个错误。 3.在web.xml，struts.xml，applicationContext.xml文件中自身有任何一点错误都可能引起上面的这个问题，而不仅仅是附带的文件错误导致。 4.如果使用ibatis的话，在SqlMapConfig.xml中定义的xml文件找不到也会报这个错误。（hibernate的配置在整合spring的时候使用spring的配置文件） 5.JDK的版本问题，最好使用JDK5.0 或者更高的版本。 6.Eclipse和tomcat的版本兼容问题 7.框架整合的过程中在导入到lib下的jar包冲突也可能产生该错误。 8.jar包的缺少以及jar包的版本也可产生该错误。（我的出现的问题） 9.其他的原因</p>
+<hr>
+<p>所以为了解决Struts2 jar包的的重复或者出错。 还是直接用myeclipse配置的包使用 -&gt;?<a target="_blank" rel="noopener" href="http://jingyan.baidu.com/article/ed2a5d1f3353d709f6be17a6.html">myeclipse 如何配置struts2</a> 自带已经包含了Struts2所需要的包</p>
+<hr>
+<p>下面是一个简单利用Struts2实现用户登录的小程序 记得先把 这个 -&gt;<a target="_blank" rel="noopener" href="http://jingyan.baidu.com/article/ed2a5d1f3353d709f6be17a6.html">myeclipse 如何配置struts2</a>?配置好才进行下面的 配置完成后在src中出现struts.xml的文件 然后需要建两个JSP页面：login.jsp 、loginResult.jsp，一个action类、 配置WEB.xml的代码如下</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<p><web-app version="2.5" 
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+http://java.sun.com/xml/ns/javaee/web-app\_2\_5.xsd"></p>
+<!-- 默认首页配置 -->
+<welcome-file-list> 
+<welcome-file>index.jsp</welcome-file> 
+</welcome-file-list>
+<!-- Starts配置名 -->
+<display-name>Starts info</display-name>
+<!-- Starts注册 -->
+<filter>
+<filter-name>struts2</filter-name>
+<filter-class>
+org.apache.struts2.dispatcher.FilterDispatcher
+</filter-class>
+</filter>
+<filter-mapping>
+<filter-name>struts2</filter-name>
+<url-pattern>/\*</url-pattern>
+</filter-mapping>
+</web-app>
+
+<p>Jsp页面代码：</p>
+<p>&lt;%@ page language=”java” import=”java.util.*“ contentType=”text/html; charset=utf-8”%&gt;<br>&lt;%@taglib prefix=”s” uri=”/struts-tags”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;login.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+  <br/>
+  <br/>
+  <br/>
+    <div> 
+    ${requestScope.message}  
+    <s:form action="Login" method="post">
+    <s:textfield name="adminUserName" label="用户名" />
+    <s:password name="adminUserPassword" size="21" label="密码"/>
+    <s:submit value="提 交"/>
+    </s:form> 
+    </div>
+  </body>
+</html>
+
+<p>由于文件中用到了strut的标签，所以需要在文件头部加上下面语句：</p>
+<p>&lt;%@taglib prefix=”s” uri=”/struts-tags”%&gt;</p>
+<p>而：</p>
+<p>${requestScope.message}  </p>
+<p>是我使用了EL表达式，接收失败的报错信息显示出来 loginResult.jsp</p>
+<p>&lt;%@ page language=”java” import=”java.util.*“ contentType=”text/html; charset=utf-8”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;通过&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+    ${message}
+  </body>
+</html>
+
+<p>这个文件是显示验证结果！成功到这个页面 Struts.xml:</p>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="example" namespace="" extends="struts-default">
+<action name="Login" class="action.LoginAction">
+<result>/loginResult.jsp</result>
+<result name="input">/login.jsp</result>
+</action>
+</package>
+</struts>    
+
+<p><struts></struts>之间是actionMapper相关的配置内容、一个WEB应用系统会有很多配置，所以用到了<package>来进行分类，这个相当于Java开发的包 最后是在loginAction.java</p>
+<p>package action;</p>
+<p>import com.opensymphony.xwork2.ActionSupport;</p>
+<p>/**<br> * Struts2实现用户登录<br> * @author Administrator<br> *<br> */<br>public class LoginAction extends ActionSupport{<br>//执行用户验证的方法<br>public String execute() throws Exception{<br>if(“admin”.equals(adminUserName)&amp;&amp;”admin”.equals(adminUserPassword)){<br>message=adminUserName+”登录成功！”;<br>}else{<br>message=adminUserName+”登录失败！”;<br>return INPUT;<br>}</p>
+<p>return SUCCESS;<br>}</p>
+<p>public String adminUserName;//用户名<br>public String adminUserPassword;//密码<br>public String message;//执行后返回的信息<br>public String getAdminUserName() {<br>return adminUserName;<br>}<br>public void setAdminUserName(String adminUserName) {<br>this.adminUserName = adminUserName;<br>}<br>public String getAdminUserPassword() {<br>return adminUserPassword;<br>}<br>public void setAdminUserPassword(String adminUserPassword) {<br>this.adminUserPassword = adminUserPassword;<br>}<br>public String getMessage() {<br>return message;<br>}<br>public void setMessage(String message) {<br>this.message = message;<br>}</p>
+<p>}</p>
+<p>这个类有山歌属性：adminUserNmae、adminUserPassword、和message。 执行完成会返回execute()方法。</p>
+<hr>
+<p>程序开发完毕后： <img src="http://qn.199604.com/20170216004237.jpg"> 运行结果图： <img src="http://qn.199604.com/20170216004253.jpg"> 成功图： <img src="http://qn.199604.com/20170216004325.jpg"> 失败图： <img src="http://qn.199604.com/20170216004305.jpg"></p>
+<hr>
+<p>写的很烂、也很长气、新手学习处理的问题。</p>
+<hr>
+<h1 id="测身材体型的应用"><a href="#测身材体型的应用" class="headerlink" title="测身材体型的应用"></a>测身材体型的应用</h1><p>index.jsp页面</p>
+<p>&lt;%@ page language=”java” import=”java.util.*“ pageEncoding=”utf-8”%&gt;<br>&lt;%@taglib prefix=”s” uri=”/struts-tags” %&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;index.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+<style type="text/css">
+div{font-size: 50px;
+font-weight: bold;
+color: #f55;
+}
+#t{
+font-weight: bold;
+color: #f55;
+}
+</style>
+  </head>
+  <body>
+    <center>
+    <s:div>炸鸡专用测试</s:div>
+<s:form action="Body" method="post">
+<s:textfield name="height" label="身高(cm)" id="t"/>
+<s:textfield name="weight" label="体重(kg)" id="t" />
+<s:submit value="提交"/>
+</s:form>
+    </center>
+  </body>
+</html>
+
+<p>normal.jsp</p>
+<p>&lt;%@ page language=”java” import=”java.util.*“ contentType=”text/html; charset=utf-8”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;normal.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+    <h1>正常！</h1>
+  </body>
+</html>
+
+<p>thin.,jsp</p>
+<p>&lt;%@ page language=”java” import=”java.util.*“ contentType=”text/html; charset=utf-8”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;normal.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+    <h1>你的体型偏瘦！</h1>
+  </body>
+</html>
+
+<p>little_thin..jsp</p>
+<p>&lt;%@ page language=”java” import=”java.util.*“ contentType=”text/html; charset=utf-8”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;normal.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+    <h1>你的体型：苗条！</h1>
+  </body>
+</html>
+
+<p>little_fat.jsp</p>
+<p>&lt;%@ page language=”java” import=”java.util.*“ contentType=”text/html; charset=utf-8”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;normal.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+    <h1>你的体型：轻度肥胖！</h1>
+  </body>
+</html>
+
+<p>fat.jsp</p>
+<p>&lt;%@ page language=”java” import=”java.util.*“ contentType=”text/html; charset=utf-8”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;normal.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+    <h1>你的体型：重度肥胖！</h1>
+  </body>
+</html>
+
+<p>BodyAction.java</p>
+<p>package com.glj;</p>
+<p>import com.opensymphony.xwork2.ActionSupport;</p>
+<p>public class BodyAction extends ActionSupport {<br>private String height;<br>private String weight;<br>public String execute(){</p>
+<p>double bodyHeight = Double.parseDouble(height);<br>double bodyWeight = Double.parseDouble(weight);<br>double standardBody = (bodyHeight-100)*0.9;<br>double body = bodyWeight/standardBody;<br>if(body&lt;0.8){<br>return “thin”;<br>}else if(body&gt;=0.8&amp;&amp;body&lt;0.9){<br>return “little_thin”;<br>}else if(body&gt;=0.9&amp;&amp;body&lt;0.9){<br>return “normal”;<br>}else if(body&gt;=1.1&amp;&amp;body&lt;=1.3){<br>return “little_fat”;<br>}else if(body&gt;1.3){<br>return “fat”;<br>}else{<br>return “error”;<br>}<br>}<br>public String getHeight() {<br>return height;<br>}<br>public void setHeight(String height) {<br>this.height = height;<br>}<br>public String getWeight() {<br>return weight;<br>}<br>public void setWeight(String weight) {<br>this.weight = weight;<br>}</p>
+<p>}</p>
+<p>struts.xml</p>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="bodyTest" namespace="" extends="struts-default">
+<action name="Body" class="com.glj.BodyAction">
+<result name="thin">/thin.jsp</result>
+<result name="little\_fat">/little\_fat.jsp</result>
+<result name="fat">/fat.jsp</result>
+<result name="little\_thin">/little\_thin.jsp</result>
+<result name="normal">/normal.jsp</result>
+<result name="error">/index.jsp</result>
+</action>
+</package>
+</struts>    
+
+<p>web.xml</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<p><web-app version="2.5" 
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+http://java.sun.com/xml/ns/javaee/web-app\_2\_5.xsd"><br>  <welcome-file-list><br>    <welcome-file>index.jsp</welcome-file><br>  </welcome-file-list><br>  <filter><br>  <filter-name>struts2</filter-name><br>  <filter-class><br>  org.apache.struts2.dispatcher.FilterDispatcher<br>  </filter-class><br>  </filter><br>  <filter-mapping><br>  <filter-name>struts2</filter-name><br>  <url-pattern>/*</url-pattern><br>  </filter-mapping></web-app></p>
+<hr>
+<p>带有数据验证(Validation) 去掉strut2标签自动生成html中的table/tr/td代码，只需要在配置文件struts.xml中加入以下代码即可</p>
+<p><constant name="struts.ui.theme" value="simple"></constant></p>
+<p> </p>
+<p>package com.glj;</p>
+<p>import com.opensymphony.xwork2.ActionSupport;</p>
+<p>public class userAction extends ActionSupport{<br>private String username;<br>private String password;<br>public String getUsername() {<br>return username;<br>}<br>public void setUsername(String username) {<br>this.username = username;<br>}<br>public String getPassword() {<br>return password;<br>}<br>public void setPassword(String password) {<br>this.password = password;<br>}<br>@Override<br>public void validate() {<br>// TODO Auto-generated method stub<br>super.validate();<br>if(“”.equals(this.getUsername())null==this.getUsername()){<br>this.addFieldError(“username”, “对不起，用户名不能为空”);<br>}<br>if(“”.equals(this.getPassword())null==this.getPassword()){<br>this.addFieldError(“password”, “对不起，密码不能为空”);<br>}<br>}<br>@Override<br>public String execute() throws Exception {<br>System.out.println(“执行了userAction”);<br>if (“admin”.equals(this.getUsername())&amp;&amp;”admin”.equals(this.getPassword())) {<br>return SUCCESS;<br>}<br>else{<br>return ERROR;<br>}<br>}<br>}</p>
+<p>&lt;%@ page language=”java” pageEncoding=”utf-8”%&gt;<br><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"></p>
+<html>
+  <head>
+  </head> 
+  <body>
+  <center>
+    <form action="login.action" method="post" focus="login">
+      <h2>系统登录：</h2>
+      账号:
+<input type="text" name="username">
+${errors.username\[0\]}
+<br />
+      密码:
+<input type="password" name="password">
+${errors.password\[0\]}
+<br />
+<input type="submit" value="提交">
+    </form>
+   </center>
+  </body>
+</html>
+
+<p>用&lt;s:actionerror&gt;标签显示出全部错误信息/&lt;s:actionmessage /&gt; 提示信息</p>
+<p>package com.glj;</p>
+<p>import com.opensymphony.xwork2.ActionSupport;</p>
+<p>public class userAction extends ActionSupport{<br>private String username;<br>private String password;<br>public String getUsername() {<br>return username;<br>}<br>public void setUsername(String username) {<br>this.username = username;<br>}<br>public String getPassword() {<br>return password;<br>}<br>public void setPassword(String password) {<br>this.password = password;<br>}<br>@Override<br>public void validate() {<br>// TODO Auto-generated method stub<br>super.validate();<br>if(“”.equals(this.getUsername())null==this.getUsername()){<br>this.addActionError( “对不起，用户名不能为空”);<br>}<br>if(“”.equals(this.getPassword())null==this.getPassword()){<br>this.addActionError(“对不起，密码不能为空”);<br>}<br>}<br>@Override<br>public String execute() throws Exception {<br>System.out.println(“执行了userAction”);<br>if (“admin”.equals(this.getUsername())&amp;&amp;”admin”.equals(this.getPassword())) {<br>return SUCCESS;<br>}<br>else{<br>return ERROR;<br>}<br>}<br>}</p>
+<p>在jsp页面加入&lt;s:actionerror /&gt; &lt;s:actionmessage /&gt; 和</p>
+<p>this.addActionError(“对不起，密码不能为空”);同理</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/260/" title="简单利用Struts2实现用户登录&#x2F;测身材">http://erbi.me/260/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/jsp/" rel="tag"># jsp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/258/" rel="prev" title="利用学生机搭建owncloud云储存">
+                  <i class="fa fa-chevron-left"></i> 利用学生机搭建owncloud云储存
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/264/" rel="next" title="开学季">
+                  开学季 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

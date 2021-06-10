@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="前提：因为我姐需要帮她挂机刷学时而我自己又懒于是就直接谷歌了一下… 在这位大神的前提下修改了一下：https:&#x2F;&#x2F;www.52pojie.cn&#x2F;thread-1105553-1-1.html 主要这位大神的代码是直接还有多少个未学习&#x2F;正在学习的都全部打开窗口，不符合最新规则只能打开一门进行学习 因为自己学python 也不久.菜逼一个~ 使用前需要安装浏览器对应的驱动，代码使用的是谷歌浏览器，因此">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Python和selenium--广东省干部培训网络学院自动登录学习脚本">
+<meta property="og:url" content="http://erbi.me/1401/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="前提：因为我姐需要帮她挂机刷学时而我自己又懒于是就直接谷歌了一下… 在这位大神的前提下修改了一下：https:&#x2F;&#x2F;www.52pojie.cn&#x2F;thread-1105553-1-1.html 主要这位大神的代码是直接还有多少个未学习&#x2F;正在学习的都全部打开窗口，不符合最新规则只能打开一门进行学习 因为自己学python 也不久.菜逼一个~ 使用前需要安装浏览器对应的驱动，代码使用的是谷歌浏览器，因此">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-01T07:25:24.000Z">
+<meta property="article:modified_time" content="2021-06-10T02:37:23.676Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/1401/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1401&#x2F;&quot;,&quot;path&quot;:&quot;1401&#x2F;&quot;,&quot;title&quot;:&quot;基于Python和selenium--广东省干部培训网络学院自动登录学习脚本&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>基于Python和selenium--广东省干部培训网络学院自动登录学习脚本 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1401/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于Python和selenium--广东省干部培训网络学院自动登录学习脚本
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-01 15:25:24" itemprop="dateCreated datePublished" datetime="2020-04-01T15:25:24+08:00">2020-04-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 10:37:23" itemprop="dateModified" datetime="2021-06-10T10:37:23+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>前提：因为我姐需要帮她挂机刷学时<del>而我自己又懒</del>于是就直接谷歌了一下…</p>
+<p>在这位大神的前提下修改了一下：<a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1105553-1-1.html">https://www.52pojie.cn/thread-1105553-1-1.html</a></p>
+<p>主要这位大神的代码是直接还有多少个未学习/正在学习的都全部打开窗口，不符合最新规则只能打开一门进行学习</p>
+<p>因为自己学python 也不久.菜逼一个~</p>
+<p>使用前需要安装浏览器对应的驱动，代码使用的是谷歌浏览器，因此自行百度/谷歌如何下载安装谷歌浏览器驱动~</p>
+<p>python建议直接安装Anaconda吧，就不用每个都pip了~</p>
+<p>ps:记得弄个网络好哒<del>我这边没考虑啥报错的问题</del>如果遇上什么鹏博士那些的话就节哀吧~</p>
+<p>代码如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">import pyautogui</span><br><span class="line">import time</span><br><span class="line">import math</span><br><span class="line"></span><br><span class="line">def switch2frame(par):</span><br><span class="line">    par.switch_to.frame(&#x27;secondIframe&#x27;)</span><br><span class="line">    par.switch_to.frame(&#x27;thirdIframe&#x27;)</span><br><span class="line">    par.switch_to.frame(&#x27;dataMainIframe&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def run_main(video_unstudy_num, browser):</span><br><span class="line">    if int(video_unstudy_num) &gt; 0:</span><br><span class="line">        print(&quot;nonlocal--该目录下还有&#123;&#125;个视频未学习……&quot;.format(video_unstudy_num))</span><br><span class="line">        js_click = &#x27;document.getElementsByClassName(&quot;courseware-list-reed&quot;)[0].click()&#x27;</span><br><span class="line">        browser.execute_script(js_click)</span><br><span class="line">        time.sleep(3)</span><br><span class="line">        # 拿到所有的窗口</span><br><span class="line">        all_handles = browser.window_handles</span><br><span class="line">        pre_window_handle = browser.current_window_handle</span><br><span class="line">        for handle in all_handles:</span><br><span class="line">            if handle != pre_window_handle:</span><br><span class="line">                browser.switch_to.window(handle)</span><br><span class="line">                browser.implicitly_wait(10)</span><br><span class="line">                # time.sleep(10)</span><br><span class="line">                # elem = browser.find_element_by_class_name(&quot;introjs-button&quot;)</span><br><span class="line">                elem = browser.find_element_by_link_text(&#x27;好的，我知道了&#x27;)</span><br><span class="line">                elem.click()</span><br><span class="line">                time.sleep(2)</span><br><span class="line">                browser.switch_to.frame(&#x27;course_frame&#x27;)</span><br><span class="line">                time.sleep(10)</span><br><span class="line">                # 点击播放</span><br><span class="line">                js_paused = &#x27;return document.getElementById(&quot;my-video_html5_api&quot;).paused;&#x27;</span><br><span class="line">                view_paused_status = browser.execute_script(js_paused)</span><br><span class="line">                print(&#x27;viewPaused：&#x27; + str(view_paused_status))</span><br><span class="line">                # false 点击了播放  true 点击了暂停</span><br><span class="line">                if view_paused_status:</span><br><span class="line">                    elem = browser.find_element_by_class_name(&quot;vjs-play-control&quot;)</span><br><span class="line">                    elem.click()</span><br><span class="line">                time.sleep(5)</span><br><span class="line">                # 获取视频播放时长?</span><br><span class="line">                js_duration_str = &#x27;return document.getElementById(&quot;my-video_html5_api&quot;).duration;&#x27;</span><br><span class="line">                view_time = browser.execute_script(js_duration_str)</span><br><span class="line">                print(&#x27;viewTime:&#x27; + str(view_time))</span><br><span class="line">                time.sleep(5)</span><br><span class="line">                js_current_time_str = &#x27;return document.getElementById(&quot;my-video_html5_api&quot;).currentTime;&#x27;</span><br><span class="line">                view_current_time = browser.execute_script(js_current_time_str);</span><br><span class="line">                print(&#x27;viewCurrentTime:&#x27; + str(view_current_time))</span><br><span class="line"></span><br><span class="line">                if math.ceil(view_current_time) &gt;= math.ceil(view_time):</span><br><span class="line">                    print(&#x27;1111&#x27;)</span><br><span class="line">                    browser.switch_to.default_content()</span><br><span class="line">                    elem = browser.find_element_by_id(&#x27;btnexit&#x27;)</span><br><span class="line">                    elem.click()</span><br><span class="line">                    # 关闭视频网站页面 进入pre_window_handle页面</span><br><span class="line">                    browser.switch_to.window(pre_window_handle)</span><br><span class="line">                    browser.refresh()</span><br><span class="line">                    browser.implicitly_wait(10)</span><br><span class="line">                    switch2frame(browser)</span><br><span class="line">                    js_list = &#x27;return document.getElementsByClassName(&quot;courseware-list-reed&quot;).length;&#x27;</span><br><span class="line">                    video_unstudy_num = browser.execute_script(js_list)</span><br><span class="line">                    time.sleep(3)</span><br><span class="line">                    # print(&quot;local--该目录下还有&#123;&#125;个视频未学习……&quot;.format(video_unstudy_num))</span><br><span class="line">                    run_main(video_unstudy_num, browser)</span><br><span class="line">                else:</span><br><span class="line">                    print(&#x27;2222&#x27;)</span><br><span class="line">                    time.sleep(math.ceil(view_time) - math.ceil(view_current_time))</span><br><span class="line">                    browser.switch_to.default_content()</span><br><span class="line">                    elem = browser.find_element_by_id(&#x27;btnexit&#x27;)</span><br><span class="line">                    elem.click()</span><br><span class="line">                    # 关闭视频网站页面 进入pre_window_handle页面</span><br><span class="line">                    browser.switch_to.window(pre_window_handle)</span><br><span class="line">                    browser.refresh()</span><br><span class="line">                    browser.implicitly_wait(10)</span><br><span class="line">                    switch2frame(browser)</span><br><span class="line">                    js_list = &#x27;return document.getElementsByClassName(&quot;courseware-list-reed&quot;).length;&#x27;</span><br><span class="line">                    video_unstudy_num = browser.execute_script(js_list)</span><br><span class="line">                    time.sleep(3)</span><br><span class="line">                    # print(&quot;local--该目录下还有&#123;&#125;个视频未学习……&quot;.format(video_unstudy_num))</span><br><span class="line">                    run_main(video_unstudy_num, browser)</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;该目录下还有视频已学习完毕……&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    # 输入账号</span><br><span class="line">    username = &quot;*****&quot;</span><br><span class="line">    # 输入密码</span><br><span class="line">    passwd = &quot;*****&quot;</span><br><span class="line">    login_url = &#x27;https://gbpx.gd.gov.cn/gdceportal/index.aspx&#x27;</span><br><span class="line">    option = webdriver.ChromeOptions()</span><br><span class="line">    option.add_argument(&#x27;--mute-audio&#x27;)</span><br><span class="line">    browser = webdriver.Chrome(options=option)</span><br><span class="line">    browser.get(login_url)</span><br><span class="line">    browser.implicitly_wait(10)</span><br><span class="line">    # 窗口最大化</span><br><span class="line">    browser.maximize_window()</span><br><span class="line">    elem = browser.find_element_by_xpath(&#x27;//*[@id=&quot;pnlLogin&quot;]/div[1]/div[2]&#x27;)</span><br><span class="line">    elem.click()</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    elem = browser.find_element_by_id(&quot;txtLoginName&quot;)</span><br><span class="line">    elem.clear()</span><br><span class="line">    elem.send_keys(username)</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    elem = browser.find_element_by_id(&quot;txtPassword&quot;)</span><br><span class="line">    elem.clear()</span><br><span class="line">    elem.send_keys(passwd)</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    # 验证码</span><br><span class="line">    code_num = pyautogui.prompt(&quot;请输入验证码:&quot;)</span><br><span class="line">    elem = browser.find_element_by_id(&quot;txtValid&quot;)</span><br><span class="line">    elem.clear()</span><br><span class="line">    elem.send_keys(code_num)</span><br><span class="line">    elem = browser.find_element_by_xpath(&#x27;//*[@id=&quot;user-login-form&quot;]/div[2]/input[1]&#x27;)</span><br><span class="line">    elem.click()</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    elem = browser.find_element_by_id(&#x27;btnStudy&#x27;)</span><br><span class="line">    elem.click()</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    # browser.switch_to_frame(&#x27;secondIframe&#x27;)</span><br><span class="line">    # browser.switch_to.frame(&#x27;secondIframe&#x27;)</span><br><span class="line">    # browser.switch_to.frame(&#x27;thirdIframe&#x27;)</span><br><span class="line">    # browser.switch_to.frame(&#x27;dataMainIframe&#x27;)</span><br><span class="line">    switch2frame(browser)</span><br><span class="line">    time.sleep(1)</span><br><span class="line"></span><br><span class="line">    js_list = &#x27;return document.getElementsByClassName(&quot;courseware-list-reed&quot;).length;&#x27;</span><br><span class="line">    video_unstudy_num = browser.execute_script(js_list)</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    run_main(video_unstudy_num, browser)</span><br><span class="line">    browser.close()</span><br><span class="line">    print(&quot;end......&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>然后在玩这个的同时，又想着能不能直接让python自己去识别验证码呢？</p>
+<p>于是乎就在上面的代码基础上，弄了一个自动识别验证码的脚本，但是pytesseract识别率是真的差(可能我百度来的脚本不行?)</p>
+<p>使用前下面脚本时，需要先预装tesseract-ocr，怎么下载安装记得百度噢</p>
+<p>代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">import pyautogui</span><br><span class="line">import time</span><br><span class="line">import math</span><br><span class="line">from PIL import Image  # 用于打开图片和对图片处理</span><br><span class="line">import pytesseract  # 用于图片转文字</span><br><span class="line">import re</span><br><span class="line"></span><br><span class="line">def switch2frame(par):</span><br><span class="line">    par.switch_to.frame(&#x27;secondIframe&#x27;)</span><br><span class="line">    par.switch_to.frame(&#x27;thirdIframe&#x27;)</span><br><span class="line">    par.switch_to.frame(&#x27;dataMainIframe&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def processing_image(img_obj):</span><br><span class="line">    # 转灰度</span><br><span class="line">    print(&#x27;转灰度1&#x27;)</span><br><span class="line">    img = img_obj.convert(&quot;L&quot;)</span><br><span class="line">    print(&#x27;转灰度2&#x27;)</span><br><span class="line">    pixdata = img.load()</span><br><span class="line">    w, h = img.size</span><br><span class="line">    threshold = 160</span><br><span class="line">    # 遍历所有像素，大于阈值的为黑色</span><br><span class="line">    for y in range(h):</span><br><span class="line">        for x in range(w):</span><br><span class="line">            if pixdata[x, y] &lt; threshold:</span><br><span class="line">                pixdata[x, y] = 0</span><br><span class="line">            else:</span><br><span class="line">                pixdata[x, y] = 255</span><br><span class="line">    return img</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def delete_spot(img_obj):</span><br><span class="line">    print(&#x27;delete_spot&#x27;)</span><br><span class="line">    images = processing_image(img_obj)</span><br><span class="line">    data = images.getdata()</span><br><span class="line">    w, h = images.size</span><br><span class="line">    black_point = 0</span><br><span class="line">    for x in range(1, w - 1):</span><br><span class="line">        for y in range(1, h - 1):</span><br><span class="line">            mid_pixel = data[w * y + x]  # 中央像素点像素值</span><br><span class="line">            if mid_pixel &lt; 50:  # 找出上下左右四个方向像素点像素值</span><br><span class="line">                top_pixel = data[w * (y - 1) + x]</span><br><span class="line">                left_pixel = data[w * y + (x - 1)]</span><br><span class="line">                down_pixel = data[w * (y + 1) + x]</span><br><span class="line">                right_pixel = data[w * y + (x + 1)]</span><br><span class="line">                # 判断上下左右的黑色像素点总个数</span><br><span class="line">                if top_pixel &lt; 10:</span><br><span class="line">                    black_point += 1</span><br><span class="line">                if left_pixel &lt; 10:</span><br><span class="line">                    black_point += 1</span><br><span class="line">                if down_pixel &lt; 10:</span><br><span class="line">                    black_point += 1</span><br><span class="line">                if right_pixel &lt; 10:</span><br><span class="line">                    black_point += 1</span><br><span class="line">                if black_point &lt; 1:</span><br><span class="line">                    images.putpixel((x, y), 255)</span><br><span class="line">                black_point = 0</span><br><span class="line">    return images</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def image_str(img_obj):</span><br><span class="line">    print(&quot;image_str&quot;)</span><br><span class="line">    image = delete_spot(img_obj)</span><br><span class="line">    # 设置pyteseract路径</span><br><span class="line">    pytesseract.pytesseract.tesseract_cmd = r&quot;D:\Program Files (x86)\Tesseract-OCR\tesseract&quot;</span><br><span class="line">    # 图片转文字</span><br><span class="line">    result = pytesseract.image_to_string(image)</span><br><span class="line">    print(result)</span><br><span class="line">    # 去除识别出来的特殊字符</span><br><span class="line">    resultj = re.sub(u&quot;([^\u4e00-\u9fa5\u0030-\u0039\u0041-\u005a\u0061-\u007a])&quot;, &quot;&quot;, result)</span><br><span class="line">    print(resultj)</span><br><span class="line">    result_four = resultj[0:4]</span><br><span class="line">    return result_four</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def run_main(video_unstudy_num, browser):</span><br><span class="line">    if int(video_unstudy_num) &gt; 0:</span><br><span class="line">        print(&quot;nonlocal--该目录下还有&#123;&#125;个视频未学习……&quot;.format(video_unstudy_num))</span><br><span class="line">        js_click = &#x27;document.getElementsByClassName(&quot;courseware-list-reed&quot;)[0].click()&#x27;</span><br><span class="line">        browser.execute_script(js_click)</span><br><span class="line">        time.sleep(3)</span><br><span class="line">        # 拿到所有的窗口</span><br><span class="line">        all_handles = browser.window_handles</span><br><span class="line">        pre_window_handle = browser.current_window_handle</span><br><span class="line">        for handle in all_handles:</span><br><span class="line">            if handle != pre_window_handle:</span><br><span class="line">                browser.switch_to.window(handle)</span><br><span class="line">                browser.implicitly_wait(10)</span><br><span class="line">                # time.sleep(10)</span><br><span class="line">                # elem = browser.find_element_by_class_name(&quot;introjs-button&quot;)</span><br><span class="line">                elem = browser.find_element_by_link_text(&#x27;好的，我知道了&#x27;)</span><br><span class="line">                elem.click()</span><br><span class="line">                time.sleep(2)</span><br><span class="line">                browser.switch_to.frame(&#x27;course_frame&#x27;)</span><br><span class="line">                time.sleep(10)</span><br><span class="line">                # 点击播放</span><br><span class="line">                js_paused = &#x27;return document.getElementById(&quot;my-video_html5_api&quot;).paused;&#x27;</span><br><span class="line">                view_paused_status = browser.execute_script(js_paused)</span><br><span class="line">                print(&#x27;viewPaused：&#x27; + str(view_paused_status))</span><br><span class="line">                # false 点击了播放  true 点击了暂停</span><br><span class="line">                if view_paused_status:</span><br><span class="line">                    elem = browser.find_element_by_class_name(&quot;vjs-play-control&quot;)</span><br><span class="line">                    elem.click()</span><br><span class="line">                time.sleep(5)</span><br><span class="line">                # 获取视频播放时长?</span><br><span class="line">                js_duration_str = &#x27;return document.getElementById(&quot;my-video_html5_api&quot;).duration;&#x27;</span><br><span class="line">                view_time = browser.execute_script(js_duration_str)</span><br><span class="line">                print(&#x27;viewTime:&#x27; + str(view_time))</span><br><span class="line">                time.sleep(5)</span><br><span class="line">                js_current_time_str = &#x27;return document.getElementById(&quot;my-video_html5_api&quot;).currentTime;&#x27;</span><br><span class="line">                view_current_time = browser.execute_script(js_current_time_str);</span><br><span class="line">                print(&#x27;viewCurrentTime:&#x27; + str(view_current_time))</span><br><span class="line"></span><br><span class="line">                if math.ceil(view_current_time) &gt;= math.ceil(view_time):</span><br><span class="line">                    print(&#x27;1111&#x27;)</span><br><span class="line">                    browser.switch_to.default_content()</span><br><span class="line">                    elem = browser.find_element_by_id(&#x27;btnexit&#x27;)</span><br><span class="line">                    elem.click()</span><br><span class="line">                    # 关闭视频网站页面 进入pre_window_handle页面</span><br><span class="line">                    browser.switch_to.window(pre_window_handle)</span><br><span class="line">                    browser.refresh()</span><br><span class="line">                    browser.implicitly_wait(10)</span><br><span class="line">                    switch2frame(browser)</span><br><span class="line">                    js_list = &#x27;return document.getElementsByClassName(&quot;courseware-list-reed&quot;).length;&#x27;</span><br><span class="line">                    video_unstudy_num = browser.execute_script(js_list)</span><br><span class="line">                    time.sleep(3)</span><br><span class="line">                    # print(&quot;local--该目录下还有&#123;&#125;个视频未学习……&quot;.format(video_unstudy_num))</span><br><span class="line">                    run_main(video_unstudy_num, browser)</span><br><span class="line">                else:</span><br><span class="line">                    print(&#x27;2222&#x27;)</span><br><span class="line">                    time.sleep(math.ceil(view_time) - math.ceil(view_current_time))</span><br><span class="line">                    browser.switch_to.default_content()</span><br><span class="line">                    elem = browser.find_element_by_id(&#x27;btnexit&#x27;)</span><br><span class="line">                    elem.click()</span><br><span class="line">                    # 关闭视频网站页面 进入pre_window_handle页面</span><br><span class="line">                    browser.switch_to.window(pre_window_handle)</span><br><span class="line">                    browser.refresh()</span><br><span class="line">                    browser.implicitly_wait(10)</span><br><span class="line">                    switch2frame(browser)</span><br><span class="line">                    js_list = &#x27;return document.getElementsByClassName(&quot;courseware-list-reed&quot;).length;&#x27;</span><br><span class="line">                    video_unstudy_num = browser.execute_script(js_list)</span><br><span class="line">                    time.sleep(3)</span><br><span class="line">                    # print(&quot;local--该目录下还有&#123;&#125;个视频未学习……&quot;.format(video_unstudy_num))</span><br><span class="line">                    run_main(video_unstudy_num, browser)</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;该目录下还有视频已学习完毕……&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    # 输入账号</span><br><span class="line">    username = &quot;****&quot;</span><br><span class="line">    # 输入密码</span><br><span class="line">    passwd = &quot;*****&quot;</span><br><span class="line">    login_url = &#x27;https://gbpx.gd.gov.cn/gdceportal/index.aspx&#x27;</span><br><span class="line">    option = webdriver.ChromeOptions()</span><br><span class="line">    option.add_argument(&#x27;--mute-audio&#x27;)</span><br><span class="line">    browser = webdriver.Chrome(options=option)</span><br><span class="line">    # browser.maximize_window()</span><br><span class="line">    browser.get(login_url)</span><br><span class="line">    browser.implicitly_wait(10)</span><br><span class="line">    # 窗口最大化</span><br><span class="line">    browser.maximize_window()</span><br><span class="line">    elem = browser.find_element_by_xpath(&#x27;//*[@id=&quot;pnlLogin&quot;]/div[1]/div[2]&#x27;)</span><br><span class="line">    elem.click()</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    elem = browser.find_element_by_id(&quot;txtLoginName&quot;)</span><br><span class="line">    elem.clear()</span><br><span class="line">    elem.send_keys(username)</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    elem = browser.find_element_by_id(&quot;txtPassword&quot;)</span><br><span class="line">    elem.clear()</span><br><span class="line">    elem.send_keys(passwd)</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    # 验证码</span><br><span class="line">    # code_num = pyautogui.prompt(&quot;请输入验证码:&quot;)</span><br><span class="line">    # elem = browser.find_element_by_id(&quot;txtValid&quot;)</span><br><span class="line">    # elem.clear()</span><br><span class="line">    # elem.send_keys(code_num)</span><br><span class="line"></span><br><span class="line">    js_display = &#x27;document.getElementsByClassName(&quot;signup_header2&quot;)[0].style.display = &quot;none&quot;;&#x27; \</span><br><span class="line">                 &#x27;document.getElementsByClassName(&quot;signup_header&quot;)[0].style.display = &quot;none&quot;;&#x27;</span><br><span class="line">    browser.execute_script(js_display)</span><br><span class="line">    # 全屏截图</span><br><span class="line">    # browser.save_screenshot(&#x27;pictures.png&#x27;)</span><br><span class="line">    browser.get_screenshot_as_file(&#x27;pictures.png&#x27;)</span><br><span class="line">    page_snap_obj = Image.open(&#x27;pictures.png&#x27;)</span><br><span class="line"></span><br><span class="line">    # 验证码元素位置</span><br><span class="line">    elem = browser.find_element_by_xpath(&#x27;//*[@id=&quot;imgValid&quot;]&#x27;)</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    location = elem.location</span><br><span class="line">    print(&quot;location:&quot;+str(location))</span><br><span class="line">    # 获取验证码的大小参数</span><br><span class="line">    size = elem.size</span><br><span class="line">    print(&quot;size:&quot; + str(size))</span><br><span class="line">    left = location[&#x27;x&#x27;]*1.5</span><br><span class="line">    top = location[&#x27;y&#x27;]*1.5</span><br><span class="line">    right = left + size[&#x27;width&#x27;]*1.5</span><br><span class="line">    bottom = top + size[&#x27;height&#x27;]*1.5</span><br><span class="line">    # 按照验证码的长宽，切割验证码</span><br><span class="line">    image_obj = page_snap_obj.crop((left, top, right, bottom))</span><br><span class="line">    # 打开切割后的完整验证码</span><br><span class="line">    # image_obj.show()</span><br><span class="line">    code_num = image_str(image_obj)</span><br><span class="line">    elem = browser.find_element_by_id(&quot;txtValid&quot;)</span><br><span class="line">    elem.clear()</span><br><span class="line">    elem.send_keys(code_num)</span><br><span class="line"></span><br><span class="line">    elem = browser.find_element_by_xpath(&#x27;//*[@id=&quot;user-login-form&quot;]/div[2]/input[1]&#x27;)</span><br><span class="line">    elem.click()</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    elem = browser.find_element_by_id(&#x27;btnStudy&#x27;)</span><br><span class="line">    elem.click()</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    # browser.switch_to_frame(&#x27;secondIframe&#x27;)</span><br><span class="line">    # browser.switch_to.frame(&#x27;secondIframe&#x27;)</span><br><span class="line">    # browser.switch_to.frame(&#x27;thirdIframe&#x27;)</span><br><span class="line">    # browser.switch_to.frame(&#x27;dataMainIframe&#x27;)</span><br><span class="line">    switch2frame(browser)</span><br><span class="line">    time.sleep(1)</span><br><span class="line"></span><br><span class="line">    js_list = &#x27;return document.getElementsByClassName(&quot;courseware-list-reed&quot;).length;&#x27;</span><br><span class="line">    video_unstudy_num = browser.execute_script(js_list)</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    run_main(video_unstudy_num, browser)</span><br><span class="line">    browser.close()</span><br><span class="line">    print(&quot;end......&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>好了~你以为就完了？</p>
+<p>其实在弄这两个脚本的时候，我试过直接用Js脚本无线循环请求也是可以达到的…</p>
+<p>因为这个学习系统是用scorm标准记录学习时间及其进度，但是你如果看了他的播放页面源码，可以知道无非就是一直请求这几个URL：</p>
+<p><a target="_blank" rel="noopener" href="https://url/resplay/resCoursse/createRes">https://url/resplay/resCoursse/createRes</a> (请求课程信息)</p>
+<p><a target="_blank" rel="noopener" href="https://url/resplay/resCoursse/heartbeat(%E9%97%B4%E9%9A%941%E5%88%86%E9%92%9F%E6%8F%90%E4%BA%A4%E4%B8%80%E4%B8%AA%E4%BD%A0%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%97%B6%E9%97%B4%EF%BC%8C%E5%8F%A0%E5%8A%A0%E6%97%B6%E9%97%B4%E6%8F%90%E4%BA%A4%E7%9A%84)">https://url/resplay/resCoursse/heartbeat(间隔1分钟提交一个你的学习时间，叠加时间提交的)</a></p>
+<p><a target="_blank" rel="noopener" href="https://url/resplay/resCoursse/finished(%E5%9C%A8%E5%85%B3%E9%97%AD%E9%A1%B5%E9%9D%A2%E6%98%AF%E6%8F%90%E4%BA%A4%E7%9A%84)">https://url/resplay/resCoursse/finished(在关闭页面是提交的)</a></p>
+<p>url是啥你自行去找到…我怕犯法…</p>
+<p>然后测试可以用postman 去(post)请求一下</p>
+<p><a target="_blank" rel="noopener" href="https://url/resplay/resCoursse/createRes">https://url/resplay/resCoursse/createRes</a> (请求课程信息)</p>
+<p>请求参数:</p>
+<p>labelId–在播放页面URL上面有，因为是默认还是每个人不一样我就不知道了~</p>
+<p>courseId–科目id，在播放页面URL上面有</p>
+<p>请求头：</p>
+<p>token–你账号的token</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://url/resplay/resCoursse/heartbeat(%E9%97%B4%E9%9A%941%E5%88%86%E9%92%9F%E6%8F%90%E4%BA%A4%E4%B8%80%E4%B8%AA%E4%BD%A0%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%97%B6%E9%97%B4%EF%BC%8C%E5%8F%A0%E5%8A%A0%E6%97%B6%E9%97%B4%E6%8F%90%E4%BA%A4%E7%9A%84)https://url/resplay/resCoursse/finished(%E5%9C%A8%E5%85%B3%E9%97%AD%E9%A1%B5%E9%9D%A2%E6%98%AF%E6%8F%90%E4%BA%A4%E7%9A%84)">https://url/resplay/resCoursse/heartbeat(间隔1分钟提交一个你的学习时间，叠加时间提交的)https://url/resplay/resCoursse/finished(在关闭页面是提交的)</a></p>
+<p>请求参数:</p>
+<p>labelId–在播放页面URL上面有，因为是默认还是每个人不一样我就不知道了~</p>
+<p>courseId–科目id，在播放页面URL上面有</p>
+<p>event–&gt;beat</p>
+<p>scoData–&gt;{“cmi.core.session_time”:”10:44:02”,”cmi.core.lesson_location”:56079}</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1401/" title="基于Python和selenium--广东省干部培训网络学院自动登录学习脚本">http://erbi.me/1401/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1394/" rel="prev" title="Linux下几种文件传输命令sftp scp sz rz">
+                  <i class="fa fa-chevron-left"></i> Linux下几种文件传输命令sftp scp sz rz
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1408/" rel="next" title="CentOS6/7修改主机名">
+                  CentOS6/7修改主机名 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

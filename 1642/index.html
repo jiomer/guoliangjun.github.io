@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Greenplum(gp) 维护使用笔记1. 数据库启动：gpstart常用可选参数： -a : 直接启动，不提示终端用户输入确认 -m:只启动master 实例，主要在故障处理时使用 我的常用：gpstart -a 2.数据库停止：gpstop常用可选参数： -a：直接停止，不提示终端用户输入确认 -m：只停止master 实例，与gpstart –m 对应使用 -M fast：停止数据库，中断">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Greenplum(gp) 维护使用笔记">
+<meta property="og:url" content="http://erbi.me/1642/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="Greenplum(gp) 维护使用笔记1. 数据库启动：gpstart常用可选参数： -a : 直接启动，不提示终端用户输入确认 -m:只启动master 实例，主要在故障处理时使用 我的常用：gpstart -a 2.数据库停止：gpstop常用可选参数： -a：直接停止，不提示终端用户输入确认 -m：只停止master 实例，与gpstart –m 对应使用 -M fast：停止数据库，中断">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-29T15:11:31.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:15.099Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="Greenplum">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/1642/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1642&#x2F;&quot;,&quot;path&quot;:&quot;1642&#x2F;&quot;,&quot;title&quot;:&quot;Greenplum(gp) 维护使用笔记&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Greenplum(gp) 维护使用笔记 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Greenplum-gp-%E7%BB%B4%E6%8A%A4%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">Greenplum(gp) 维护使用笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%AF%E5%8A%A8%EF%BC%9Agpstart"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 数据库启动：gpstart</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%81%9C%E6%AD%A2%EF%BC%9Agpstop"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.数据库停止：gpstop</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E6%9F%A5%E7%9C%8B%E5%AE%9E%E4%BE%8B%E9%85%8D%E7%BD%AE%E5%92%8C%E7%8A%B6%E6%80%81"><span class="nav-number">1.0.3.</span> <span class="nav-text">3.查看实例配置和状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-gpstate"><span class="nav-number">1.0.4.</span> <span class="nav-text">4.gpstate</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E4%BC%9A%E8%AF%9D%E5%92%8C%E6%8F%90%E4%BA%A4%E7%9A%84%E6%9F%A5%E8%AF%A2%E7%AD%89%E4%BF%A1%E6%81%AF"><span class="nav-number">1.0.5.</span> <span class="nav-text">5.查看用户会话和提交的查询等信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81%E8%A1%A8%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">1.0.6.</span> <span class="nav-text">6.查看数据库、表占用空间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83%E6%83%85%E5%86%B5"><span class="nav-number">1.0.7.</span> <span class="nav-text">7.查看数据分布情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-%E5%AE%9E%E4%BE%8B%E6%81%A2%E5%A4%8D-gprecoverseg"><span class="nav-number">1.0.8.</span> <span class="nav-text">8.实例恢复:gprecoverseg</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.0.9.</span> <span class="nav-text">9.导出表结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86"><span class="nav-number">1.0.10.</span> <span class="nav-text">10.数据库僵尸进程处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11-copy%E5%AF%BC%E5%87%BA%E3%80%81%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.0.11.</span> <span class="nav-text">11.copy导出、导入数据文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12-%E5%BB%BA%E7%AB%8B%E5%88%86%E5%8C%BA-%E5%88%A0%E9%99%A4%E5%88%86%E5%8C%BA"><span class="nav-number">1.0.12.</span> <span class="nav-text">12.建立分区&#x2F;删除分区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#13-%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="nav-number">1.0.13.</span> <span class="nav-text">13.创建用户</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1642/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Greenplum(gp) 维护使用笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-29 23:11:31" itemprop="dateCreated datePublished" datetime="2020-11-29T23:11:31+08:00">2020-11-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:15" itemprop="dateModified" datetime="2021-06-10T09:36:15+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/gp%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85/" itemprop="url" rel="index"><span itemprop="name">gp数据库集群安装</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Greenplum-gp-维护使用笔记"><a href="#Greenplum-gp-维护使用笔记" class="headerlink" title="Greenplum(gp) 维护使用笔记"></a>Greenplum(gp) 维护使用笔记</h3><h5 id="1-数据库启动：gpstart"><a href="#1-数据库启动：gpstart" class="headerlink" title="1. 数据库启动：gpstart"></a>1. 数据库启动：gpstart</h5><p>常用可选参数： -a : 直接启动，不提示终端用户输入确认 -m:只启动master 实例，主要在故障处理时使用 我的常用：gpstart -a</p>
+<h5 id="2-数据库停止：gpstop"><a href="#2-数据库停止：gpstop" class="headerlink" title="2.数据库停止：gpstop"></a>2.数据库停止：gpstop</h5><p>常用可选参数： -a：直接停止，不提示终端用户输入确认 -m：只停止master 实例，与gpstart –m 对应使用 -M fast：停止数据库，中断所有数据库连接，回滚正在运行的事务 -u：不停止数据库，只加载pg_hba.conf 和postgresql.conf中运行时参数，当改动参数配置时候使用。 -f：强制停止数据库 -r： 重启数据库 我的常用：gpstop -M fast</p>
+<h5 id="3-查看实例配置和状态"><a href="#3-查看实例配置和状态" class="headerlink" title="3.查看实例配置和状态"></a>3.查看实例配置和状态</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from gp_segment_configuration order by 1</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-gpstate"><a href="#4-gpstate" class="headerlink" title="4.gpstate"></a>4.gpstate</h5><p>常用可选参数： -m：只列出mirror 实例的状态和配置信息–&gt;常用gpstate -m 检查数据库是否正常 -f：显示standby master 的详细信息 -s：查看详细状态，如在同步，可显示数据同步完成百分比 -e: 查看同步进程 -p: … -c: … 我的常用：gpstate -m</p>
+<h5 id="5-查看用户会话和提交的查询等信息"><a href="#5-查看用户会话和提交的查询等信息" class="headerlink" title="5.查看用户会话和提交的查询等信息"></a>5.查看用户会话和提交的查询等信息</h5><p>select * from pg_stat_activity : 该表能查看到当前数据库连接的IP 地址，用户名，提交的查询等。 另外也可以在master 主机上查看进程，对每个客户端连接，master 都会创建一个进程。 ps -ef grep -i postgresgrep -i con</p>
+<h5 id="6-查看数据库、表占用空间"><a href="#6-查看数据库、表占用空间" class="headerlink" title="6.查看数据库、表占用空间"></a>6.查看数据库、表占用空间</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT tablename,pg_relation_size(tablename) FROM pg_tables WHERE schemaname = &#x27;smartinsight&#x27;  limit 10;</span><br></pre></td></tr></table></figure>
+
+<p>ps:必须在数据库所对应的存储系统里，至少保留30%的自由空间，日常巡检，要检查存储空间的剩余容量。 <a target="_blank" rel="noopener" href="https://www.mobibrw.com/2018/16112">https://www.mobibrw.com/2018/16112</a></p>
+<h5 id="7-查看数据分布情况"><a href="#7-查看数据分布情况" class="headerlink" title="7.查看数据分布情况"></a>7.查看数据分布情况</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Select gp_segment_id,count(*) from  &#x27;tablename&#x27;  group by 1 </span><br></pre></td></tr></table></figure>
+
+<h5 id="8-实例恢复-gprecoverseg"><a href="#8-实例恢复-gprecoverseg" class="headerlink" title="8.实例恢复:gprecoverseg"></a>8.实例恢复:gprecoverseg</h5><p>通过 gpstate -m 或查询g p_segement_configuration 系统表发现有实例down 掉以后，使用该命令进行恢复。 首先产生一个恢复的配置文件 ： gprecoverseg -o ./recov 查询文件是否为恢复节点：cat recov 进行恢复：gprecoverseg -i ./recov ps:gprecoverseg -F 强制恢复 –&gt;不到迫不得已 请勿执行，会停库</p>
+<h5 id="9-导出表结构"><a href="#9-导出表结构" class="headerlink" title="9.导出表结构"></a>9.导出表结构</h5><p>pg_dump命令可以导出数据库中的表结构 -s 选项用来只导出表结构，而不会导出表中的数据 -t 选项用来指定要导出的数据库表 pg_dump -s -t tablename dbname &gt; /home/gpadmin/temp.sql dbname 是数据库，tablename 是dbname 中的表，/home/gpadmin/temp.sql是定向到的文件. 如果数据库是远程的，需要指定主机，端口，用户等 pg_dump -h host -p port -U username -s -t tablename dbname &gt; /home/gpadmin/temp.sql</p>
+<h5 id="10-数据库僵尸进程处理"><a href="#10-数据库僵尸进程处理" class="headerlink" title="10.数据库僵尸进程处理"></a>10.数据库僵尸进程处理</h5><p>首先使用kill -15 去停止进程，kill -15 不响应，再用kill -11; 一般情况下，不要用kill -9，否则可能导致数据库宕机且状态不一致，严重的导致数据库不能重新启动，可能需要用pg_resetxlog去重置日志，有可能导致数据丢失；</p>
+<h5 id="11-copy导出、导入数据文件"><a href="#11-copy导出、导入数据文件" class="headerlink" title="11.copy导出、导入数据文件"></a>11.copy导出、导入数据文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">导出：</span><br><span class="line">copy (select的结果集) to &#x27;导出文件存放路径&#x27; with 文件类型 header;</span><br><span class="line">copy (select * from ditie) to &#x27;/home/gpadmin/ditie.csv&#x27; with csv header;</span><br><span class="line"></span><br><span class="line">导入:</span><br><span class="line">copy 表名 from &#x27;数据源路径&#x27; with 数据源文件类型 header;</span><br><span class="line">copy ditie from &#x27;/home/gpadmin/ditie.csv&#x27; with csv header;</span><br><span class="line"></span><br><span class="line">//将文件ditie.csv导入到数据表ditie,DELIMITER选项将不同的字符指定为值分隔符* </span><br><span class="line">copy ditie to &#x27;/home/gpadmin/ditie.csv&#x27; WITH DELIMITER AS &#x27;,&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="12-建立分区-删除分区"><a href="#12-建立分区-删除分区" class="headerlink" title="12.建立分区/删除分区"></a>12.建立分区/删除分区</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">删除分区：</span><br><span class="line">ALTER TABLE 表名 DROP PARTITION p_200601;</span><br><span class="line">ALTER TABLE 表名 DROP PARTITION p_20060102;</span><br><span class="line">ALTER TABLE 表名 DROP PARTITION p_20060102_15;</span><br><span class="line">alter table sts_misc5m_s6a_lu_1h drop partition p_20180122_00;</span><br><span class="line"></span><br><span class="line">新增/建立分区：</span><br><span class="line">ALTER TABLE yj_v2_raw_cgi_quality ADD PARTITION p_201902 START (text &#x27;20190201&#x27;) INCLUSIVE END (text &#x27;20190301&#x27;) EXCLUSIVE;</span><br></pre></td></tr></table></figure>
+
+<h5 id="13-创建用户"><a href="#13-创建用户" class="headerlink" title="13.创建用户"></a>13.创建用户</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">CREATE ROLE select_user login password &#x27;Js_gp123!@#&#x27;;</span><br><span class="line">或者下面都可以：</span><br><span class="line">CREATE USER select_user WITH PASSWORD &#x27;Js_gp123!@#&#x27;;</span><br><span class="line"></span><br><span class="line">把USAGE权限给到select_user</span><br><span class="line">grant usage on schema smartinsight to select_user;</span><br><span class="line"></span><br><span class="line">#单独赋查询的权限</span><br><span class="line">GRANT SELECT ON TABLE zz_pm_nr_nsa_nrcellcu_minute20200923 TO select_user;</span><br><span class="line"></span><br><span class="line">GP集群虽然和pgsql差不多 但是也有本质区别因此不能使用：</span><br><span class="line">grant select on all tables in schema smartinsight to select_user;</span><br><span class="line">这个语句无效的详情：https://blog.csdn.net/weixin_42658788/article/details/88040209</span><br><span class="line"></span><br><span class="line">解决办法-创建一个函数：</span><br><span class="line">create or replace function grant_on_all_tables(schema text, usr text) </span><br><span class="line">returns setof text as $$ </span><br><span class="line">declare </span><br><span class="line">   r record ; </span><br><span class="line">   grantstmt text; </span><br><span class="line">begin </span><br><span class="line">   for r in select * from pg_class c, pg_namespace nsp </span><br><span class="line">       where c.relnamespace = nsp.oid AND c.relkind=&#x27;r&#x27; AND nspname = schema and (relname like &#x27;%JS_MR_SERVICE_CELL_MINUTE_%&#x27; or relname like &#x27;%JS_PM_LTE_EUTRANCELL_MINUTE_%&#x27;)</span><br><span class="line">   loop </span><br><span class="line">     grantstmt = &#x27;GRANT SELECT ON &quot;&#x27; quote_ident(schema)  &#x27;&quot;.&quot;&#x27;  </span><br><span class="line">quote_ident(r.relname)  &#x27;&quot; to &quot;&#x27;  quote_ident(usr)  &#x27;&quot;&#x27;; </span><br><span class="line"></span><br><span class="line">     EXECUTE grantstmt; </span><br><span class="line">     return next grantstmt; </span><br><span class="line">   end loop; </span><br><span class="line">end; </span><br><span class="line"></span><br><span class="line">$$ language plpgsql;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1642/" title="Greenplum(gp) 维护使用笔记">http://erbi.me/1642/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Greenplum/" rel="tag"># Greenplum</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1633/" rel="prev" title="使用BufferedReader和BufferedWriter转换文件编码格式遇到的坑~">
+                  <i class="fa fa-chevron-left"></i> 使用BufferedReader和BufferedWriter转换文件编码格式遇到的坑~
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1645/" rel="next" title="redis集群部署">
+                  redis集群部署 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

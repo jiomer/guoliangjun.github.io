@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="前言好了,为了巩固spring,那我也去写一个spring4.0的笔记…这个也是以前学习spring框架没有去写的笔记  Hello World Spring 是一个开源框架. Spring 为简化企业级应用开发而生. Spring 是一个 IOC(DI) 和 AOP 容器框架.  Spring 模块 搭建 Spring的 HelloWorldHelloWorld.java 12345678910">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring4.0笔记">
+<meta property="og:url" content="http://erbi.me/814/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="前言好了,为了巩固spring,那我也去写一个spring4.0的笔记…这个也是以前学习spring框架没有去写的笔记  Hello World Spring 是一个开源框架. Spring 为简化企业级应用开发而生. Spring 是一个 IOC(DI) 和 AOP 容器框架.  Spring 模块 搭建 Spring的 HelloWorldHelloWorld.java 12345678910">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/spring1.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/spring2.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/spring3.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/spring4.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/spring5.png">
+<meta property="article:published_time" content="2017-12-03T16:53:39.000Z">
+<meta property="article:modified_time" content="2021-06-10T06:05:22.583Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/typoraImg/spring1.png">
+
+
+<link rel="canonical" href="http://erbi.me/814/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;814&#x2F;&quot;,&quot;path&quot;:&quot;814&#x2F;&quot;,&quot;title&quot;:&quot;Spring4.0笔记&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Spring4.0笔记 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hello-World"><span class="nav-number">2.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.</span> <span class="nav-text">Spring 模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA-Spring%E7%9A%84-HelloWorld"><span class="nav-number">2.2.</span> <span class="nav-text">搭建 Spring的 HelloWorld</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IOC-%E5%89%8D%E7%94%9F-%E2%80%93%E5%88%86%E7%A6%BB%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.3.</span> <span class="nav-text">IOC 前生 –分离接口与实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IOC-%E5%89%8D%E7%94%9F-%E2%80%93%E9%87%87%E7%94%A8%E5%B7%A5%E5%8E%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text">IOC 前生 –采用工厂设计模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IOC-%E2%80%93%E9%87%87%E7%94%A8%E5%8F%8D%E8%BD%AC%E6%8E%A7%E5%88%B6"><span class="nav-number">2.5.</span> <span class="nav-text">IOC –采用反转控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8-Spring-%E7%9A%84-IOC-%E5%AE%B9%E5%99%A8%E9%87%8C%E9%85%8D%E7%BD%AE-Bean"><span class="nav-number">2.6.</span> <span class="nav-text">在 Spring 的 IOC 容器里配置 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B%E7%9A%84-IOC-%E5%AE%B9%E5%99%A8%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.7.</span> <span class="nav-text">Spring 提供了两种类型的 IOC 容器实现.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ApplicationContext"><span class="nav-number">2.8.</span> <span class="nav-text">ApplicationContext</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E-IOC-%E5%AE%B9%E5%99%A8%E4%B8%AD%E8%8E%B7%E5%8F%96-Bean"><span class="nav-number">2.9.</span> <span class="nav-text">从 IOC 容器中获取 Bean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.10.</span> <span class="nav-text">依赖注入的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5%EF%BC%88%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="nav-number">2.10.1.</span> <span class="nav-text">属性注入（最常用的注入方式）:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5%EF%BC%9A"><span class="nav-number">2.10.2.</span> <span class="nav-text">构造方法注入：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E9%9D%A2%E5%80%BC%EF%BC%9A"><span class="nav-number">2.11.</span> <span class="nav-text">字面值：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E5%85%B6%E5%AE%83-Bean%EF%BC%9A"><span class="nav-number">2.12.</span> <span class="nav-text">引用其它 Bean：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E9%83%A8-Bean"><span class="nav-number">2.13.</span> <span class="nav-text">内部 Bean</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/814/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring4.0笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-12-04 00:53:39" itemprop="dateCreated datePublished" datetime="2017-12-04T00:53:39+08:00">2017-12-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 14:05:22" itemprop="dateModified" datetime="2021-06-10T14:05:22+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>好了,为了巩固spring,那我也去写一个spring4.0的笔记…这个也是以前学习spring框架没有去写的笔记</p>
+<hr>
+<h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h3><ul>
+<li>Spring 是一个开源框架.</li>
+<li>Spring 为简化企业级应用开发而生.</li>
+<li>Spring 是一个 IOC(DI) 和 AOP 容器框架.</li>
+</ul>
+<h4 id="Spring-模块"><a href="#Spring-模块" class="headerlink" title="Spring 模块"></a>Spring 模块</h4><p><img src="http://qn.199604.com/typoraImg/spring1.png" alt="img"></p>
+<h4 id="搭建-Spring的-HelloWorld"><a href="#搭建-Spring的-HelloWorld" class="headerlink" title="搭建 Spring的 HelloWorld"></a>搭建 Spring的 HelloWorld</h4><p>HelloWorld.java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.glj.bean;</span><br><span class="line"></span><br><span class="line">public class HelloWorld &#123;</span><br><span class="line">	private String userName;</span><br><span class="line"></span><br><span class="line">	public String getUserName() &#123;</span><br><span class="line">		return userName;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setUserName(String userName) &#123;</span><br><span class="line">		this.userName = userName;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void toHello()&#123;</span><br><span class="line">		System.out.println(userName);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>applicationContext.xml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;bean id=&quot;hello&quot; class=&quot;com.glj.bean.HelloWorld&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;userName&quot; value=&quot;hello Spring&quot;&gt;&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p>HelloWorldTest.java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.glj.test;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.ApplicationContext;</span><br><span class="line">import org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line">import com.glj.bean.HelloWorld;</span><br><span class="line"></span><br><span class="line">public class HelloWorldTest &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);</span><br><span class="line">	 	HelloWorld hw = (HelloWorld) ac.getBean(&quot;hello&quot;);</span><br><span class="line">	 	hw.toHello();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="IOC-前生-–分离接口与实现"><a href="#IOC-前生-–分离接口与实现" class="headerlink" title="IOC 前生 –分离接口与实现"></a>IOC 前生 –分离接口与实现</h4><p><img src="http://qn.199604.com/typoraImg/spring2.png" alt="img"></p>
+<h4 id="IOC-前生-–采用工厂设计模式"><a href="#IOC-前生-–采用工厂设计模式" class="headerlink" title="IOC 前生 –采用工厂设计模式"></a>IOC 前生 –采用工厂设计模式</h4><p><img src="http://qn.199604.com/typoraImg/spring3.png" alt="img"></p>
+<h4 id="IOC-–采用反转控制"><a href="#IOC-–采用反转控制" class="headerlink" title="IOC –采用反转控制"></a>IOC –采用反转控制</h4><p><img src="http://qn.199604.com/typoraImg/spring4.png" alt="img"></p>
+<h4 id="在-Spring-的-IOC-容器里配置-Bean"><a href="#在-Spring-的-IOC-容器里配置-Bean" class="headerlink" title="在 Spring 的 IOC 容器里配置 Bean"></a>在 Spring 的 IOC 容器里配置 Bean</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;hello&quot; class=&quot;com.glj.bean.HelloWorld&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;userName&quot; value=&quot;hello Spring&quot;&gt;&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>id：Bean 的名称</li>
+<li>-在 IOC 容器中必须是唯一的</li>
+<li>-若 id 没有指定，Spring 自动将权限定性类名作为 Bean 的名字</li>
+<li>-id 可以指定多个名字，名字之间可用逗号、分号、或空格分隔</li>
+</ul>
+<h4 id="Spring-提供了两种类型的-IOC-容器实现"><a href="#Spring-提供了两种类型的-IOC-容器实现" class="headerlink" title="Spring 提供了两种类型的 IOC 容器实现."></a>Spring 提供了两种类型的 IOC 容器实现.</h4><ul>
+<li>BeanFactory: IOC 容器的基本实现.</li>
+<li>ApplicationContext: 提供了更多的高级特性. 是 BeanFactory 的子接口.</li>
+<li>BeanFactory 是 Spring 框架的基础设施，面向 Spring 本身.</li>
+<li>ApplicationContext 面向使用 Spring 框架的开发者，几乎所有的应用场合都直接使用 ApplicationContext 而非底层的 BeanFactory</li>
+<li>无论使用何种方式, 配置文件时相同的.</li>
+</ul>
+<h4 id="ApplicationContext"><a href="#ApplicationContext" class="headerlink" title="ApplicationContext"></a>ApplicationContext</h4><p>ApplicationContext 的主要实现类：</p>
+<ul>
+<li>ClassPathXmlApplicationContext：从 类路径下加载配置文件(在src下面而不是包或者其他下面)</li>
+<li>FileSystemXmlApplicationContext: 从文件系统中加载配置文件(很少用这种)</li>
+</ul>
+<p>ConfigurableApplicationContext 扩展于 ApplicationContext，新增加两个主要方法：refresh() 和 close()， 让 ApplicationContext 具有启动、刷新和关闭上下文的能力.</p>
+<p>ApplicationContext 在初始化上下文时就实例化所有单例的 Bean。</p>
+<p>WebApplicationContext 是专门为 WEB 应用而准备的，它允许从相对于 WEB 根目录的路径中完成初始化工作.</p>
+<p>结构如下图:</p>
+<p><img src="http://qn.199604.com/typoraImg/spring5.png" alt="img"></p>
+<h4 id="从-IOC-容器中获取-Bean"><a href="#从-IOC-容器中获取-Bean" class="headerlink" title="从 IOC 容器中获取 Bean"></a>从 IOC 容器中获取 Bean</h4><ul>
+<li>调用 ApplicationContext 的 getBean() 方法</li>
+</ul>
+<p>即可有两种:</p>
+<p>1.HelloWord hw= ac.getBean(HelloWord.class);这种方法基于类型来获取，如果类中有多个相同的bean的名称，这种方法将不在合适</p>
+<p>2.HelloWord hw= (HelloWord) ac.getBean(“helloWord”);这种方法基于Bean的Id来获取，使用范围比上面较广</p>
+<h4 id="依赖注入的方式"><a href="#依赖注入的方式" class="headerlink" title="依赖注入的方式"></a>依赖注入的方式</h4><p>Spring 支持 3 种依赖注入的方式：</p>
+<ul>
+<li>属性注入</li>
+<li>构造器注入</li>
+<li>工厂方法注入（很少使用，不推荐）</li>
+</ul>
+<h5 id="属性注入（最常用的注入方式）"><a href="#属性注入（最常用的注入方式）" class="headerlink" title="属性注入（最常用的注入方式）:"></a>属性注入（最常用的注入方式）:</h5><ul>
+<li><p>属性注入即通过 setter 方法注入Bean 的属性值或依赖的对象</p>
+</li>
+<li><p>属性注入使用 <property> 元素, 使用 name 属性指定 Bean 的属性名称，value 属性或 <value> 子节点指定属性值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;hello&quot; class=&quot;com.glj.bean.HelloWorld&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;userName&quot; value=&quot;hello Spring&quot;&gt;&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="构造方法注入："><a href="#构造方法注入：" class="headerlink" title="构造方法注入："></a>构造方法注入：</h5><ul>
+<li>通过构造方法注入Bean 的属性值或依赖的对象，它保证了 Bean 实例在实例化后就可以使用</li>
+<li>构造器注入在 <constructor-arg> 元素里声明属性, <constructor-arg> 中没有 name 属性</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 按索引匹配入参： --&gt;</span><br><span class="line">&lt;bean id=&quot;hello&quot; class=&quot;com.glj.bean.HelloWorld&quot;&gt;</span><br><span class="line">	&lt;constructor-arg value=&quot;hello&quot; index=&quot;0&quot;&gt;&lt;/constructor-arg&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">&lt;!-- 按类型匹配入参：--&gt;</span><br><span class="line">&lt;bean id=&quot;hello1&quot; class=&quot;com.glj.bean.HelloWorld&quot;&gt;</span><br><span class="line">	&lt;constructor-arg value=&quot;hello1&quot; type=&quot;java.lang.String&quot;&gt;&lt;/constructor-arg&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="字面值："><a href="#字面值：" class="headerlink" title="字面值："></a>字面值：</h4><ul>
+<li>字面值：可用字符串表示的值，可以通过 <value> 元素标签或 value 属性进行注入</li>
+<li>基本数据类型及其封装类、String 等类型都可以采取字面值注入的方式</li>
+<li>若字面值中包含特殊字符，可以使用 <![CDATA[]]> 把字面值包裹起来</li>
+</ul>
+<h4 id="引用其它-Bean："><a href="#引用其它-Bean：" class="headerlink" title="引用其它 Bean："></a>引用其它 Bean：</h4><p>可以通过 <ref> 元素或 ref 属性为 Bean 的属性或构造器参数指定对 Bean 的引用.</p>
+<p>也可以在属性或构造器里包含 Bean 的声明, 这样的 Bean 称为内部 Bean</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;dog&quot; class=&quot;com.glj.bean.Dog&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;name&quot; value=&quot;glj只狗&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;sex&quot; value=&quot;男&quot; /&gt;</span><br><span class="line">	&lt;!-- </span><br><span class="line">	&lt;property name=&quot;foot&quot; ref=&quot;foot&quot; /&gt;</span><br><span class="line">	 或者</span><br><span class="line">	 --&gt;</span><br><span class="line">	 &lt;property name=&quot;foot&quot;&gt;</span><br><span class="line">	 	&lt;ref bean=&quot;foot&quot;/&gt;</span><br><span class="line">	 &lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">&lt;bean id=&quot;foot&quot; class=&quot;com.glj.bean.Foot&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;name&quot; value=&quot;骨头&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="内部-Bean"><a href="#内部-Bean" class="headerlink" title="内部 Bean"></a>内部 Bean</h4><ul>
+<li>当 Bean 实例仅仅给一个特定的属性使用时, 可以将其声明为内部 Bean.</li>
+<li>内部 Bean 声明直接包含在 <property> 或 <constructor-arg> 元素里, 不需要设置任何 id 或 name 属性</li>
+<li>内部 Bean 不能使用在任何其他地方</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;dog&quot; class=&quot;com.glj.bean.Dog&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;name&quot; value=&quot;glj只狗&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;sex&quot; value=&quot;男&quot; /&gt;</span><br><span class="line">	 &lt;property name=&quot;foot&quot;&gt;</span><br><span class="line">	 	&lt;bean class=&quot;com.glj.bean.Foot&quot;&gt;</span><br><span class="line">	 		&lt;property name=&quot;name&quot; value=&quot;骨头&quot;&gt;&lt;/property&gt;</span><br><span class="line">	 	&lt;/bean&gt;</span><br><span class="line">	 &lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>今天就先记到这里吧…</p>
+<p>晚安…</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/814/" title="Spring4.0笔记">http://erbi.me/814/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+              <a href="/tags/spring/" rel="tag"># spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/805/" rel="prev" title="SSM整合Shiro实现用户权限验证的增删改查实例demo">
+                  <i class="fa fa-chevron-left"></i> SSM整合Shiro实现用户权限验证的增删改查实例demo
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/827/" rel="next" title="maven配置jdk">
+                  maven配置jdk <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

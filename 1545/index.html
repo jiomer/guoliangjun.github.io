@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="序言这篇文章主要目的是分享我个人在探索uniapp期间的一些坑和整体感受，难免会有一些偏个人的主观意见，希望各位再看这篇文章之前先去看官方文档，以免先入为主。 官方文档并非同步更新的，需要同步着当前的uni-app v3版本升级 这篇文章看，这样才是比较完整的内容。 关于苹果下架H5 app 的相关新闻，请看这个官方说明 。想看更多新闻请看 公告 。 开发工具介绍及使用uniapp，由 Dclou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="uni-app的技术探索">
+<meta property="og:url" content="http://erbi.me/1545/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="序言这篇文章主要目的是分享我个人在探索uniapp期间的一些坑和整体感受，难免会有一些偏个人的主观意见，希望各位再看这篇文章之前先去看官方文档，以免先入为主。 官方文档并非同步更新的，需要同步着当前的uni-app v3版本升级 这篇文章看，这样才是比较完整的内容。 关于苹果下架H5 app 的相关新闻，请看这个官方说明 。想看更多新闻请看 公告 。 开发工具介绍及使用uniapp，由 Dclou">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-01T02:24:43.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:15.013Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="uni-app">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/1545/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1545&#x2F;&quot;,&quot;path&quot;:&quot;1545&#x2F;&quot;,&quot;title&quot;:&quot;uni-app的技术探索&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>uni-app的技术探索 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%8F%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">开发工具介绍及使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E7%A8%8B%E6%9E%84%E5%BB%BA"><span class="nav-number">3.</span> <span class="nav-text">工程构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APP%E6%89%93%E5%8C%85"><span class="nav-number">4.</span> <span class="nav-text">APP打包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%B8%82%E5%9C%BA"><span class="nav-number">5.</span> <span class="nav-text">插件市场</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E9%A1%B6%E5%B1%82%E8%AE%BE%E8%AE%A1"><span class="nav-number">6.</span> <span class="nav-text">项目顶层设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E9%80%82%E9%85%8D%E6%96%B9%E6%A1%88%E5%8F%8A%E5%B8%83%E5%B1%80"><span class="nav-number">7.</span> <span class="nav-text">页面适配方案及布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UI%E6%A1%86%E6%9E%B6"><span class="nav-number">8.</span> <span class="nav-text">UI框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6"><span class="nav-number">8.0.1.</span> <span class="nav-text">基础组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#uni-ui"><span class="nav-number">8.0.2.</span> <span class="nav-text">uni-ui</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ColorUI"><span class="nav-number">8.0.3.</span> <span class="nav-text">ColorUI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThroUI"><span class="nav-number">8.0.4.</span> <span class="nav-text">ThroUI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#graceUI"><span class="nav-number">8.0.5.</span> <span class="nav-text">graceUI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vant-weapp"><span class="nav-number">8.0.6.</span> <span class="nav-text">vant-weapp</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webview"><span class="nav-number">9.</span> <span class="nav-text">webview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nvue"><span class="nav-number">10.</span> <span class="nav-text">nvue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http%E8%AF%B7%E6%B1%82"><span class="nav-number">11.</span> <span class="nav-text">http请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex%E7%9B%B8%E5%85%B3"><span class="nav-number">12.</span> <span class="nav-text">vuex相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1"><span class="nav-number">13.</span> <span class="nav-text">路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84"><span class="nav-number">14.</span> <span class="nav-text">资源路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87-iconfont"><span class="nav-number">15.</span> <span class="nav-text">字体图标 iconfont</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95"><span class="nav-number">16.</span> <span class="nav-text">调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E5%92%8C%E7%BB%9F%E8%AE%A1"><span class="nav-number">17.</span> <span class="nav-text">推送和统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uniapp%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%EF%BC%88%E5%8C%85%E5%90%AB%E5%8E%9F%E7%94%9Fsdk%E7%9B%B8%E5%85%B3%EF%BC%89"><span class="nav-number">18.</span> <span class="nav-text">uniapp插件开发指南 （包含原生sdk相关）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6"><span class="nav-number">19.</span> <span class="nav-text">业务组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Toast"><span class="nav-number">19.0.1.</span> <span class="nav-text">Toast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Drawer"><span class="nav-number">19.0.2.</span> <span class="nav-text">Drawer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List"><span class="nav-number">19.0.3.</span> <span class="nav-text">List</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">20.</span> <span class="nav-text">知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E4%BA%8E1px%E7%9A%84%E7%BB%86%E7%BA%BF%E6%9D%A1"><span class="nav-number">20.1.</span> <span class="nav-text">小于1px的细线条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%8C%E6%96%87%E6%9C%AC%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">20.2.</span> <span class="nav-text">富文本解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%97%A5%E5%BF%97"><span class="nav-number">20.3.</span> <span class="nav-text">报错日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B6%E9%83%A8%E6%A0%8F%E5%92%8C%E5%BA%95%E9%83%A8%E6%A0%8F%E7%9B%B8%E5%85%B3%E9%AB%98%E5%BA%A6"><span class="nav-number">20.4.</span> <span class="nav-text">顶部栏和底部栏相关高度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%BC%E8%88%AA%E6%A0%8F"><span class="nav-number">20.5.</span> <span class="nav-text">自定义导航栏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="nav-number">20.6.</span> <span class="nav-text">下拉刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%A8%A1%E5%9D%97"><span class="nav-number">20.7.</span> <span class="nav-text">登录模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%AB%E7%A0%81-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9B%B8%E5%85%B3"><span class="nav-number">20.8.</span> <span class="nav-text">扫码 (二维码相关)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E9%80%BB%E8%BE%91%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="nav-number">20.9.</span> <span class="nav-text">返回逻辑自定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E4%B8%8A%E4%B8%AA%E9%A1%B5%E9%9D%A2%E5%B9%B6%E5%88%B7%E6%96%B0%EF%BC%88%E5%9B%9E%E8%B0%83%EF%BC%89"><span class="nav-number">20.10.</span> <span class="nav-text">返回上个页面并刷新（回调）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%8E%A8%E8%8D%90"><span class="nav-number">21.</span> <span class="nav-text">其他推荐</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1545/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          uni-app的技术探索
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-05-01 10:24:43" itemprop="dateCreated datePublished" datetime="2020-05-01T10:24:43+08:00">2020-05-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:15" itemprop="dateModified" datetime="2021-06-10T09:36:15+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h2><p>这篇文章主要目的是分享我个人在探索uniapp期间的一些坑和整体感受，难免会有一些偏个人的主观意见，希望各位再看这篇文章之前先去看官方文档，以免先入为主。 官方文档并非同步更新的，需要同步着当前的<a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/36599">uni-app v3版本升级</a> 这篇文章看，这样才是比较完整的内容。 关于苹果下架H5 app 的相关新闻，请看这个<a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/36654">官方说明</a> 。想看更多新闻请看 <a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/notice/list/">公告</a> 。</p>
+<h2 id="开发工具介绍及使用"><a href="#开发工具介绍及使用" class="headerlink" title="开发工具介绍及使用"></a>开发工具介绍及使用</h2><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/">uniapp</a>，由 <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Dcloud/8358528?fr=aladdin">Dcloud</a> 公司推出。 因为app的开发依赖HbuilderX的app编译模块 ， 所以HbuilderX这个开发工具的版本相当重要。 我们从<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/release">HbuilderX更新日志</a>可以看出，v3版本的编译器是从2.5.1版本加入正式版的，那时候是2020-01-03，直到现在过去2个月，v3版本还不算稳定，<strong>推荐是官方有推出更新就更新</strong> （虽然每次更新填坑的时候也在挖坑） 目前的app开发（整个流程）需要官方的开发工具HbuilderX的支持。因为app的项目热开发、debug、真机运行、打包都需要这个HbuilderX 去做一个 “启动器”的角色。开发上面可以使用其他的编辑器，比如我们的vscode，保存代码HbuilderX会自动编译。 目前我使用的是最新的HbuilderX 2.6.1 ，这里有这个版本的 <a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/36837">相关更新</a> 开发插件相关 在菜单栏 =&gt; 工具栏下有插件安装，在这里基本能找到你想要的插件</p>
+<h2 id="工程构建"><a href="#工程构建" class="headerlink" title="工程构建"></a>工程构建</h2><p>开发app必须要用HbuilderX ,所以项目的初始化我直接使用了官方提供的基础模板，从而走上了从零构建项目工程的道路… 第二种方式是通过vue-cli，这里官方文档 <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/quickstart">快速入手</a>  有更加具体的说明，这里我不再赘述。</p>
+<h2 id="APP打包"><a href="#APP打包" class="headerlink" title="APP打包"></a>APP打包</h2><p>这里介绍了<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/quickstart?id=%E5%8F%91%E5%B8%83uni-app">发布app</a> 的大概资料。app的打包需要HbuilderX完成，这里面涉及到<strong>开发者证书相关的一块</strong> ,正式打包需要原生这边的一些东西。可以需询问相关的开发人员，也可以问我。 我们自己开发测试可以使用官方提供的<strong>测试证书</strong> （打包时候的默认选项）。</p>
+<h2 id="插件市场"><a href="#插件市场" class="headerlink" title="插件市场"></a>插件市场</h2><p>以往的从npm的地方的下载的插件通常只支持H5端， <a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/">插件市场</a>则是uniapp相关插件主要获取来源，插件特性是能兼容多端。 插件安装方式</p>
+<ol>
+<li> 使用npm进行安装使用，这是我们比较熟悉的方式 （但目前使用的组件一般很少支持这种方式）</li>
+<li> 手动下载插件的zip压缩包， 解压后直接放入项目文件夹中使用</li>
+</ol>
+<p>生态 uniapp已经出来这么多年了，而目前生态的状况在我看来，我是不满意的。或许是因为uniapp的稳定性不够或者其他原因，插件市场插件数量少同时质量也不够高（比起我们之前的要差上一个档次），没有一套其他第三方团队提供的比较完整地UI框架，大对数都是个人开发者在做。 文档 插件能否有效利用，文档是一个主要的因素。我个人在使用插件的时候发现大部分插件的文档并不友好（甚至连官方也不是很完善） v3编译器带来的影响 其实自从V3编译器上线正式版之后，经历了一个月的疫情的影响和官方HbuilderX本身的各种小bug不断，目前插件市场的绝大多数组件都没有兼容v3 ，所以可以试着想想对于v3这个版本来说生态是很初始的一个状态的，生态的跟进还需要一定的时间（UI相关的插件会好很多，多半只是UI的布局受到影响）</p>
+<h2 id="项目顶层设计"><a href="#项目顶层设计" class="headerlink" title="项目顶层设计"></a>项目顶层设计</h2><p>JS API发生了一个巨大的改变，开发方式相同，但是各项api名字都不一样，但也就只是改了个名字。 出现了一系列对原生的<a target="_blank" rel="noopener" href="http://www.html5plus.org/doc/h5p.html">html5+ api</a> (加强版api)。这里会出现很多原生相关的知识点和小技巧，无疑是一大波知识点的补充。 也有部分js和vue的api无法使用，主要原因的一个功能在某个端不存在想对应的概念，或者说不支持这个特性。 比方说微信小程序的请求是不支持发送cookie凭证，而我们常用的H5是可以做到的，cookie凭证在我们的文件上传一类的接口中需要使用到 就是这样，可能是因为官方为了让多端的表现统一，所以在接口设计上就会统一砍掉，保持开发上的一致性。 这样的情况从我来看不在少数 但实际上如果 配置 发送cookie凭证 , 实际上是可以使用的(前提是那个端支持), 同时也不会报错 (注意使用<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/platform?id=%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91">条件编译</a>), 但是官方文档并不会提到这一点</p>
+<h2 id="页面适配方案及布局"><a href="#页面适配方案及布局" class="headerlink" title="页面适配方案及布局"></a>页面适配方案及布局</h2><p>适配方案 <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/frame?id=%E5%B0%BA%E5%AF%B8%E5%8D%95%E4%BD%8D">尺寸单位</a>。按照文档，直接使用rpx，简单易用，使用750px宽的的设计稿即可 （什么？给的是1242？自己用ps调）。 我目前99%都是使用rpx, 只有在做少部分比如一些边框的那种细线的时候才会使用到px，但并不是说px使用的场景就很少，这需要各位的挖掘。 并不是现在的所有第三方插件都使用了rpx, 因为有些组件有点年代了, 它们大量使用着upx和px。选择第三方插件的时候请多多注意。 布局和样式 官方首先推荐flex布局, 当然flex本身就是个很不错的选择，我个人也推荐这个，当然同时我们也能使用原本就有的布局方法，这些在vue页面都是支持的（nvue的布局是例外）。 每个页面的css自带作用域, 不用在style中额外声明scoped 样式重置相关 在 uni-app 中不能使用 * 选择器。样式重置是个问题， 比如我们常见的一些 *{ box-sizing:border-box } 这个盒子模型贯穿我们整个项目的一个布局思路, 但目前我自己使用只能每个单独去处理, 比较不方便, 同时没有遇到较好的解决方法</p>
+<h2 id="UI框架"><a href="#UI框架" class="headerlink" title="UI框架"></a>UI框架</h2><p><a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/35489">多端UI库的基本认识</a> ,下面是介绍我所知道的大多数开发者会使用的UI库。</p>
+<h4 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/component/README">基础组件</a></h4><p>基础组件会是我们业务开发中很重要的组成部分。官方放在基础组件这个位置就说明了态度。 性能来说最好（官方），但UI上来说特别简单（这里input默认情况连边框都没有），需要自己的额外修饰</p>
+<h4 id="uni-ui"><a href="#uni-ui" class="headerlink" title="uni-ui"></a><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/component/README?id=uniui">uni-ui</a></h4><p>优点:官方团队维护的组件库， 稳定性和支持性有保证。 缺点：<strong>难看</strong><strong>,</strong> <strong>且业务型组件不够丰富</strong><strong>,</strong> <strong>有的组件甚至没有样式</strong> <strong>(<strong><strong>也可以侧面说可开发的部分很多</strong></strong>)</strong> 这里附上 <a target="_blank" rel="noopener" href="https://m3w.cn/uniapp">uniapp相关组件的在线预览</a> 这里有个很奇妙的问题 , 下面这个是组件的引入方式, 在组件中单独引入没有问题, 但当在main.js中想做全局组件引入就会<strong>报错</strong> , 目前没有探明原因 import { uniLoadMore } from ‘@dcloudio/uni-ui/‘</p>
+<h4 id="ColorUI"><a href="#ColorUI" class="headerlink" title="ColorUI"></a><a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/plugin?id=239">ColorUI</a></h4><ul>
+<li>  css库，为数不多的使用人数多的，比较好看的UI之一，<strong>没有使用文档！</strong> 使用纯靠复制粘贴</li>
+<li>  <strong>并没有对组件进行功能上的封装</strong> ， 样式的命名上面也不够谨慎</li>
+<li>  不支持nvue</li>
+</ul>
+<p>我个人是及其不推荐使用这个库的，样式的写法可以作为参考</p>
+<h4 id="ThroUI"><a href="#ThroUI" class="headerlink" title="ThroUI"></a><a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/plugin?id=556">ThroUI</a></h4><ul>
+<li>  我个人没有使用，但是觉得还可以的一个很完善的有功能封装的UI框架，推荐尝试使用（踩坑）</li>
+<li>  不支持nvue</li>
+</ul>
+<h4 id="graceUI"><a href="#graceUI" class="headerlink" title="graceUI"></a><a target="_blank" rel="noopener" href="http://grace.hcoder.net/login">graceUI</a></h4><ul>
+<li>  各方面看起来支持性最好的一个第三方UI框架，<strong>但是要钱！</strong> 200一个月，没钱</li>
+<li>  各方面支持性很好，支持nvue</li>
+</ul>
+<h4 id="vant-weapp"><a href="#vant-weapp" class="headerlink" title="vant-weapp"></a><a target="_blank" rel="noopener" href="https://github.com/youzan/vant-weapp">vant-weapp</a></h4><ul>
+<li>  你没有看错, 这是vant对微信小程序组件推出的框架, 但uniapp本身是支持微信小程序组件的, 当然不好的地方是只支持编译 app、微信小程序、H5，其他小程序不支持。</li>
+<li>  同时官方说明使用微信小程序从性能上来说比常规的vue组件、页面性能要差， 这点希望考虑进去。</li>
+<li>  不支持nvue</li>
+<li>  至少组件很全，还有一个专门的团队在维护呀</li>
+</ul>
+<p><strong>个人意见</strong> 开发上面我个人推荐是基础组件+ uni-ui + 任意一款第三方UI框架， 首选稳定的官方提供的框架，然后在部分需求去选择业务组件。 v3版本刚出的情况下，难免会出现比较多的问题。特别是那种个人开发者做的独立插件。从UI看来，nvue页面的业务开发速度上明显会落后于常规vue页面</p>
+<h2 id="webview"><a href="#webview" class="headerlink" title="webview"></a>webview</h2><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/component/web-view">https://uniapp.dcloud.io/component/web-view</a> 我个人总感觉这是个很关健的组件，使用这个组件能完全模仿出以前传统的webiview+ h5的方式。同时通讯各种的api都很齐全。 ps : 目前我使用方面主要是用来app内部打开外链使用。当时我遇到这个需求的时候，期望能找到api直接调用打开webview的方法，我个人认为uniapp的接口设计上是会有这么个接口的，但我寻找了很久都没有找到类似的接口，于是我只能单独做了个路由页面去做webview以处理app内部打开外链。</p>
+<h2 id="nvue"><a href="#nvue" class="headerlink" title="nvue"></a>nvue</h2><p>nvue，native vue，即原生的vue，这是这个文件后缀名的来源 。 相关资料 <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/use-weex">官方nvue文档</a> <a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/36074%20">nvue不同编译模式介绍</a> <strong>坏处</strong></p>
+<ol>
+<li> 正如前面所提到的UI框架对nvue的支持普遍不好，意味着nvue页面业务开发速度会受到不少的影响</li>
+<li> nvue是基于<a target="_blank" rel="noopener" href="https://weex.apache.org/zh/docs/api/weex-variable.html">weex</a> ，意味着使用上你需要接受weex的各种限制，这是个全新的知识点，你需要花想当的时间去消化吸收 （从<a target="_blank" rel="noopener" href="https://weex.apache.org/zh/docs/styles/common-styles.html#%E7%9B%92%E6%A8%A1%E5%9E%8B">样式限制</a> 来看，布局上就能受到不小阻碍）</li>
+<li> 公用文件相关。在nvue中，我们可能会使用一些公用的组件，但如果想在nvue页面中使用, 组件也得按照weex的规则去写，否则就会报错无法使用，这意味着所有的公用的组件也许你都得考虑做nvue的兼容，这是个不小的工作量。</li>
+<li> 特别有意思的是官方的<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/component/README?id=uniui">uni-ui</a> 组件都普遍是在 2019-11-12 才支持nvue（可以点几个组件看看，里面有更新日志），这里面有值得挖掘的部分。虽然目前不清楚之前的nvue发生了什么，连官方都是最近才做完的兼容，我们有理由怀疑nvue整体的可靠性</li>
+<li> nvue 专用组件使用方面比较诡异</li>
+<li> 调试困难，即便是官方有debug工具， 但能看到的信息不多，调试起来的感觉比较像猜</li>
+</ol>
+<p><strong>好处</strong></p>
+<ol>
+<li> 高性能。官方一直推荐的部分需要高性能的场景就推荐使用nvue。个人感受：如丝般顺滑</li>
+</ol>
+<p>个人意见 我个人使用过nvue， 综合考虑下来是不推荐使用，原因如上面所述。个人是否承担nvue页面给整个项目带来的负担及后续的维护成本（还有面对各种无法难以形容的开发情况保持良好的心态）</p>
+<h2 id="http请求"><a href="#http请求" class="headerlink" title="http请求"></a>http请求</h2><p>我试用了插件市场中差不多三款http的插件，最终选择了 <a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/plugin?id=392">luch-request</a> ，因为其余的插件封装不完整，还有细微的bug和不支持的功能。 使用方法与 axios基本相似，少部分不同 , 需要自己对<strong>请求进行再封装</strong> 。   存在的问题 目前这个插件还不支持abort 个人意见 插件市场有好几个模仿axios的的http请求库， 在我的认识里面相似及其功能的插件对于大多数人来说只需要一款，绝对不会出现第二款。而目前在插件市场就出现了3款，且使用人数都相差不大。所以目前插件市场出现这种现象是比较令我感到奇怪，侧面证明uniapp的生态还不算稳定。 反馈 <strong>文件上传</strong><strong>,</strong> <strong>出现问题</strong> 自定义出现难度</p>
+<h2 id="vuex相关"><a href="#vuex相关" class="headerlink" title="vuex相关"></a>vuex相关</h2><p>使用方式基本没有差别 <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/use?id=%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">配置使用vuex</a> <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/use-weex?id=vue-%E5%92%8C-nvue-%E5%85%B1%E4%BA%AB%E7%9A%84%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE">nvue使用vuex注意事项</a></p>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/collocation/pages?id=pages">pages.json</a>， 文档明确说明了所有的页面路径都是需要在这里配的， 同时还可以在这里设置对应页面的导航栏的各种自定义按钮呀， 搜索栏， 透明等等。（注意每次配置完后你的热开发都是要重启的，这个不像我们的webpack这块能自动编译） <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/frame?id=%E8%B7%AF%E7%94%B1">官方关于路由的使用相关文档</a> <strong>参数的接收</strong> //钩子 onLoad(query){ //query 就是对象参数， 中文的参数需要使用 encodeURIComponent 和 decodeURIComponent转换处理 } 个人意见 我认为上述的这种做法并不是很好，因为我认为的这种中文转码应该内置处理了，就像vue-router本身不存在这样的问题。 插件市场的 <a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/plugin?id=578">vue-router</a> 是个不错的选择，这个是插件是在uniapp中模拟vue-router，使用之后大致上能延续以往习惯的开发方式，包含了vue-router原本就比较丰富的api。但是目前还不能在v3版本使用，因为v3版本的部分问题没有修复，如果修复了可以尝试去跟进 我目前在这个作者群， 这是作者的相关项目 <a target="_blank" rel="noopener" href="https://github.com/SilurianYang/uni-simple-router"> uni-simple-router</a> ，如果方便的可以给作者点个star, 秋梨膏 ~ 反馈 原生api用着还可以</p>
+<h2 id="资源路径"><a href="#资源路径" class="headerlink" title="资源路径"></a>资源路径</h2><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/frame?id=%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84%E8%AF%B4%E6%98%8E">资源路径说明</a> ，如果背景图片引用上出现问题，参考<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/frame?id=%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87">背景图片- 绝对路径 引用图片</a> 背景图片相对路径引用失败可能是v3版本的一个暂时性的bug 反馈 少数有bug</p>
+<h2 id="字体图标-iconfont"><a href="#字体图标-iconfont" class="headerlink" title="字体图标 iconfont"></a>字体图标 iconfont</h2><p>跟原本常规使用方式一致,使用icomoon即可。部分<strong>不适合</strong><strong>/*<em><strong>不能使用</strong>字体图标的场景使用图片代替即可 引入方式 不能像传统项目直接在main.js中直接引用，HbuilderX会报出App平台 v3 模式暂不支持在 js 文件中引用***.css 关于这个暂不支持可能后续会有解决方案,这里将会持续关注 这里提供一个可用的引入方式，就是在App.vue中引入，代码如下： /* #ifndef APP-PLUS-NVUE*/ /*字图标片icomoon */ @import “static/icomoon/style.css”; /* #endif */ 以我们常用的icomoon为例, 我们将icomoon放在static文件加下面并通过上述方式引用, 但是这时候会报错, 提示字体文件 ttf/eot找不到 , 我们需要对其中引用tff文件的引用路径做一下小小修改，</em>*下面是例子</strong> @font-face { font-family: ‘icomoon’; src:  url(‘fonts/icomoon.eot?8v7q4m’); src:  url(‘fonts/icomoon.eot?8v7q4m#iefix’) format(‘embedded-opentype’), url(‘fonts/icomoon.ttf?8v7q4m’) format(‘truetype’), url(‘fonts/icomoon.woff?8v7q4m’) format(‘woff’), url(‘fonts/icomoon.svg?8v7q4m#icomoon’) format(‘svg’); font-weight: normal; font-style: normal; font-display: block; } 我们需要所有的路径改为<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/frame?id=%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87">绝对路径</a> ， 也就是图中的fonts/icomoon 改成 ~@/static/icomoon/fonts/icomoon (这里的路径请根据自己的文件结构自行调整), 修改完后就能够正确使用 。 <strong>当然这么做也有其缺点</strong></p>
+<ol>
+<li> 每次从字体图标库打包了新的文件下来后<strong>都要修改</strong>.</li>
+<li> 还有icomoon预览用的html就失效了 :) , 因为~@是uniapp特有的一个规则，在uniapp中才能正常编译使用，而index.html的路径是常规的引用规则。</li>
+</ol>
+<p>  这里实际上还有另外一个解决方式， 那就是字体文件转换成<strong>base64</strong>的方式，直接内联进去，这样就不会有字体文件引用的问题 此时或许有人注意到我在上面提供的例子中, 是通过<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/platform?id=%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91">条件编译</a>来引入字体图标的css文件的 , 在nvue的页面中不引人这个css文件, 这么做的原因是主要因为<strong>下面这段</strong> [class^=’icon-‘], [class*=’ icon-‘] { /* use !important to prevent issues with browser extensions that change fonts */ font-family: ‘icomoon’ !important; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; /* Better Font Rendering =========== */ -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; } 这只是一个例子, 因为nvue的 css使用规则是基于weex的, 在这套规则中<strong>不能识别属性选择器</strong>, 会提示报错。这意味着我们放弃了在nvue文件中使用我们自定义的字体图标 ，目前没有找到比较方便的解决方法 ，在nvue页面推荐使用官方提供的icons 组件做字体图标。</p>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/snippet?id=%E4%BD%BF%E7%94%A8-chrome-%E8%B0%83%E8%AF%95-h5">调试相关文档</a> , 正常情况只需要在电脑浏览器上对H5进行调试即可, 基本上H5跟app的表现是一致的, 当遇到比较复杂的问题, 就可以考虑<strong>debug****调试</strong> 普通H5调试 菜单栏 =&gt;运行 =&gt; 运行到浏览器 (选择自己想要打开的浏览器) 真机调试<strong>vue</strong>!页面 菜单栏 =&gt; 视图 =&gt; 显示webview控制台 (其实很像 google 的 inspect) 真机调试<strong>Nvue</strong>页面 <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/snippet?id=%E5%85%B3%E4%BA%8E-app-%E7%9A%84%E8%B0%83%E8%AF%95debug">关于-app-的调试debug</a> , 连接失败可以尝试关闭电脑防火墙，同时电脑和手机要处于同一wifi下</p>
+<h2 id="推送和统计"><a href="#推送和统计" class="headerlink" title="推送和统计"></a>推送和统计</h2><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/cloud">https://uniapp.dcloud.io/cloud</a></p>
+<h2 id="uniapp插件开发指南-（包含原生sdk相关）"><a href="#uniapp插件开发指南-（包含原生sdk相关）" class="headerlink" title="uniapp插件开发指南 （包含原生sdk相关）"></a>uniapp插件开发指南 （包含原生sdk相关）</h2><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/api/extend/native-plugin">app原生插件</a></p>
+<h2 id="业务组件"><a href="#业务组件" class="headerlink" title="业务组件"></a>业务组件</h2><p>目前这里讲的组件都是<strong>uni-ui</strong>， 看之前推荐去<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/README?id=%E5%BF%AB%E9%80%9F%E4%BD%93%E9%AA%8C">快速体验</a> 下载app，边实时预览边看。</p>
+<h4 id="Toast"><a href="#Toast" class="headerlink" title="Toast"></a><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/api/ui/prompt">Toast</a></h4><p>uni.showToast({ title: error_message, duration: 2000, icon: ‘none’, //不想要icon需要手动取消 position: ‘bottom’//这个位置的显示会特殊点 })</p>
+<ol>
+<li> 使用上颇为麻烦, 因为默认是有icon的, 所以每次都需要手动icon: ‘none’ （我很希望能找到一个全局设置的方法）</li>
+<li> position: ‘bottom’ 这里面比较特殊，显示的效果是特殊的轻提示 (用app能看出明显区别)</li>
+</ol>
+<h4 id="Drawer"><a href="#Drawer" class="headerlink" title="Drawer"></a><a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/plugin?id=26">Drawer</a></h4><p>这个侧边栏使用的场景不用我说, 一般首页普遍都会有。这里我想提醒的是这个组件的问题。</p>
+<ol>
+<li> 先将这个组件开启遮罩，这个组件会有滚动穿透的现象，说明这个遮罩功能是不完善的，但是目前官方仍然没去处理， 官方的想法我暂时看不懂</li>
+<li> 这个组件的遮罩有个范围，表现为不覆盖 tabbar（底部栏）,同时也不覆盖导航栏，这种遮罩在部分场景下是不符合需求的</li>
+</ol>
+<p><strong>解决方法</strong></p>
+<ol>
+<li> 放弃使用官方提供的组件，去插件市场换个组件</li>
+<li> 手动有subNvue实现</li>
+</ol>
+<h4 id="List"><a href="#List" class="headerlink" title="List"></a><a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/plugin?id=24">List</a></h4><p>我在项目中使用完这个组件之后，我意识到了为什么文档不友好体现在哪里。 首先我们进去一看 示例，这不就是我们移动端常见的cell吗？ 如果认真看虽然很像cell，<strong>但是却没有提供插槽</strong>， 我不认为加入个简单的插槽都这么困难，这里面发生了什么，但原因我目前仍然没有查明 我们继续看文档， 看向使用方式会发现使用的时候需要同时引入uniList,uniListItem这两个组件 ，很明显uniListItem 这个组件基本上就是cell, <strong>同时你会发现当然文档并没有<strong><strong>uni-list</strong></strong>的一个文档或者是相关说明</strong>。 我当时就裂开了， 官方文档竟然能这么写 为了解决这个疑问，我们首先来看源码 <strong>uni-list</strong> <template> <!-- #ifndef APP-NVUE --> <view class="uni-list"> <slot /> </view> <!-- #endif --> <!-- #ifdef APP-NVUE --> &lt;list class=”uni-list” :enableBackToTop=”enableBackToTop” loadmoreoffset=”15” :scroll-    y=”scrollY” @loadmore=”loadMore”&gt; <slot /> </list> <!-- #endif --> </template> <strong>uni-list-item</strong> <template> <!-- #ifdef APP-NVUE --> <cell> <!-- #endif --> &lt;view :class=”disabled ? ‘uni-list-item–disabled’ : ‘’” :hover-class=”disabled                 showSwitch ? ‘’ : ‘uni-list-item–hover’” class=”uni-list-item” @click=”onClick”&gt; <!-- ...其余代码 --> </view> <!-- #ifdef APP-NVUE --> </cell> <!-- #endif --> </template> 可能这里放代码不合适，可以去<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@dcloudio/uni-ui">npm地址</a> 下载下来看源码会更适合。 这里我们应该把目光着重放在 其中的条件编译部分的代码，会发现这两个组件会在nvue页面中， 使用 list、cell 这两个<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/component/list">nvue专用的原生组件</a> , 文档明确说明了这两个组件之间的关系, 即 能作为list组件的一级子组件的组件只有cell、header、refresh、loading，而cell就是其中1个； 同样的能作为cell组件的父组件的只有list、recycler、waterfall，而list是其中一个 让我们尝试一下错误示范, 在nvue页面中，如果我们如下方这么写，那么就会提示报错，因为这是不符合规范的 <list> <view></view> <!--或者是其他规范外的组件--> </list> <!--or--> <view> <cell></cell> <!--或者是其他规范外的组件--> </view> 至此我们能理解为什么uni-list和uni-list-item会在文档中成对出现了, 多半是不希望有人在nvue页面使用这个组件的时候出错。<strong>但文档并没有能对这个情况做一个很好的说明</strong>，能想象得出来，会出现这种情况并不会只是在这个组件中。 官方已经为所有的组件进行了nvue的适配，无论是否使用nvue，至少我们知道使用nvue的时候会遇到更多的障碍，各位在使用的时候要谨慎应对。</p>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="小于1px的细线条"><a href="#小于1px的细线条" class="headerlink" title="小于1px的细线条"></a>小于1px的细线条</h3><p>/*其实跟vant的方案是一样的, 通常的1px看起来是会有点粗,只需要设置1px再通过transform 之后就可以达到想要的细线条,这个方法在hbuilderx2.6.1.202002261 后证实有效*/ &amp;::after { content: “ “; position: absolute; height: 1px; top: 50%; right: 0; left: 0; background-color: #d2d2d2; transform: scaleY(0.5); }</p>
+<h3 id="富文本解决方案"><a href="#富文本解决方案" class="headerlink" title="富文本解决方案"></a>富文本解决方案</h3><p>这里是指类似v-html的过程 大部分情况下我们使用v-html， 替代方案 <a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/search?q=uparse">插件市场富文本</a></p>
+<h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><p>这个我认为也是比较重要的东西， 因为有些错误只会在特定情况下发生（app的确很容易这样），事后的问题重现难度大。应该要统一做个错误日志，好方面问题排查 比如用onError的钩子去处理 <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/use?id=%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">https://uniapp.dcloud.io/use?id=常见问题</a> <strong>目前并未探索出比较好的错误预警方式</strong><strong>!</strong></p>
+<h3 id="顶部栏和底部栏相关高度"><a href="#顶部栏和底部栏相关高度" class="headerlink" title="顶部栏和底部栏相关高度"></a>顶部栏和底部栏相关高度</h3><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/frame?id=css%E5%8F%98%E9%87%8F">https://uniapp.dcloud.io/frame?id=css%e5%8f%98%e9%87%8f</a></p>
+<h3 id="自定义导航栏"><a href="#自定义导航栏" class="headerlink" title="自定义导航栏"></a>自定义导航栏</h3><p>实际上官方提供的原生导航栏本身就很强大!包括了各种你想的到的常见需求,例如 常见搜索栏, 各种按钮 <a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/34921">uni-app导航栏开发指南</a>, <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/collocation/pages?id=customnav">官网文档对应部分</a> 但同时应该也要注意<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/collocation/pages?id=customnav">相关问题</a>，避免开发上面出现比较大的问题。 当需求特别诡异的时候，可以考虑 <a target="_blank" rel="noopener" href="https://ext.dcloud.net.cn/plugin?id=52">前端模拟导航栏</a></p>
+<h3 id="下拉刷新"><a href="#下拉刷新" class="headerlink" title="下拉刷新"></a>下拉刷新</h3><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/collocation/pages?id=app-pulltorefresh">官方文档- 下拉刷新</a> 原生自带的下拉刷新我全局关掉了，目前我的做法是在需要地方单独做下拉刷新 （nvue页面），但并没有对下拉刷新进行抽象 （官方的示例中也不抽象）。 常用列表的下拉刷新方案 (vue) <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/api/lifecycle?id=%E5%BA%94%E7%94%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">应用生命周期</a> ,每个页面提供了对应的下拉刷新 onPullDownRefresh和上拉刷新 onReachBottom的 生命周期. <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/api/ui/pulldown">下拉刷新的更多妙用</a> , 这里你甚至能手动调用下拉刷新</p>
+<h3 id="登录模块"><a href="#登录模块" class="headerlink" title="登录模块"></a>登录模块</h3><p>实现方面可以参考HBuilderX新建uni-app项目时的登陆模板。 <strong>登录页不一定要设为首页</strong> 页面呢..及相关微信登录等其他<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/api/plugins/login">第三方登录</a> , 可以参考登录模板或者插件市场的相关代码。 总体来说做起来不会太难</p>
+<h3 id="扫码-二维码相关"><a href="#扫码-二维码相关" class="headerlink" title="扫码 (二维码相关)"></a>扫码 (二维码相关)</h3><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/component/barcode?id=barcode">内嵌扫码</a> <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/api/system/barcode?id=scancode">接口调用扫码</a></p>
+<h3 id="返回逻辑自定义"><a href="#返回逻辑自定义" class="headerlink" title="返回逻辑自定义"></a>返回逻辑自定义</h3><p><a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/35120">https://ask.dcloud.net.cn/article/35120</a></p>
+<h3 id="返回上个页面并刷新（回调）"><a href="#返回上个页面并刷新（回调）" class="headerlink" title="返回上个页面并刷新（回调）"></a>返回上个页面并刷新（回调）</h3><p>使用场景 常用是提交表单之后返回上个页面并刷新列表 <a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/question/64481">uniapp社区相关解决方案</a> <a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/collocation/frame/window?id=getcurrentpages">getCurrentPages文档</a> let page = getCurrentPages();//获取页面栈 let prevPage = pages[pages.length - 2];//获取你想操作的对应页面 // #ifdef APP-PLUS prevPage.$vm.test();//app端写法 // #endif // #ifndef APP-PLUS prevPage.test();//调用列表页面方法 // #endif uni.navigateBack();//跳转页面的操作,这个一定要放在后面不然page 这些就会失效 //test 是对应页面的对应方法 没有, 因为其他平台式并不一定有dom这个概念的</p>
+<h2 id="其他推荐"><a href="#其他推荐" class="headerlink" title="其他推荐"></a>其他推荐</h2><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5d48eac9518825403769d9ad#heading-24">掘金-uni-app的开发经历</a></p>
+<hr>
+<p>感谢 <strong>李坤泉</strong> 前端大佬的投稿…</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1545/" title="uni-app的技术探索">http://erbi.me/1545/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/uni-app/" rel="tag"># uni-app</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1535/" rel="prev" title="WordPress--Crayon Syntax Highlighter与主题不兼容问题">
+                  <i class="fa fa-chevron-left"></i> WordPress--Crayon Syntax Highlighter与主题不兼容问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1548/" rel="next" title="uniapp之列表、下拉刷新、上拉加载">
+                  uniapp之列表、下拉刷新、上拉加载 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

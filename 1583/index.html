@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="GP&amp;CDH安装部署系列-CDH5.16.1安装 安装文件文件都放到&#x2F;home&#x2F;tools&#x2F;    jdk-8u131-linux-x64.rpm   MySQL-5.6.31-1.linux_glibc2.5.x86_64.rpm-bundle.tar   mysql-connector-java-5.1.36-bin.jar   cloudera-manager-centos7-cm5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GP&amp;CDH安装部署系列-CDH安装">
+<meta property="og:url" content="http://erbi.me/1583/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="GP&amp;CDH安装部署系列-CDH5.16.1安装 安装文件文件都放到&#x2F;home&#x2F;tools&#x2F;    jdk-8u131-linux-x64.rpm   MySQL-5.6.31-1.linux_glibc2.5.x86_64.rpm-bundle.tar   mysql-connector-java-5.1.36-bin.jar   cloudera-manager-centos7-cm5">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200608234422115.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200608235546681.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200608235701183.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200608235719643.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200608235819492.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200608235833493.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200608235900122.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200608235941595.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000006139.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000036880.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000100297.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000107248.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000230972.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000236010.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000240213.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000243863.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000248159.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000254430.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000326024.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000333156.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000340048.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000432335.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000701009.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000708323.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000716188.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000724766.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000732728.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000736427.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609000741513.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609001249552.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/2018031217272740.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/20180312174849108.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/20180312174946224.png">
+<meta property="article:published_time" content="2020-06-08T16:30:24.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:15.047Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="CDH">
+<meta property="article:tag" content="GP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/typoraImg/image-20200608234422115.png">
+
+
+<link rel="canonical" href="http://erbi.me/1583/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1583&#x2F;&quot;,&quot;path&quot;:&quot;1583&#x2F;&quot;,&quot;title&quot;:&quot;GP&amp;CDH安装部署系列-CDH安装&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>GP&CDH安装部署系列-CDH安装 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">安装文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#centos7%E4%B8%BA%E6%9C%80%E5%B0%8F%E5%8C%96%E5%AE%89%E8%A3%85%EF%BC%8C%E5%86%8D%E5%AE%89%E8%A3%85-CDH%E5%89%8D%E5%BF%85%E9%A1%BB%E5%85%88%E5%AE%89%E8%A3%85%E5%A6%82%E4%B8%8B%E7%A8%8B%E5%BA%8F%E5%8C%85%EF%BC%9A-%E4%BC%9A%E6%9C%89%E6%8A%A5%E9%94%99-%E6%AF%8F%E5%8F%B0%E9%83%BD%E8%A6%81%E6%89%A7%E8%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">centos7为最小化安装，再安装 CDH前必须先安装如下程序包：(会有报错~每台都要执行)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85jdk%EF%BC%88%E6%AF%8F%E5%8F%B0%E9%83%BD%E9%9C%80%E5%AE%89%E8%A3%85%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">安装jdk（每台都需安装）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#master%E4%B8%BB%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%88%B0sdw"><span class="nav-number">3.1.</span> <span class="nav-text">master主服务器执行文件传输到sdw</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E5%AE%89%E8%A3%85%E8%BF%87%E7%9A%84java%E5%8C%85"><span class="nav-number">3.2.</span> <span class="nav-text">查找安装过的java包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85java-rpm%E5%8C%85-%E6%AF%8F%E5%8F%B0%E6%9C%BA%E5%99%A8%E6%89%A7%E8%A1%8C"><span class="nav-number">3.3.</span> <span class="nav-text">安装java rpm包(每台机器执行)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F"><span class="nav-number">3.4.</span> <span class="nav-text">验证是否安装成功</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85mysql5-6-31%EF%BC%88%E5%8F%AA%E5%9C%A8mdw%E4%B8%8A%E5%AE%89%E8%A3%85%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">离线安装mysql5_6_31（只在mdw上安装）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8Bmysql-tar%E5%8C%85"><span class="nav-number">4.1.</span> <span class="nav-text">解压mysql tar包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E5%B7%B2%E7%BB%8F%E5%AE%89%E8%A3%85%E7%9A%84%E5%8D%B8%E8%BD%BD"><span class="nav-number">4.2.</span> <span class="nav-text">查找已经安装的卸载</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85mysql-rpm%E5%8C%85"><span class="nav-number">4.3.</span> <span class="nav-text">安装mysql rpm包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8mysql%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.4.</span> <span class="nav-text">启动mysql服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%EF%BC%8C%E8%AE%B0%E4%BD%8F%E5%8E%9F%E5%A7%8B%E5%AF%86%E7%A0%81"><span class="nav-number">4.5.</span> <span class="nav-text">安装完成，记住原始密码..</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%99%BB%E5%BD%95mysql-%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E5%B9%B6%E6%8E%88%E6%9D%83"><span class="nav-number">4.6.</span> <span class="nav-text">登录mysql 修改密码并授权</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E4%BF%AE%E6%94%B9%E6%88%90%E5%8A%9F"><span class="nav-number">4.7.</span> <span class="nav-text">测试是否修改成功</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85CDH%EF%BC%88%E5%8F%AA%E5%9C%A8mdw%E4%B8%8A%E5%AE%89%E8%A3%85%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">安装CDH（只在mdw上安装）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9config-ini%E7%9A%84server-host%E5%80%BC"><span class="nav-number">5.1.</span> <span class="nav-text">修改config.ini的server_host值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%A8%E6%AF%8F%E5%8F%B0%E6%9C%BA%E5%99%A8%E6%89%A7%E8%A1%8C"><span class="nav-number">5.2.</span> <span class="nav-text">在每台机器执行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%A8master%E4%B8%8A%E6%89%A7%E8%A1%8C"><span class="nav-number">5.3.</span> <span class="nav-text">在master上执行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6master%E6%9C%BA%E5%99%A8%E7%9A%84-opt-cm-5-16-1-%E5%88%B0sdw%E6%9C%BA%E5%99%A8"><span class="nav-number">5.4.</span> <span class="nav-text">复制master机器的 &#x2F;opt&#x2F;cm-5.16.1 到sdw机器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E6%9C%8D%E5%8A%A1%E5%89%8D%E9%9C%80%E8%A6%81%E8%BF%9B%E8%A1%8C%E5%A6%82%E4%B8%8B%E4%BF%AE%E6%94%B9-%E6%AF%8F%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E6%89%A7%E8%A1%8C"><span class="nav-number">6.</span> <span class="nav-text">开启服务前需要进行如下修改(每台机器上执行)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B0%86-swappness%E4%BF%AE%E6%94%B9%E4%B8%BA0%EF%BC%8C%E5%B0%BD%E9%87%8F%E4%B8%8D%E4%BD%BF%E7%94%A8%E4%BA%A4%E6%8D%A2%E5%88%86%E5%8C%BA%EF%BC%9A"><span class="nav-number">6.1.</span> <span class="nav-text">将 swappness修改为0，尽量不使用交换分区：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF-%E5%81%9C%E6%AD%A2%E6%9C%8D%E5%8A%A1%EF%BC%9A"><span class="nav-number">7.</span> <span class="nav-text">开启&#x2F;停止服务：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-master%E4%B8%8A%E5%BC%80%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">7.1.</span> <span class="nav-text">1. master上开启服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-segment%E4%B8%8A%E5%BC%80%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">7.2.</span> <span class="nav-text">2. segment上开启服务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#web%E9%A1%B5%E9%9D%A2%E9%85%8D%E7%BD%AE"><span class="nav-number">8.</span> <span class="nav-text">web页面配置</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E9%A1%B5%E9%9D%A2%E6%95%88%E6%9E%9C%E5%9B%BE"><span class="nav-number">8.0.1.</span> <span class="nav-text">打开页面效果图</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E6%9C%BA%E5%99%A8%E6%95%88%E6%9E%9C%E5%9B%BE"><span class="nav-number">8.0.2.</span> <span class="nav-text">集群机器效果图</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="nav-number">8.0.3.</span> <span class="nav-text">集群开始安装</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E4%B8%AD"><span class="nav-number">8.0.4.</span> <span class="nav-text">集群安装中</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#parcel%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%E5%8F%8D%E9%A6%88"><span class="nav-number">8.0.5.</span> <span class="nav-text">parcel安装完成后反馈</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AE%89%E8%A3%85%E6%9C%8D%E5%8A%A1%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81"><span class="nav-number">8.0.6.</span> <span class="nav-text">选择自定义安装服务！！！！！</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E8%AE%BE%E7%BD%AE%E5%AE%89%E8%A3%85"><span class="nav-number">8.0.7.</span> <span class="nav-text">集群设置安装</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">8.0.8.</span> <span class="nav-text">集群初始化</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0hive%E6%9C%8D%E5%8A%A1"><span class="nav-number">8.1.</span> <span class="nav-text">添加hive服务</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%89%A7%E8%A1%8C"><span class="nav-number">8.1.1.</span> <span class="nav-text">连接mysql数据库执行</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A3%85hive"><span class="nav-number">8.1.2.</span> <span class="nav-text">装hive</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9hive%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE%EF%BC%9A"><span class="nav-number">8.1.3.</span> <span class="nav-text">修改hive数据库配置：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9mysql%E9%85%8D%E7%BD%AE"><span class="nav-number">8.1.4.</span> <span class="nav-text">修改mysql配置</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E6%96%87%E4%BB%B6-%E9%87%8D%E5%90%AFmysql"><span class="nav-number">8.1.5.</span> <span class="nav-text">保存文件 重启mysql</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E4%B8%80%E6%AD%A5%EF%BC%9A"><span class="nav-number">8.1.6.</span> <span class="nav-text">最后一步：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%80%E6%9C%80%E6%9C%80%E5%90%8E%E5%B0%B1%E6%98%AF%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="nav-number">8.1.7.</span> <span class="nav-text">最最最后就是性能测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">9.</span> <span class="nav-text">遇到问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-HDFS-dfs-permissions-%E5%8E%BB%E6%8E%89%E5%AF%B9%E5%8B%BE%EF%BC%8C%E4%B8%8D%E7%84%B6%E9%9C%80%E8%A6%81%E9%AA%8C%E8%AF%81%E6%9D%83%E9%99%90%E6%89%8D%E8%83%BD%E8%BF%9B%E8%A1%8C%E6%8F%92%E5%85%A5%E2%80%A6"><span class="nav-number">9.1.</span> <span class="nav-text">1.HDFS dfs.permissions 去掉对勾，不然需要验证权限才能进行插入…</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%A6%82%E6%9E%9C%E6%98%AF%E6%97%A7%E6%9C%BA%E5%99%A8%E9%9C%80%E8%A6%81%E7%9C%8B%E7%9C%8B%E6%98%AF%E5%90%A6%E5%B7%B2%E7%BB%8F%E5%AE%89%E8%A3%85%E4%BA%86cloudera%E5%92%8CCDH"><span class="nav-number">9.2.</span> <span class="nav-text">2.如果是旧机器需要看看是否已经安装了cloudera和CDH</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-ProtocolError-lt-ProtocolError-for-127-0-0-1-RPC2-401-Unauthor"><span class="nav-number">9.3.</span> <span class="nav-text">3.ProtocolError: &lt;ProtocolError for 127.0.0.1&#x2F;RPC2: 401 Unauthor.</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-Cloudera-Manager%E9%9B%86%E7%BE%A4%E6%8A%A5%E8%AD%A6%EF%BC%8C%E5%A0%86%E8%BD%AC%E5%82%A8%E7%9B%AE%E5%BD%95-tmp-%E6%88%96%E6%97%A5%E5%BF%97%E7%9B%AE%E5%BD%95-var-log-%E5%8F%AF%E7%94%A8%E7%A9%BA%E9%97%B4%E5%B0%8F%E4%BA%8E-5-0-%E5%90%89%E5%AD%97%E8%8A%82"><span class="nav-number">9.4.</span> <span class="nav-text">4.Cloudera Manager集群报警，堆转储目录&#x2F;tmp 或日志目录&#x2F;var&#x2F;log 可用空间小于 5.0 吉字节</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1583/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GP&CDH安装部署系列-CDH安装
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-06-09 00:30:24" itemprop="dateCreated datePublished" datetime="2020-06-09T00:30:24+08:00">2020-06-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:15" itemprop="dateModified" datetime="2021-06-10T09:36:15+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">linux总结</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>GP&amp;CDH安装部署系列-CDH5.16.1安装</p>
+<h4 id="安装文件"><a href="#安装文件" class="headerlink" title="安装文件"></a>安装文件</h4><p>文件都放到/home/tools/</p>
+<ul>
+<li>  jdk-8u131-linux-x64.rpm</li>
+<li>  MySQL-5.6.31-1.linux_glibc2.5.x86_64.rpm-bundle.tar</li>
+<li>  mysql-connector-java-5.1.36-bin.jar</li>
+<li>  cloudera-manager-centos7-cm5.16.1_x86_64.tar.gz</li>
+<li>  CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel</li>
+<li>  CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel.sha(.sha1)</li>
+<li>  manifest.json</li>
+</ul>
+<h4 id="centos7为最小化安装，再安装-CDH前必须先安装如下程序包：-会有报错-每台都要执行"><a href="#centos7为最小化安装，再安装-CDH前必须先安装如下程序包：-会有报错-每台都要执行" class="headerlink" title="centos7为最小化安装，再安装 CDH前必须先安装如下程序包：(会有报错~每台都要执行)"></a>centos7为最小化安装，再安装 CDH前必须先安装如下程序包：(会有报错~每台都要执行)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install chkconfig python bind-utils psmisc libxslt zlib sqlite fuse fuse-libs RedHat-lsb cyrus-sasl-plain cyrus-sasl-gssapi autoconf -y</span><br></pre></td></tr></table></figure>
+
+<p> </p>
+<h4 id="安装jdk（每台都需安装）"><a href="#安装jdk（每台都需安装）" class="headerlink" title="安装jdk（每台都需安装）"></a>安装jdk（每台都需安装）</h4><h5 id="master主服务器执行文件传输到sdw"><a href="#master主服务器执行文件传输到sdw" class="headerlink" title="master主服务器执行文件传输到sdw"></a>master主服务器执行文件传输到sdw</h5><p>[root@mdw96 tools]# scp -r jdk-8u131-linux-x64.rpm <a href="mailto:&#114;&#111;&#111;&#116;&#64;&#49;&#48;&#x2e;&#50;&#x32;&#x37;&#46;&#49;&#x37;&#x2e;&#x39;&#55;">&#114;&#111;&#111;&#116;&#64;&#49;&#48;&#x2e;&#50;&#x32;&#x37;&#46;&#49;&#x37;&#x2e;&#x39;&#55;</a>:/home/tools/ …..(省略)</p>
+<h5 id="查找安装过的java包"><a href="#查找安装过的java包" class="headerlink" title="查找安装过的java包"></a>查找安装过的java包</h5><p>rpm -qa grep java</p>
+<blockquote>
+<p>如果查出来有 运行 rpm -e –nodeps 查出来的包名（将已安装java全部卸载）</p>
+</blockquote>
+<h5 id="安装java-rpm包-每台机器执行"><a href="#安装java-rpm包-每台机器执行" class="headerlink" title="安装java rpm包(每台机器执行)"></a>安装java rpm包(每台机器执行)</h5><p>rpm -ivh jdk-8u131-linux-x64.rpm</p>
+<h5 id="验证是否安装成功"><a href="#验证是否安装成功" class="headerlink" title="验证是否安装成功"></a>验证是否安装成功</h5><p>java -version or which java</p>
+<h4 id="离线安装mysql5-6-31（只在mdw上安装）"><a href="#离线安装mysql5-6-31（只在mdw上安装）" class="headerlink" title="离线安装mysql5_6_31（只在mdw上安装）"></a>离线安装mysql5_6_31（只在mdw上安装）</h4><p> </p>
+<h5 id="解压mysql-tar包"><a href="#解压mysql-tar包" class="headerlink" title="解压mysql tar包"></a>解压mysql tar包</h5><p>[root@mdw96 data]# cd tools/ [root@mdw96 data]# tar -xf MySQL-5.6.31-1.linux_glibc2.5.x86_64.rpm-bundle.tar [root@mdw96 tools]# ls</p>
+<ul>
+<li>  MySQL-devel-5.6.31-1.linux_glibc2.5.x86_64.rpm</li>
+<li>  MySQL-shared-5.6.31-1.linux_glibc2.5.x86_64.rpm</li>
+<li>  MySQL-5.6.31-1.linux_glibc2.5.x86_64.rpm-bundle.tar</li>
+<li>  MySQL-embedded-5.6.31-1.linux_glibc2.5.x86_64.rpm</li>
+<li>  MySQL-shared-compat-5.6.31-1.linux_glibc2.5.x86_64.rpm</li>
+<li>  MySQL-client-5.6.31-1.linux_glibc2.5.x86_64.rpm</li>
+<li>  MySQL-server-5.6.31-1.linux_glibc2.5.x86_64.rpm</li>
+<li>  MySQL-test-5.6.31-1.linux_glibc2.5.x86_64.rpm</li>
+</ul>
+<h5 id="查找已经安装的卸载"><a href="#查找已经安装的卸载" class="headerlink" title="查找已经安装的卸载"></a>查找已经安装的卸载</h5><p>rpm -qa grep <strong>mysql</strong> rpm -qa grep <strong>mariadb</strong></p>
+<blockquote>
+<p>如果查出来有 运行 rpm -e –nodeps 查出来的包名（将已安装mysql全部卸载）</p>
+</blockquote>
+<h5 id="安装mysql-rpm包"><a href="#安装mysql-rpm包" class="headerlink" title="安装mysql rpm包"></a>安装mysql rpm包</h5><p>rpm -ivh MySQL-server-5.6.31-1.linux_glibc2.5.x86_64.rpm</p>
+<h5 id="启动mysql服务"><a href="#启动mysql服务" class="headerlink" title="启动mysql服务"></a>启动mysql服务</h5><p>service mysql start 安装mysql 客户端 rpm -ivh MySQL-client-5.6.31-1.linux_glibc2.5.x86_64.rpm rpm -ivh MySQL-devel-5.6.31-1.linux_glibc2.5.x86_64.rpm rpm -ivh MySQL-embedded-5.6.31-1.linux_glibc2.5.x86_64.rpm rpm -ivh MySQL-shared-5.6.31-1.linux_glibc2.5.x86_64.rpm rpm -ivh MySQL-shared-compat-5.6.31-1.linux_glibc2.5.x86_64.rpm rpm -ivh MySQL-test-5.6.31-1.linux_glibc2.5.x86_64.rpm</p>
+<h5 id="安装完成，记住原始密码"><a href="#安装完成，记住原始密码" class="headerlink" title="安装完成，记住原始密码.."></a>安装完成，记住原始密码..</h5><p>cat /root/.mysql_secret</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># The random password set for the root user at Sat Apr 1 19:37:12 2020 (local time): </span><br><span class="line">Cpb43u6T_D2qmg9M</span><br></pre></td></tr></table></figure>
+
+<h5 id="登录mysql-修改密码并授权"><a href="#登录mysql-修改密码并授权" class="headerlink" title="登录mysql 修改密码并授权"></a>登录mysql 修改密码并授权</h5><p>mysql -u root -p mysql Enter password: Cpb43u6T_D2qmg9M 设置mysql权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SET PASSWORD = PASSWORD(&#x27;Sdcmcc@139.com&#x27;);</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; grant all on *.* to root@&#x27;%&#x27; identified by &#x27;Sdcmcc@139.com&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; grant all on *.* to root@&#x27;127.0.0.1&#x27; identified by &#x27;Sdcmcc@139.com&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; grant all on *.* to root@&#x27;localhost&#x27; identified by &#x27;Sdcmcc@139.com&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; grant all on *.* to root@&#x27;mdw132&#x27; identified by &#x27;Sdcmcc@139.com&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; grant all privileges on *.* to &#x27;root&#x27;@&#x27;mdw132&#x27; identified by &#x27;Sdcmcc@139.com&#x27; with grant option;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; flush privileges;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; quit</span><br><span class="line">Bye</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="测试是否修改成功"><a href="#测试是否修改成功" class="headerlink" title="测试是否修改成功"></a>测试是否修改成功</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@mdw96 tools]# mysql -u root -p</span><br><span class="line">Enter password: Sdcmcc@139.com</span><br><span class="line">mysql&gt; show databases;</span><br><span class="line">-&gt; ;</span><br><span class="line">+--------------------+</span><br><span class="line"> Database </span><br><span class="line">+--------------------+</span><br><span class="line"> information_schema </span><br><span class="line"> mysql </span><br><span class="line"> performance_schema </span><br><span class="line"> test </span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装CDH（只在mdw上安装）"><a href="#安装CDH（只在mdw上安装）" class="headerlink" title="安装CDH（只在mdw上安装）"></a>安装CDH（只在mdw上安装）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@mdw96 opt]# cd /home/tools/CDH-5.16.1-1.cdh5.16.1.p0.3</span><br><span class="line"></span><br><span class="line">[root@mdw96]#cp cloudera-manager-centos7-cm5.16.1_x86_64.tar.gz /opt</span><br><span class="line"></span><br><span class="line">[root@mdw96 tools]# cp mysql-connector-java-5.1.36-bin.jar /opt</span><br><span class="line"></span><br><span class="line">[root@mdw96 tools]# cd /opt</span><br><span class="line"></span><br><span class="line">[root@mdw96 opt]# tar -xf cloudera-manager-centos7-cm5.16.1_x86_64.tar.gz</span><br><span class="line"></span><br><span class="line">[root@mdw96 opt]# ls</span><br><span class="line"></span><br><span class="line">[root@mdw96 opt]# cp mysql-connector-java-5.1.36-bin.jar /opt/cm-5.16.1/share/cmf/lib/ </span><br></pre></td></tr></table></figure>
+
+<h5 id="修改config-ini的server-host值"><a href="#修改config-ini的server-host值" class="headerlink" title="修改config.ini的server_host值"></a>修改config.ini的server_host值</h5><p>注意修改：server_host为实际主机名 <img src="http://qn.199604.com/typoraImg/image-20200608234422115.png" alt="image-20200608234422115"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@mdw96 opt]# cd /home/tools/ </span><br><span class="line"></span><br><span class="line">[root@mdw96 tools]# cd CDH-5.16.1-1.cdh5.16.1.p0.3/</span><br><span class="line"></span><br><span class="line">[root@mdw96 CDH-5.16.1-1.cdh5.16.1.p0.3]# cp CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel /opt/cloudera/parcel-repo/ </span><br><span class="line"></span><br><span class="line">[root@mdw96 CDH-5.16.1-1.cdh5.16.1.p0.3]# cp CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel.sha /opt/cloudera/parcel-repo/ </span><br><span class="line"></span><br><span class="line">[root@mdw96 CDH-5.16.1-1.cdh5.16.1.p0.3]# cp manifest.json /opt/cloudera/parcel-repo/</span><br><span class="line"></span><br><span class="line">[root@mdw96 CDH-5.16.1-1.cdh5.16.1.p0.3]# cd /opt/cloudera/parcel-repo/ </span><br><span class="line"></span><br><span class="line">[root@mdw96 parcel-repo]# ls</span><br><span class="line"></span><br><span class="line">CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel  </span><br><span class="line">CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel.sha  </span><br><span class="line">manifest.json </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>当CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel.sha的后缀是.sha1,需要改成.sha，不然到时候安装CDH还是会去下载文件…这是一个坑</p>
+</blockquote>
+<h5 id="在每台机器执行"><a href="#在每台机器执行" class="headerlink" title="在每台机器执行"></a>在每台机器执行</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd --system --home=/opt/cm-5.16.1/run/cloudera-scm-server/ --no-create-home --shell=/bin/false --comment &quot;Cloudera SCM User&quot; cloudera-scm</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如是重装的CDH，需要到Mysql把cm数据库删除，第一次安装则忽略。</p>
+</blockquote>
+<h5 id="在master上执行"><a href="#在master上执行" class="headerlink" title="在master上执行"></a>在master上执行</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@mdw96 opt]# /opt/cm-5.16.1/share/cmf/schema/scm_prepare_database.sh mysql cm -hlocalhost -uroot -pSdcmcc@139.com --scm-host localhost scm scm scm </span><br></pre></td></tr></table></figure>
+
+<h5 id="复制master机器的-opt-cm-5-16-1-到sdw机器"><a href="#复制master机器的-opt-cm-5-16-1-到sdw机器" class="headerlink" title="复制master机器的 /opt/cm-5.16.1 到sdw机器"></a><strong>复制master机器的 /opt/cm-5.16.1 到sdw机器</strong></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scp -rp /opt/cm-5.16.1 root@sdw97:/opt/</span><br><span class="line">scp -rp /opt/cm-5.16.1 root@sdw98:/opt/</span><br><span class="line">scp -rp /opt/cm-5.16.1 root@sdw99:/opt/</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<h4 id="开启服务前需要进行如下修改-每台机器上执行"><a href="#开启服务前需要进行如下修改-每台机器上执行" class="headerlink" title="开启服务前需要进行如下修改(每台机器上执行)"></a>开启服务前需要进行如下修改(每台机器上执行)</h4><h5 id="将-swappness修改为0，尽量不使用交换分区："><a href="#将-swappness修改为0，尽量不使用交换分区：" class="headerlink" title="将 swappness修改为0，尽量不使用交换分区："></a>将 swappness修改为0，尽量不使用交换分区：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">echo 0 &gt; /proc/sys/vm/swappiness</span><br><span class="line">echo never &gt; /sys/kernel/mm/transparent_hugepage/defrag</span><br><span class="line"></span><br><span class="line">cat &gt;&gt; /etc/sysctl.conf &lt;&lt;END</span><br><span class="line">vm.swappiness=0</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">echo never &gt; /sys/kernel/mm/transparent_hugepage/defrag</span><br><span class="line">cat &gt;&gt; /etc/rc.local &lt;&lt;END</span><br><span class="line">echo never &gt; /sys/kernel/mm/transparent_hugepage/defrag</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+
+<h4 id="开启-停止服务："><a href="#开启-停止服务：" class="headerlink" title="开启/停止服务："></a>开启/停止服务：</h4><h5 id="1-master上开启服务"><a href="#1-master上开启服务" class="headerlink" title="1. master上开启服务"></a>1. master上开启服务</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/opt/cm-5.16.1/etc/init.d/cloudera-scm-server start</span><br><span class="line"></span><br><span class="line">/opt/cm-5.16.1/etc/init.d/cloudera-scm-agent start</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-segment上开启服务"><a href="#2-segment上开启服务" class="headerlink" title="2. segment上开启服务"></a>2. segment上开启服务</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/cm-5.16.1/etc/init.d/cloudera-scm-agent start</span><br></pre></td></tr></table></figure>
+
+<p>同理关闭start–&gt;stop ps拓展：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">停止CDH就是开启的相反步骤</span><br><span class="line">1.先停止Cluster集群服务</span><br><span class="line">2.停止CM服务</span><br><span class="line">3.在各个节点上停止Agent</span><br><span class="line">sudo /opt/cm-5.16.1/etc/init.d/cloudera-scm-agent stop</span><br><span class="line">4.在主节点上停止Server</span><br><span class="line">sudo /opt/cm-5.16.1/etc/init.d/cloudera-scm-server stop</span><br></pre></td></tr></table></figure>
+
+<h4 id="web页面配置"><a href="#web页面配置" class="headerlink" title="web页面配置"></a>web页面配置</h4><p>如下图： master ip:7180/cmf 默认用户名密码：admin/admin 下面图片可能有点混乱因为几个省的服务器图片截图…噗</p>
+<h6 id="打开页面效果图"><a href="#打开页面效果图" class="headerlink" title="打开页面效果图"></a>打开页面效果图</h6><p><img src="http://qn.199604.com/typoraImg/image-20200608235546681.png" alt="image-20200608235546681"></p>
+<h6 id="集群机器效果图"><a href="#集群机器效果图" class="headerlink" title="集群机器效果图"></a>集群机器效果图</h6><p><img src="http://qn.199604.com/typoraImg/image-20200608235701183.png" alt="image-20200608235701183"></p>
+<h6 id="集群开始安装"><a href="#集群开始安装" class="headerlink" title="集群开始安装"></a>集群开始安装</h6><p><img src="http://qn.199604.com/typoraImg/image-20200608235719643.png" alt="image-20200608235719643"></p>
+<h6 id="集群安装中"><a href="#集群安装中" class="headerlink" title="集群安装中"></a>集群安装中</h6><p><img src="http://qn.199604.com/typoraImg/image-20200608235819492.png" alt="image-20200608235819492"> <img src="http://qn.199604.com/typoraImg/image-20200608235833493.png" alt="image-20200608235833493"></p>
+<h6 id="parcel安装完成后反馈"><a href="#parcel安装完成后反馈" class="headerlink" title="parcel安装完成后反馈"></a>parcel安装完成后反馈</h6><p><img src="http://qn.199604.com/typoraImg/image-20200608235900122.png" alt="image-20200608235900122"></p>
+<h6 id="选择自定义安装服务！！！！！"><a href="#选择自定义安装服务！！！！！" class="headerlink" title="选择自定义安装服务！！！！！"></a>选择自定义安装服务！！！！！</h6><p>新的版本没有mapreduce 注意不要选择hive <img src="http://qn.199604.com/typoraImg/image-20200608235941595.png" alt="image-20200608235941595"> 旧版： <img src="http://qn.199604.com/typoraImg/image-20200609000006139.png" alt="image-20200609000006139"> 基本默认—&gt;zookeeper修改为节点服务器,至少再添加2台机器 新： <img src="http://qn.199604.com/typoraImg/image-20200609000036880.png" alt="image-20200609000036880"> <strong>新：</strong> <img src="http://qn.199604.com/typoraImg/image-20200609000100297.png" alt="image-20200609000100297"> 旧： <img src="http://qn.199604.com/typoraImg/image-20200609000107248.png" alt="image-20200609000107248"></p>
+<h6 id="集群设置安装"><a href="#集群设置安装" class="headerlink" title="集群设置安装"></a>集群设置安装</h6><p><img src="http://qn.199604.com/typoraImg/image-20200609000230972.png" alt="image-20200609000230972"> <img src="http://qn.199604.com/typoraImg/image-20200609000236010.png" alt="image-20200609000236010"> <img src="http://qn.199604.com/typoraImg/image-20200609000240213.png" alt="image-20200609000240213"> <img src="http://qn.199604.com/typoraImg/image-20200609000243863.png" alt="image-20200609000243863"> <img src="http://qn.199604.com/typoraImg/image-20200609000248159.png" alt="image-20200609000248159"> <img src="http://qn.199604.com/typoraImg/image-20200609000254430.png" alt="image-20200609000254430"> 基本保持默—&gt;但是zookeepr修改个大点的文件夹,如：/data/zookeepr</p>
+<h6 id="集群初始化"><a href="#集群初始化" class="headerlink" title="集群初始化"></a>集群初始化</h6><p><img src="http://qn.199604.com/typoraImg/image-20200609000326024.png" alt="image-20200609000326024"> <img src="http://qn.199604.com/typoraImg/image-20200609000333156.png" alt="image-20200609000333156"> <img src="http://qn.199604.com/typoraImg/image-20200609000340048.png" alt="image-20200609000340048"> ps:</p>
+<blockquote>
+<p>屏蔽时钟告警 安装完成后，主页面会有红色告警，主要为时钟告警，可需通过web页面登录：master服务器 ip:7180 在主页面上端菜单选择主机 -&gt; 配置 -&gt; 搜索“时钟” -&gt; 修改告警提示为“从不”</p>
+</blockquote>
+<p><img src="http://qn.199604.com/typoraImg/image-20200609000432335.png" alt="image-20200609000432335"></p>
+<h5 id="添加hive服务"><a href="#添加hive服务" class="headerlink" title="添加hive服务"></a>添加hive服务</h5><p>先做一个软连接： ln -s /opt/cm-5.16.1/share/cmf/lib/mysql-connector-java-5.1.36-bin.jar /usr/share/java/mysql-connector-java.jar ps： 如果没有/usr/share/java文件夹，需要mkdir /usr/share/java</p>
+<h6 id="连接mysql数据库执行"><a href="#连接mysql数据库执行" class="headerlink" title="连接mysql数据库执行"></a>连接mysql数据库执行</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@mdw96 tools]# mysql -u root -p</span><br><span class="line"></span><br><span class="line">Enter password: Sdcmcc@139.com</span><br><span class="line">//在mysql创建hive数据库</span><br><span class="line">create database hive;</span><br><span class="line">use hive;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h6 id="装hive"><a href="#装hive" class="headerlink" title="装hive"></a>装hive</h6><p><img src="http://qn.199604.com/typoraImg/image-20200609000701009.png" alt="image-20200609000701009"> <img src="http://qn.199604.com/typoraImg/image-20200609000708323.png" alt="image-20200609000708323"> <img src="http://qn.199604.com/typoraImg/image-20200609000716188.png" alt="image-20200609000716188"> <img src="http://qn.199604.com/typoraImg/image-20200609000724766.png" alt="image-20200609000724766"> <img src="http://qn.199604.com/typoraImg/image-20200609000732728.png" alt="image-20200609000732728"> <img src="http://qn.199604.com/typoraImg/image-20200609000736427.png" alt="image-20200609000736427"> <img src="http://qn.199604.com/typoraImg/image-20200609000741513.png" alt="image-20200609000741513"> 基本默认安装 路径选一个大点的盘(文件夹) 安装成功后连接mysql数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line"></span><br><span class="line">Sdcmcc@139.com</span><br></pre></td></tr></table></figure>
+
+<h6 id="修改hive数据库配置："><a href="#修改hive数据库配置：" class="headerlink" title="修改hive数据库配置："></a>修改hive数据库配置：</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use hive;</span><br><span class="line">alter table SERDE_PARAMS modify column PARAM_VALUE varchar(60000);</span><br><span class="line">desc SERDE_PARAMS;</span><br><span class="line">flush privileges;</span><br><span class="line">show tables;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h6 id="修改mysql配置"><a href="#修改mysql配置" class="headerlink" title="修改mysql配置"></a>修改mysql配置</h6><p>[root@mdw96 java]# vi /usr/my.cnf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># For advice on how to change settings please see</span><br><span class="line"># http://dev.mysql.com/doc/refman/5.6/en/server-configuration-defaults.html</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">//修改的内容</span><br><span class="line">port = 3306</span><br><span class="line">socket = /var/lib/mysql/mysql.sock</span><br><span class="line">character-set-server=utf8</span><br><span class="line">max_connections = 2000</span><br><span class="line">max_connect_errors = 2000</span><br><span class="line"></span><br><span class="line"># Remove leading # and set to the amount of RAM for the most important data</span><br><span class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</span><br><span class="line"># innodb_buffer_pool_size = 128M</span><br><span class="line"></span><br><span class="line"># Remove leading # to turn on a very important data integrity option: logging</span><br><span class="line"># changes to the binary log between backups.</span><br><span class="line"># log_bin</span><br><span class="line"></span><br><span class="line"># These are commonly set, remove the # and set as required.</span><br><span class="line"># basedir = .....</span><br><span class="line"># datadir = .....</span><br><span class="line"># port = .....</span><br><span class="line"># server_id = .....</span><br><span class="line"># socket = .....</span><br><span class="line"></span><br><span class="line"># Remove leading # to set options mainly useful for reporting servers.</span><br><span class="line"># The server defaults are faster for transactions and fast SELECTs.</span><br><span class="line"># Adjust sizes as needed, experiment to find the optimal values.</span><br><span class="line"># join_buffer_size = 128M</span><br><span class="line"># sort_buffer_size = 2M</span><br><span class="line"># read_rnd_buffer_size = 2M</span><br><span class="line"></span><br><span class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h6 id="保存文件-重启mysql"><a href="#保存文件-重启mysql" class="headerlink" title="保存文件 重启mysql"></a>保存文件 重启mysql</h6><p>systemctl restart mysql</p>
+<h6 id="最后一步："><a href="#最后一步：" class="headerlink" title="最后一步："></a><strong>最后一步：</strong></h6><p>切换到GP主服务器—mdw96： # 切换到gpadmin用户 su gpadmin #执行：（标黄请注意，如第一个标黄表示CDH是5.X的cdh5,6.X则是cdh6,同理第二个标黄也是版本号） gpconfig -c gp_hadoop_target_version -v “cdh5” gpconfig -c gp_hadoop_home -v “‘/opt/cloudera/parcels/CDH-5.16.1-1.cdh5.16.1.p0.3 /lib/hadoop/client’”</p>
+<h6 id="最最最后就是性能测试"><a href="#最最最后就是性能测试" class="headerlink" title="最最最后就是性能测试"></a>最最最后就是性能测试</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">hive</span><br><span class="line">create table date_test1(id int,name string);</span><br><span class="line">insert into date_test1 values(1,&#x27;wjian&#x27;);</span><br><span class="line"></span><br><span class="line">hdfs dfs -ls hdfs://10.214.138.132:8020/user/hive/warehouse/date_test1/</span><br><span class="line"></span><br><span class="line">drop EXTERNAL table hdfs_test;</span><br><span class="line">create EXTERNAL table hdfs_test(id int,name varchar(32))</span><br><span class="line">location (&#x27;gphdfs://10.214.138.132:8020/user/hive/warehouse/date_test1/*&#x27;)</span><br><span class="line">format &#x27;TEXT&#x27; (DELIMITER &#x27;\001&#x27;)</span><br><span class="line">;</span><br><span class="line"></span><br><span class="line">select * from hdfs_test</span><br><span class="line"></span><br><span class="line">hdfs dfs -ls hdfs://10.227.17.96:8020/data1/hive/warehouse/date_test1/</span><br><span class="line">hdfs dfs -ls hdfs:// 10.227.17.96:8020/data1/hive/warehouse/pm_lte_eutrancellfdd_hour_inner/</span><br><span class="line"></span><br><span class="line">drop EXTERNAL table hdfs_test;</span><br><span class="line">create EXTERNAL table hdfs_test(id int,name varchar(32))</span><br><span class="line">location (&#x27;gphdfs://10.227.17.96:8020/data1/hive/warehouse/date_test1/*&#x27;)</span><br><span class="line">format &#x27;TEXT&#x27; (DELIMITER &#x27;\001&#x27;)</span><br><span class="line">;</span><br><span class="line"></span><br><span class="line">select * from hdfs_test</span><br><span class="line"></span><br><span class="line">hdfs dfs -ls hdfs://10.224.230.171:8020/home/hive/warehouse/date_test1/</span><br><span class="line"></span><br><span class="line">drop EXTERNAL table hdfs_test;</span><br><span class="line">create EXTERNAL table hdfs_test(id int,name varchar(32))</span><br><span class="line">location (&#x27;gphdfs://10.224.230.171:8020/home/hive/warehouse/date_test1/*&#x27;)</span><br><span class="line">format &#x27;TEXT&#x27; (DELIMITER &#x27;\001&#x27;);</span><br><span class="line"></span><br><span class="line">select * from hdfs_test</span><br></pre></td></tr></table></figure>
+
+<h4 id="遇到问题："><a href="#遇到问题：" class="headerlink" title="遇到问题："></a>遇到问题：</h4><h5 id="1-HDFS-dfs-permissions-去掉对勾，不然需要验证权限才能进行插入…"><a href="#1-HDFS-dfs-permissions-去掉对勾，不然需要验证权限才能进行插入…" class="headerlink" title="1.HDFS dfs.permissions 去掉对勾，不然需要验证权限才能进行插入…"></a>1.HDFS dfs.permissions 去掉对勾，不然需要验证权限才能进行插入…</h5><p><img src="http://qn.199604.com/typoraImg/image-20200609001249552.png" alt="image-20200609001249552"></p>
+<h5 id="2-如果是旧机器需要看看是否已经安装了cloudera和CDH"><a href="#2-如果是旧机器需要看看是否已经安装了cloudera和CDH" class="headerlink" title="2.如果是旧机器需要看看是否已经安装了cloudera和CDH"></a><strong>2.如果是旧机器需要看看是否已经安装了cloudera和CDH</strong></h5><p><strong><a target="_blank" rel="noopener" href="https://blog.csdn.net/wulantian/article/details/42706777/">https://blog.csdn.net/wulantian/article/details/42706777/</a></strong> 这是CDH5的卸载步骤</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">删除：</span><br><span class="line">卸载挂载：</span><br><span class="line">umount /opt/cm-5.16.1/run/cloudera-scm-agent/process</span><br><span class="line"></span><br><span class="line">#执行查找一下cloudera文件</span><br><span class="line">find / -name cloudera*</span><br><span class="line"></span><br><span class="line">#查看 /var/lib文件夹遗留的文件</span><br><span class="line"># cd /var/lib</span><br><span class="line">rm -rf cloudera*</span><br><span class="line">rm -rf hadoop*</span><br><span class="line">rm -rf hbase</span><br><span class="line">rm -rf hive</span><br><span class="line">rm -rf zookeeper</span><br><span class="line">rm -rf solr</span><br><span class="line">rm -rf oozie</span><br><span class="line">rm -rf sqoop*</span><br><span class="line"></span><br><span class="line">#查看 /var/run文件夹遗留的文件</span><br><span class="line">cd /var/run  </span><br><span class="line">rm -rf cloudera*</span><br><span class="line">rm -rf hadoop*</span><br><span class="line">rm -rf hdfs*</span><br><span class="line">rm -rf hive</span><br><span class="line">rm -rf hadoop*</span><br><span class="line"></span><br><span class="line">#查看 /opt文件夹遗留的文件</span><br><span class="line">cd /opt/</span><br><span class="line">rm -rf clouder* </span><br><span class="line"></span><br><span class="line">#查看 /var/log文件夹遗留的文件</span><br><span class="line">cd /var/log</span><br><span class="line">rm -rf hadoop* </span><br><span class="line">rm -rf zookeeper* </span><br><span class="line">rm -rf hbase* </span><br><span class="line">rm -rf hive* </span><br><span class="line">rm -rf hdfs </span><br><span class="line">rm -rf mapred </span><br><span class="line">rm -rf yarn </span><br><span class="line">rm -rf sqoop* </span><br><span class="line">rm -rf oozie</span><br><span class="line"></span><br><span class="line">#查看 /etc文件夹遗留的文件</span><br><span class="line">cd /etc/</span><br><span class="line">rm -rf hadoop* </span><br><span class="line">rm -rf zookeeper* </span><br><span class="line">rm -rf hive* </span><br><span class="line">rm -rf hue </span><br><span class="line">rm -rf impala </span><br><span class="line">rm -rf sqoop* </span><br><span class="line">rm -rf oozie </span><br><span class="line">rm -rf hbase* </span><br><span class="line">rm -rf hcatalog</span><br><span class="line"></span><br><span class="line">#查看 /usr/bin文件夹遗留的文件</span><br><span class="line">cd /usr/bin/</span><br><span class="line">rm -rf hadoop* </span><br><span class="line">rm -rf zookeeper* </span><br><span class="line">rm -rf hbase* </span><br><span class="line">rm -rf hive* </span><br><span class="line">rm -rf hdfs </span><br><span class="line">rm -rf mapred </span><br><span class="line">rm -rf yarn </span><br><span class="line">rm -rf sqoop* </span><br><span class="line">rm -rf oozie </span><br><span class="line"></span><br><span class="line">#查找是否存在遗留未删除的</span><br><span class="line">find / -name hadoop*</span><br><span class="line">默认知打开程序的信息和配置 : </span><br><span class="line">/etc/alternatives</span><br><span class="line">rm -rf hadoop* </span><br><span class="line">rm -rf zookeeper* </span><br><span class="line">rm -rf hbase* </span><br><span class="line">rm -rf hive* </span><br><span class="line">rm -rf hdfs </span><br><span class="line">rm -rf mapred </span><br><span class="line">rm -rf yarn </span><br><span class="line">rm -rf sqoop* </span><br><span class="line">rm -rf oozie </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/var/lib/alternatives</span><br><span class="line">rm -rf hadoop* </span><br><span class="line">rm -rf zookeeper* </span><br><span class="line">rm -rf hbase* </span><br><span class="line">rm -rf hive* </span><br><span class="line">rm -rf hdfs </span><br><span class="line">rm -rf mapred </span><br><span class="line">rm -rf yarn </span><br><span class="line">rm -rf sqoop* </span><br><span class="line">rm -rf oozi</span><br><span class="line"></span><br><span class="line">find / -name hadoop*</span><br><span class="line"></span><br><span class="line">删除账号</span><br><span class="line">userdel -r cloudera-scm</span><br><span class="line"></span><br><span class="line">进入mysql数据库 删除cm数据库</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-ProtocolError-lt-ProtocolError-for-127-0-0-1-RPC2-401-Unauthor"><a href="#3-ProtocolError-lt-ProtocolError-for-127-0-0-1-RPC2-401-Unauthor" class="headerlink" title="3.ProtocolError: &lt;ProtocolError for 127.0.0.1/RPC2: 401 Unauthor."></a>3.ProtocolError: &lt;ProtocolError for 127.0.0.1/RPC2: 401 Unauthor.</h5><p>安装cloudera-manager-agent报错 查看/var/log/cloudera-scm-agent.log</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">报错</span><br><span class="line"></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File &quot;/usr/lib64/cmf/agent/build/env/lib/python2.7/site-packages/cmf-5.16.1-py2.7.egg/cmf/agent.py&quot;, line 2270, in connect_to_new_superviso</span><br><span class="line">self.get_supervisor_process_info()</span><br><span class="line">File &quot;/usr/lib64/cmf/agent/build/env/lib/python2.7/site-packages/cmf-5.16.1-py2.7.egg/cmf/agent.py&quot;, line 2290, in get_supervisor_process_i</span><br><span class="line">self.identifier = self.supervisor_client.supervisor.getIdentification()</span><br><span class="line">File &quot;/usr/lib64/python2.7/xmlrpclib.py&quot;, line 1233, in __call__</span><br><span class="line">return self.__send(self.__name, args)</span><br><span class="line">File &quot;/usr/lib64/python2.7/xmlrpclib.py&quot;, line 1587, in __request</span><br><span class="line">verbose=self.__verbose</span><br><span class="line">File &quot;/usr/lib64/cmf/agent/build/env/lib/python2.7/site-packages/supervisor-3.0-py2.7.egg/supervisor/xmlrpc.py&quot;, line 470, in request</span><br><span class="line">&#x27;&#x27; )</span><br><span class="line">ProtocolError: &lt;ProtocolError for 127.0.0.1/RPC2: 401 Unauthorized&gt;</span><br><span class="line">[01/Dec/2018 20:23:29 +0000] 30267 MainThread agent ERROR Failed to connect to newly launched supervisor. Agent will exit</span><br><span class="line">[01/Dec/2018 20:23:29 +0000] 30267 MainThread agent INFO Stopping agent...</span><br><span class="line">[01/Dec/2018 20:23:29 +0000] 30267 MainThread agent INFO No extant cgroups; unmounting any cgroup roots</span><br><span class="line">[01/Dec/2018 20:23:29 +0000] 30267 Dummy-1 daemonize WARNING Stopping daemon.</span><br></pre></td></tr></table></figure>
+
+<p>解决办法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@dip001 ~]# ps -ef  grep supervisord</span><br><span class="line">root 24491 1 0 11月30 ? 00:00:34 /usr/lib64/cmf/agent/build/env/bin/python /usr/lib64/cmf/agent/build/env/bin/supervisord</span><br><span class="line">root 30335 30312 0 20:27 pts/0 00:00:00 grep --color=auto supervisord</span><br><span class="line"></span><br><span class="line">[root@dip001 ~]# kill -9 24491</span><br><span class="line">[root@dip001 ~]# ps -ef  grep supervisord</span><br><span class="line">root 30338 30312 0 20:27 pts/0 00:00:00 grep --color=auto supervisord</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-Cloudera-Manager集群报警，堆转储目录-tmp-或日志目录-var-log-可用空间小于-5-0-吉字节"><a href="#4-Cloudera-Manager集群报警，堆转储目录-tmp-或日志目录-var-log-可用空间小于-5-0-吉字节" class="headerlink" title="4.Cloudera Manager集群报警，堆转储目录/tmp 或日志目录/var/log 可用空间小于 5.0 吉字节"></a>4.Cloudera Manager集群报警，堆转储目录/tmp 或日志目录/var/log 可用空间小于 5.0 吉字节</h5><p>在Cloudera Manager上收到报警信息如下： <img src="http://qn.199604.com/typoraImg/2018031217272740.png" alt="img"> 解决办法 1.检查目标主机的磁盘使用情况 登陆到目标主机后，切换路径到根目录，运行 df -h 得知是日志盘文件盘过小，更改选择比较大一些的文件挂载 修改集群中hive、yarn、spark的配置，搜索包含/var、/tmp或/yarn的配置项，以下以Hive为例： <img src="http://qn.199604.com/typoraImg/20180312174849108.png" alt="img"> 在上述路径前添加/home（因为/home所在的磁盘空间较大） <img src="http://qn.199604.com/typoraImg/20180312174946224.png" alt="img"> 保存配置重启集群即可。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1583/" title="GP&amp;CDH安装部署系列-CDH安装">http://erbi.me/1583/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/CDH/" rel="tag"># CDH</a>
+              <a href="/tags/GP/" rel="tag"># GP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1581/" rel="prev" title="centOs7.X安装cmake">
+                  <i class="fa fa-chevron-left"></i> centOs7.X安装cmake
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1585/" rel="next" title="CentOS7（64）环境使用rpm命令安装gcc">
+                  CentOS7（64）环境使用rpm命令安装gcc <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

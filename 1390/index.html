@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="在安装前需提前确认是否已经安装了vsftpd 命令如下：rpm -qagrep vsftpd 另外，默认的配置文件路径为： &#x2F;etc&#x2F;vsftpd&#x2F;vsftpd.conf 安装命令:yum install -y vsftpd 开启 重启 关闭 查看服务状态命令：systemctl start vsftpdsystemctl restart vsftpdsystemctl stop vsftpdsy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7 安装ftp服务">
+<meta property="og:url" content="http://erbi.me/1390/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="在安装前需提前确认是否已经安装了vsftpd 命令如下：rpm -qagrep vsftpd 另外，默认的配置文件路径为： &#x2F;etc&#x2F;vsftpd&#x2F;vsftpd.conf 安装命令:yum install -y vsftpd 开启 重启 关闭 查看服务状态命令：systemctl start vsftpdsystemctl restart vsftpdsystemctl stop vsftpdsy">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://199604.com/wp-content/uploads/2020/04/zhifubao.png">
+<meta property="og:image" content="http://199604.com/wp-content/uploads/2020/04/weixin.png">
+<meta property="article:published_time" content="2020-03-25T01:41:23.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:14.962Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="centos7">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://199604.com/wp-content/uploads/2020/04/zhifubao.png">
+
+
+<link rel="canonical" href="http://erbi.me/1390/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1390&#x2F;&quot;,&quot;path&quot;:&quot;1390&#x2F;&quot;,&quot;title&quot;:&quot;centos7 安装ftp服务&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>centos7 安装ftp服务 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%A8%E5%AE%89%E8%A3%85%E5%89%8D%E9%9C%80%E6%8F%90%E5%89%8D%E7%A1%AE%E8%AE%A4%E6%98%AF%E5%90%A6%E5%B7%B2%E7%BB%8F%E5%AE%89%E8%A3%85%E4%BA%86vsftpd-%E5%91%BD%E4%BB%A4%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">在安装前需提前确认是否已经安装了vsftpd 命令如下：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">安装命令:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%80%E5%90%AF-%E9%87%8D%E5%90%AF-%E5%85%B3%E9%97%AD-%E6%9F%A5%E7%9C%8B%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">开启 重启 关闭 查看服务状态命令：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%80%E5%90%AF-%E9%87%8D%E5%90%AF-%E5%85%B3%E9%97%AD-%E9%98%B2%E7%81%AB%E5%A2%99%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">开启 重启 关闭 防火墙命令：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%AB%AF%E5%8F%A3%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">配置端口：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E9%98%B2%E7%81%AB%E5%A2%99%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">重启防火墙：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E8%BE%91ftp%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">编辑ftp配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">8.</span> <span class="nav-text">重启服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-number">9.</span> <span class="nav-text">设置开机自启</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BDftp%E6%9C%8D%E5%8A%A1"><span class="nav-number">10.</span> <span class="nav-text">卸载ftp服务</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1390/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          centos7 安装ftp服务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-03-25 09:41:23" itemprop="dateCreated datePublished" datetime="2020-03-25T09:41:23+08:00">2020-03-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:14" itemprop="dateModified" datetime="2021-06-10T09:36:14+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h5 id="在安装前需提前确认是否已经安装了vsftpd-命令如下："><a href="#在安装前需提前确认是否已经安装了vsftpd-命令如下：" class="headerlink" title="在安装前需提前确认是否已经安装了vsftpd 命令如下："></a>在安装前需提前确认是否已经安装了vsftpd 命令如下：</h5><p>rpm -qagrep vsftpd</p>
+<p>另外，默认的配置文件路径为： /etc/vsftpd/vsftpd.conf</p>
+<h5 id="安装命令"><a href="#安装命令" class="headerlink" title="安装命令:"></a>安装命令:</h5><p>yum install -y vsftpd</p>
+<h5 id="开启-重启-关闭-查看服务状态命令："><a href="#开启-重启-关闭-查看服务状态命令：" class="headerlink" title="开启 重启 关闭 查看服务状态命令："></a>开启 重启 关闭 查看服务状态命令：</h5><p>systemctl start vsftpd<br>systemctl restart vsftpd<br>systemctl stop vsftpd<br>systemctl status vsftpd.service</p>
+<blockquote>
+<p>这里建议先用客户端匿名访问下FTP，是否已经安装成功。因为这里服务可能存在防火墙，需要开放21端口</p>
+</blockquote>
+<h5 id="开启-重启-关闭-防火墙命令："><a href="#开启-重启-关闭-防火墙命令：" class="headerlink" title="开启 重启 关闭 防火墙命令："></a>开启 重启 关闭 防火墙命令：</h5><h5 id="配置端口："><a href="#配置端口：" class="headerlink" title="配置端口："></a>配置端口：</h5><p>centos7中的防火墙改成了firewall</p>
+<p>使用iptables(iptables -I INPUT 1 -p tcp –dport 21 -j ACCEPT)无作用了</p>
+<p>正确开放端口的方法如下：</p>
+<p>firewall 的设置方式：<br>firewall-cmd –zone=public –add-service=ftp –permanent<br>firewall-cmd –zone=public –add-port=21/tcp –permanent</p>
+<p>返回success为成功<br>命令含义：<br>–zone #作用域<br>–add-port=21/tcp #添加端口，格式为：端口/通讯协议<br>–permanent #永久生效</p>
+<p>如果是centos6则使用：</p>
+<p>IPtables 的设置方式：<br>vi /etc/sysconfig/iptables<br>#编辑iptables文件，添加如下内容，开启21端口<br>-A INPUT -m state –state NEW -m tcp -p tcp –dport 21 -j ACCEPT</p>
+<h5 id="重启防火墙："><a href="#重启防火墙：" class="headerlink" title="重启防火墙："></a>重启防火墙：</h5><p>systemctl restart firewalld.service</p>
+<h5 id="编辑ftp配置文件"><a href="#编辑ftp配置文件" class="headerlink" title="编辑ftp配置文件"></a>编辑ftp配置文件</h5><p>vi /etc/vsftpd/vsftpd.conf</p>
+<p>修改这些：</p>
+<p>anonymous_enable=NO<br>#关闭匿名登录<br>allow_writeable_chroot=YES<br>#加上这行解决了无法登陆的问题</p>
+<h5 id="重启服务"><a href="#重启服务" class="headerlink" title="重启服务"></a>重启服务</h5><p>systemctl restart vsftpd.service</p>
+<h5 id="设置开机自启"><a href="#设置开机自启" class="headerlink" title="设置开机自启"></a>设置开机自启</h5><p>systemctl enable vsftpd.service</p>
+<p>ps : 可选是否（开启PASV（被动模式））使用开启内部发送端口，如选需要配置：</p>
+<p>firewall-cmd –zone=public –add-port=30000-30999/tcp –permanent</p>
+<p>配置端口号 vi /etc/vsftpd/vsftpd.conf:</p>
+<p>在最后追加<br>pasv_enable=YES<br>pasv_min_port=30000<br>pasv_max_port=30999</p>
+<p>重启所有服务</p>
+<h5 id="卸载ftp服务"><a href="#卸载ftp服务" class="headerlink" title="卸载ftp服务"></a>卸载ftp服务</h5><p>yum remove vsftpd</p>
+<hr>
+<p><img src="http://199604.com/wp-content/uploads/2020/04/zhifubao.png"> <img src="http://199604.com/wp-content/uploads/2020/04/weixin.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1390/" title="centos7 安装ftp服务">http://erbi.me/1390/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/centos7/" rel="tag"># centos7</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1388/" rel="prev" title="Vue.js中watch、computed、和methods三者区别~">
+                  <i class="fa fa-chevron-left"></i> Vue.js中watch、computed、和methods三者区别~
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1394/" rel="next" title="Linux下几种文件传输命令sftp scp sz rz">
+                  Linux下几种文件传输命令sftp scp sz rz <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

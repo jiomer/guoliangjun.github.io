@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1.由于最小化安装，所有机器执行1yum install ed openssh-clients zip unzip perl bind-utils net-tools -y  2.所有服务器关闭防火墙12345678910#contos7:systemctl stop firewalldsystemctl disable firewalldfirewall-cmd --state#contos7以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GP&amp;CDH安装部署系列-GP安装">
+<meta property="og:url" content="http://erbi.me/1570/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="1.由于最小化安装，所有机器执行1yum install ed openssh-clients zip unzip perl bind-utils net-tools -y  2.所有服务器关闭防火墙12345678910#contos7:systemctl stop firewalldsystemctl disable firewalldfirewall-cmd --state#contos7以">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/1589649935734.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/1589649310541.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/1589650075800.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/1589652280536.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/1589650647329.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/1589649544626.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200517181844088.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200517181808343.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200517181939966.png">
+<meta property="article:published_time" content="2020-05-17T10:29:13.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:15.037Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="CDH">
+<meta property="article:tag" content="GP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/typoraImg/1589649935734.png">
+
+
+<link rel="canonical" href="http://erbi.me/1570/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1570&#x2F;&quot;,&quot;path&quot;:&quot;1570&#x2F;&quot;,&quot;title&quot;:&quot;GP&amp;CDH安装部署系列-GP安装&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>GP&CDH安装部署系列-GP安装 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%94%B1%E4%BA%8E%E6%9C%80%E5%B0%8F%E5%8C%96%E5%AE%89%E8%A3%85%EF%BC%8C%E6%89%80%E6%9C%89%E6%9C%BA%E5%99%A8%E6%89%A7%E8%A1%8C"><span class="nav-number">1.</span> <span class="nav-text">1.由于最小化安装，所有机器执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%89%80%E6%9C%89%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">2.</span> <span class="nav-text">2.所有服务器关闭防火墙</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%A3%80%E6%9F%A5%E6%97%B6%E9%97%B4%E6%98%AF%E5%90%A6%E4%B8%BA%E5%8C%97%E4%BA%AC%E6%97%B6%E9%97%B4%EF%BC%8C%E5%A6%82%E5%B7%B2%E7%BB%8F%E6%93%8D%E4%BD%9C%E7%AC%AC%E4%B8%80%E6%AD%A5%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E5%90%8E%EF%BC%8C%E6%AD%A4%E6%AD%A5%E5%8F%AF%E7%9C%81%E7%95%A5"><span class="nav-number">3.</span> <span class="nav-text">3.检查时间是否为北京时间，如已经操作第一步时间同步后，此步可省略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%89%80%E6%9C%89%E6%9C%BA%E5%99%A8%E6%89%A7%E8%A1%8C%E6%8C%82%E8%BD%BD"><span class="nav-number">4.</span> <span class="nav-text">4.所有机器执行挂载</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A44%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.1.</span> <span class="nav-text">步骤4遇到的问题:</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E4%BF%AE%E6%94%B9%E6%89%80%E6%9C%89%E6%9C%BA%E5%99%A8%E5%90%8D%E7%A7%B0"><span class="nav-number">5.</span> <span class="nav-text">5.修改所有机器名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E4%BF%AE%E6%94%B9%E6%89%80%E6%9C%89%E6%9C%BA%E5%99%A8hosts"><span class="nav-number">6.</span> <span class="nav-text">6.修改所有机器hosts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E5%A4%9A%E6%9C%BA%E4%BF%A1%E4%BB%BB-%E5%85%8D%E7%99%BB%E9%99%86-%E6%89%80%E6%9C%89%E6%9C%BA%E5%99%A8%E9%83%BD%E9%9C%80%E8%A6%81%E6%89%A7%E8%A1%8C"><span class="nav-number">7.</span> <span class="nav-text">7.多机信任(免登陆),所有机器都需要执行</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E9%A6%96%E5%85%88%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E5%9D%87%E6%89%A7%E8%A1%8C%E5%A6%82%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%81%87%E5%88%B0%E6%8F%90%E7%A4%BA%E4%B8%80%E8%B7%AF%E5%9B%9E%E8%BD%A6%E5%8D%B3%E5%8F%AF%EF%BC%9A"><span class="nav-number">7.1.</span> <span class="nav-text">1.首先所有节点均执行如下命令，遇到提示一路回车即可：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%9C%A8%E4%B8%BB%E8%8A%82%E7%82%B9%E6%89%A7%E8%A1%8C%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-number">7.2.</span> <span class="nav-text">2.在主节点执行以下命令：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-scp%E6%96%87%E4%BB%B6%E5%88%B0%E6%89%80%E6%9C%89datenode%E8%8A%82%E7%82%B9%EF%BC%9A"><span class="nav-number">7.3.</span> <span class="nav-text">3.scp文件到所有datenode节点：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-GP%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2%EF%BC%9A"><span class="nav-number">8.</span> <span class="nav-text">8.GP数据库安装部署：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#8-1-%E4%BF%AE%E6%94%B9%E6%89%80%E6%9C%89%E6%9C%BA%E5%99%A8%E7%9A%84hosts-%E5%A6%82%E6%9E%9C%E6%AD%A5%E9%AA%A46%E5%B7%B2%E5%81%9A%E6%A3%80%E6%9F%A5%E4%B8%80%E9%81%8D"><span class="nav-number">8.1.</span> <span class="nav-text">8.1:修改所有机器的hosts(如果步骤6已做检查一遍)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-2-%E5%AE%89%E8%A3%85greenplum%E2%80%93%E4%B8%BB%E8%8A%82%E7%82%B9%E6%89%A7%E8%A1%8C%EF%BC%88mdw132%E4%B8%8A%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="nav-number">8.2.</span> <span class="nav-text">8.2:安装greenplum–主节点执行（mdw132上执行）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-3-%E9%85%8D%E7%BD%AE%E5%85%A8%E9%83%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%88%97%E8%A1%A8%EF%BC%88mdw132%E4%B8%8A%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="nav-number">8.3.</span> <span class="nav-text">8.3:配置全部服务器列表（mdw132上执行）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-4-%E4%BA%A4%E6%8D%A2%E5%AF%86%E9%92%A5"><span class="nav-number">8.4.</span> <span class="nav-text">8.4:交换密钥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-5%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%B3%BB%E7%BB%9F%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%EF%BC%88mdw132%E4%B8%8A%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="nav-number">8.5.</span> <span class="nav-text">8.5：服务器系统参数配置（mdw132上执行）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE1"><span class="nav-number">8.5.1.</span> <span class="nav-text">#配置1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE2"><span class="nav-number">8.5.2.</span> <span class="nav-text">#配置2</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE3"><span class="nav-number">8.5.3.</span> <span class="nav-text">#配置3</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE4%EF%BC%88Centos6-5%E6%B2%A1%E6%9C%89%E8%AF%A5%E6%96%87%E4%BB%B6%EF%BC%8C%E7%95%A5%E8%BF%87%EF%BC%89"><span class="nav-number">8.5.4.</span> <span class="nav-text">#配置4（Centos6.5没有该文件，略过）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE5"><span class="nav-number">8.5.5.</span> <span class="nav-text">#配置5</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE6"><span class="nav-number">8.5.6.</span> <span class="nav-text">#配置6</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-7"><span class="nav-number">8.5.7.</span> <span class="nav-text">#配置 7</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-6-%E5%B0%86mdw132-%E4%B8%BB%E6%9C%8D%E5%8A%A1%E5%99%A8-%E9%85%8D%E7%BD%AE%E8%A6%86%E7%9B%96%E5%85%B6%E5%AE%83%E8%8A%82%E7%82%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%EF%BC%9A"><span class="nav-number">8.6.</span> <span class="nav-text">8.6.将mdw132(主服务器)配置覆盖其它节点服务器脚本：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-7-%E6%A3%80%E6%9F%A5%E9%85%8D%E7%BD%AE%E7%BB%93%E6%9E%9C"><span class="nav-number">8.7.</span> <span class="nav-text">8.7.检查配置结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-8-%E5%AE%89%E8%A3%85GP%E6%95%B0%E6%8D%AE%E5%BA%93-mdw132%E4%B8%8A%E6%89%A7%E8%A1%8C"><span class="nav-number">8.8.</span> <span class="nav-text">8.8.安装GP数据库(mdw132上执行)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%8C%BA%EF%BC%8C%E4%BB%A5%E4%B8%8B%E6%AD%A5%E9%AA%A4root%E7%94%A8%E6%88%B7%E5%9C%A8mdw132%E6%89%A7%E8%A1%8C%EF%BC%8C%E5%9C%A8%E6%89%80%E6%9C%89%E8%8A%82%E7%82%B9%E4%B8%8A%E5%AE%89%E8%A3%85GP%EF%BC%9A"><span class="nav-number">8.8.1.</span> <span class="nav-text">#1.创建数据存储区，以下步骤root用户在mdw132执行，在所有节点上安装GP：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-master%E5%AD%98%E5%82%A8%E5%88%9B%E5%BB%BA%EF%BC%9A"><span class="nav-number">8.8.2.</span> <span class="nav-text">#2.master存储创建：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-second-master%E5%AD%98%E5%82%A8%EF%BC%88%E6%9C%AC%E6%AC%A1%E6%B2%A1%E5%A4%87%E7%94%A8%E7%AE%A1%E7%90%86smdw%E6%9C%8D%E5%8A%A1%E5%99%A8-%E8%AF%B7%E5%BF%BD%E7%95%A5%E6%AD%A4%E6%AD%A5%E9%AA%A4%EF%BC%89"><span class="nav-number">8.8.3.</span> <span class="nav-text">#3.second master存储（本次没备用管理smdw服务器,请忽略此步骤）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-segment%E5%AD%98%E5%82%A8"><span class="nav-number">8.8.4.</span> <span class="nav-text">#4.segment存储</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-9-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">8.9.</span> <span class="nav-text">8.9.配置环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8B%E6%AD%A5%E9%AA%A4gpadmin%E7%94%A8%E6%88%B7%E5%9C%A8mdw132%E6%89%A7%E8%A1%8C"><span class="nav-number">8.9.1.</span> <span class="nav-text">#以下步骤gpadmin用户在mdw132执行.</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEgpadmin%E5%8F%98%E9%87%8F"><span class="nav-number">8.9.2.</span> <span class="nav-text">#配置gpadmin变量</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-10-%E5%88%9D%E5%A7%8B%E5%8C%96GP%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mdw132%E4%B8%8A%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="nav-number">8.10.</span> <span class="nav-text">8.10.初始化GP数据库（mdw132上执行）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">8.10.1.</span> <span class="nav-text">#创建目录</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%9E%E4%BE%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E7%BD%91%E5%8D%A1"><span class="nav-number">8.10.2.</span> <span class="nav-text">#配置实例对应的网卡</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%9E%E4%BE%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E7%A3%81%E7%9B%98%E7%AD%89"><span class="nav-number">8.10.3.</span> <span class="nav-text">#配置实例对应的磁盘等</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">8.10.4.</span> <span class="nav-text">#执行初始化</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-11-%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE%E8%AE%BE%E7%BD%AE%EF%BC%88mdw132%E4%B8%8A%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="nav-number">8.11.</span> <span class="nav-text">8.11.远程访问设置（mdw132上执行）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-12-%E9%85%8D%E7%BD%AEGP%E6%95%B0%E6%8D%AE%E5%BA%93%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81%EF%BC%88mdw132%E4%B8%8A%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="nav-number">8.12.</span> <span class="nav-text">8.12.配置GP数据库登录密码（mdw132上执行）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-13-GP%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%EF%BC%88mdw132%E4%B8%8A%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="nav-number">8.13.</span> <span class="nav-text">8.13.GP数据库参数配置（mdw132上执行）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-14-%E9%87%8D%E5%90%AFGP%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mdw132%E4%B8%8A%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="nav-number">8.14.</span> <span class="nav-text">8.14.重启GP数据库（mdw132上执行）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-15-%E6%80%A7%E8%83%BD%E9%AA%8C%E8%AF%81%EF%BC%88%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F%E5%90%8E%E6%B5%8B%E8%AF%95%EF%BC%8Cmdw132%E4%B8%8A%E6%89%A7%E8%A1%8C%EF%BC%89"><span class="nav-number">8.15.</span> <span class="nav-text">8.15.性能验证（数据库安装成功后测试，mdw132上执行）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%BD%91%E5%8D%A1%E6%80%A7%E8%83%BD%E9%AA%8C%E8%AF%81%EF%BC%8C%E7%BD%91%E5%8D%A1-%E7%AE%A1%E7%90%86%E5%8F%A3"><span class="nav-number">8.15.1.</span> <span class="nav-text">#网卡性能验证，网卡-管理口</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E6%80%A7%E8%83%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">8.15.2.</span> <span class="nav-text">#磁盘性能验证</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1570/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GP&CDH安装部署系列-GP安装
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-05-17 18:29:13" itemprop="dateCreated datePublished" datetime="2020-05-17T18:29:13+08:00">2020-05-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:15" itemprop="dateModified" datetime="2021-06-10T09:36:15+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/gp%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85/" itemprop="url" rel="index"><span itemprop="name">gp数据库集群安装</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="1-由于最小化安装，所有机器执行"><a href="#1-由于最小化安装，所有机器执行" class="headerlink" title="1.由于最小化安装，所有机器执行"></a>1.由于最小化安装，所有机器执行</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install ed openssh-clients zip unzip perl bind-utils net-tools -y</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-所有服务器关闭防火墙"><a href="#2-所有服务器关闭防火墙" class="headerlink" title="2.所有服务器关闭防火墙"></a>2.所有服务器关闭防火墙</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#contos7:</span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line">firewall-cmd --state</span><br><span class="line"></span><br><span class="line">#contos7以下:</span><br><span class="line">service iptables stop</span><br><span class="line">service iptables status</span><br><span class="line">chkconfig iptables off(永久性生效，重启后不会复原)</span><br><span class="line">#service iptables stop(即时生效，重启后复原)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-检查时间是否为北京时间，如已经操作第一步时间同步后，此步可省略"><a href="#3-检查时间是否为北京时间，如已经操作第一步时间同步后，此步可省略" class="headerlink" title="3.检查时间是否为北京时间，如已经操作第一步时间同步后，此步可省略"></a>3.检查时间是否为北京时间，如已经操作第一步时间同步后，此步可省略</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#检查ntp主机时间是否为当前北京时间</span><br><span class="line">date</span><br><span class="line"></span><br><span class="line">#如不是：</span><br><span class="line">date -s &quot;2020-05-15 16:11:00&quot;</span><br><span class="line"></span><br><span class="line">#修改系统时间date后加clock -w 理由--&gt;为了保险，需要使用 clock -w 把当前系统时间写入到CMOS中</span><br><span class="line">clock -w</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-所有机器执行挂载"><a href="#4-所有机器执行挂载" class="headerlink" title="4.所有机器执行挂载"></a>4.所有机器执行挂载</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#正常情况下：</span><br><span class="line">#查看磁盘</span><br><span class="line">fdisk -l</span><br><span class="line"></span><br><span class="line">#查看已挂载磁盘对应目录</span><br><span class="line">df -h</span><br><span class="line"></span><br><span class="line">#进入根目录</span><br><span class="line">cd /</span><br><span class="line"></span><br><span class="line">#创建目录</span><br><span class="line">mkdir data</span><br><span class="line"></span><br><span class="line">#格式化磁盘（如果是挂在两个盘，则需要格式两个磁盘：/dev/sdb /dev/sdc）</span><br><span class="line">mkfs.xfs -f /dev/sdb</span><br><span class="line">#mkfs.xfs -f /dev/sdc</span><br><span class="line"></span><br><span class="line">#将信息写入fstab,让系统开启自动挂载</span><br><span class="line">echo &quot;</span><br><span class="line">/dev/sdb /data xfs rw,noatime,inode64,allocsize=16m 1 1</span><br><span class="line">&quot; &gt;&gt;/etc/fstab</span><br><span class="line"></span><br><span class="line">#挂载磁盘</span><br><span class="line">mount -a</span><br><span class="line"></span><br><span class="line">#检查是否挂载成功</span><br><span class="line">df -h</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="步骤4遇到的问题"><a href="#步骤4遇到的问题" class="headerlink" title="步骤4遇到的问题:"></a>步骤4遇到的问题:</h5><p>#当需要的挂载磁盘已经挂载了对应的目录 umount /dev/sdb /data #当遇到提示：设备正忙，卸载即告失败(/data: device is busy) 可使用：lsof /data <img src="http://qn.199604.com/typoraImg/1589649935734.png" alt="1589649935734"> #使用fuser查看目录被谁占用，然后kill掉线程(lsof /data其实也可) 或者使用：fuser /data /data: 2454 rc #kill掉正在使用的进程后，重新 umount /dev/sdb /data kill -9 2454 umount /dev/sdb /data #遇到：mount:can‘t find uuid = xxxx <img src="http://qn.199604.com/typoraImg/1589649310541.png" alt="1589649310541"> 这说明uuid 对应的磁盘之前是有挂载过，然后我们格式化后UUID已经变了，然后之前对应的也是/data 目录，解决办法： 输入 blkid，然后拿到/dev/sdb 新的UUID，然后把/etc/fstab 文件对应的/dev/sdb 换成UUID，把之前有关/data的全部注销掉，再重新挂载： <img src="http://qn.199604.com/typoraImg/1589650075800.png" alt="1589649544626"> <img src="http://qn.199604.com/typoraImg/1589652280536.png" alt="1589650075800">  </p>
+<h4 id="5-修改所有机器名称"><a href="#5-修改所有机器名称" class="headerlink" title="5.修改所有机器名称"></a>5.修改所有机器名称</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#centos7:</span><br><span class="line">hostnamectl set-hostname mdw132</span><br><span class="line">hostnamectl  --static</span><br><span class="line">.....</span><br><span class="line">hostnamectl set-hostname sdw137</span><br><span class="line">hostnamectl set-hostname sdw138</span><br><span class="line">hostnamectl set-hostname sdw139</span><br><span class="line"></span><br><span class="line">#centos7以下：</span><br><span class="line">#永久生效</span><br><span class="line">vi /etc/sysconfig/network</span><br><span class="line">HOSTNAME=mdw132</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-修改所有机器hosts"><a href="#6-修改所有机器hosts" class="headerlink" title="6.修改所有机器hosts"></a>6.修改所有机器hosts</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/hosts</span><br><span class="line"></span><br><span class="line">10.214.138.132 mdw132</span><br><span class="line">10.214.138.133 sdw133</span><br><span class="line">10.214.138.134 sdw134</span><br><span class="line">10.214.138.135 sdw135</span><br><span class="line">10.214.138.136 sdw136</span><br><span class="line">10.214.138.137 sdw137</span><br><span class="line">10.214.138.138 sdw138</span><br><span class="line">10.214.138.139 sdw139</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-多机信任-免登陆-所有机器都需要执行"><a href="#7-多机信任-免登陆-所有机器都需要执行" class="headerlink" title="7.多机信任(免登陆),所有机器都需要执行"></a>7.多机信任(免登陆),所有机器都需要执行</h4><p>区分：这里master节点和其他datanode节点会略有区别。</p>
+<h5 id="1-首先所有节点均执行如下命令，遇到提示一路回车即可："><a href="#1-首先所有节点均执行如下命令，遇到提示一路回车即可：" class="headerlink" title="1.首先所有节点均执行如下命令，遇到提示一路回车即可："></a>1.首先所有节点均执行如下命令，遇到提示一路回车即可：</h5><p>ssh-keygen -t rsa</p>
+<h5 id="2-在主节点执行以下命令："><a href="#2-在主节点执行以下命令：" class="headerlink" title="2.在主节点执行以下命令："></a><img src="http://qn.199604.com/typoraImg/1589650647329.png" alt="1589650647329">2.在主节点执行以下命令：</h5><p>cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</p>
+<h5 id="3-scp文件到所有datenode节点："><a href="#3-scp文件到所有datenode节点：" class="headerlink" title="3.scp文件到所有datenode节点："></a>3.scp文件到所有datenode节点：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scp ~/.ssh/authorized_keys root@10.214.138.133:~/.ssh/</span><br><span class="line">scp ~/.ssh/authorized_keys root@10.214.138.134:~/.ssh/</span><br><span class="line">scp ~/.ssh/authorized_keys root@10.214.138.135:~/.ssh/</span><br><span class="line">scp ~/.ssh/authorized_keys root@10.214.138.136:~/.ssh/</span><br><span class="line">scp ~/.ssh/authorized_keys root@10.214.138.137:~/.ssh/</span><br><span class="line">scp ~/.ssh/authorized_keys root@10.214.138.138:~/.ssh/</span><br><span class="line">scp ~/.ssh/authorized_keys root@10.214.138.139:~/.ssh/</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-GP数据库安装部署："><a href="#8-GP数据库安装部署：" class="headerlink" title="8.GP数据库安装部署："></a>8.GP数据库安装部署：</h4><h5 id="8-1-修改所有机器的hosts-如果步骤6已做检查一遍"><a href="#8-1-修改所有机器的hosts-如果步骤6已做检查一遍" class="headerlink" title="8.1:修改所有机器的hosts(如果步骤6已做检查一遍)"></a>8.1:修改所有机器的hosts(如果步骤6已做检查一遍)</h5><p>cat /etc/hosts</p>
+<h5 id="8-2-安装greenplum–主节点执行（mdw132上执行）"><a href="#8-2-安装greenplum–主节点执行（mdw132上执行）" class="headerlink" title="8.2:安装greenplum–主节点执行（mdw132上执行）"></a>8.2:安装greenplum–主节点执行（mdw132上执行）</h5><p>安装软件上传至mdw132目录：/home/gp_install</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#创建/home/gp_install</span><br><span class="line">mkdir /home/gp_install</span><br><span class="line">#进入</span><br><span class="line">cd /home/gp_install</span><br><span class="line">#赋值目录</span><br><span class="line">chmod 777 /home/gp_install</span><br><span class="line"></span><br><span class="line">#winscp 上传greenplum-db-4.3.11.3-rhel5-x86_64.bin到 /home/gp_install</span><br><span class="line"></span><br><span class="line">#以下步骤root用户在mdw执行，安装本地GP,并交换密钥：</span><br><span class="line">#（在文件所在目录下执行）</span><br><span class="line">./greenplum-db-4.3.11.3-rhel5-x86_64.bin</span><br><span class="line"># 注意修改默认安装目录为：/usr/local/greenplum-db，其它都默认为yes。</span><br><span class="line"></span><br><span class="line">#读取变量</span><br><span class="line">source /usr/local/greenplum-db/greenplum_path.sh</span><br></pre></td></tr></table></figure>
+
+<h5 id="8-3-配置全部服务器列表（mdw132上执行）"><a href="#8-3-配置全部服务器列表（mdw132上执行）" class="headerlink" title="8.3:配置全部服务器列表（mdw132上执行）"></a>8.3:配置全部服务器列表（mdw132上执行）</h5><p>注意：后续vi新建脚本都默认在mdw132服务器的/home/gp_install目录下，同时执行命令也需在mdw132服务器的该目录下运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cd /home/gp_install</span><br><span class="line"></span><br><span class="line">vi hostfile_all</span><br><span class="line">#添加:</span><br><span class="line">sdw133</span><br><span class="line">sdw134</span><br><span class="line">sdw135</span><br><span class="line">sdw136</span><br><span class="line">sdw137</span><br><span class="line">sdw138</span><br><span class="line">sdw139</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="8-4-交换密钥"><a href="#8-4-交换密钥" class="headerlink" title="8.4:交换密钥"></a>8.4:交换密钥</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#将hostfile_all文件赋值给</span><br><span class="line">chown gpadmin:gpadmin /hostfile_all</span><br><span class="line"></span><br><span class="line">#删除原来的文件</span><br><span class="line">cd /root/.ssh/</span><br><span class="line">rm -rf *</span><br><span class="line"></span><br><span class="line">#执行</span><br><span class="line">cd /home/gp_install/</span><br><span class="line">gpssh-exkeys -f hostfile_all</span><br><span class="line"></span><br><span class="line">[INFO] completed successfully--&gt;成功</span><br></pre></td></tr></table></figure>
+
+<p>如果遇到一直输密码啥的： <img src="http://qn.199604.com/typoraImg/1589649544626.png" alt="1589652280536"> 1.有可能我们之前的多机信任有问题。 2.ssh版本密钥不对，需要修改sshd_config(所有机器执行)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line">#添加 </span><br><span class="line">KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1</span><br><span class="line"></span><br><span class="line">service sshd restart</span><br></pre></td></tr></table></figure>
+
+<p>最好改完以后,再重新生成一次秘钥,即从新多一个多机信任，先把cd /root/.ssh/ 下的文件都 rm -rf 了</p>
+<h5 id="8-5：服务器系统参数配置（mdw132上执行）"><a href="#8-5：服务器系统参数配置（mdw132上执行）" class="headerlink" title="8.5：服务器系统参数配置（mdw132上执行）"></a>8.5：服务器系统参数配置（mdw132上执行）</h5><h6 id="配置1"><a href="#配置1" class="headerlink" title="#配置1"></a>#配置1</h6><p>#修改 vi /etc/sysctl.conf 注释原来所有内容，添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#system</span><br><span class="line"># Controls source route verification</span><br><span class="line">net.ipv4.conf.default.rp_filter = 1</span><br><span class="line"></span><br><span class="line"># Disable netfilter on bridges.</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 0</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 0</span><br><span class="line">net.bridge.bridge-nf-call-arptables = 0</span><br><span class="line"></span><br><span class="line">#gp,64G内存—shmmax ：68719476736，128G内存-- shmmax ：137438953472，物理内存*0.9*1024*1024*1024</span><br><span class="line">#xfs_mount_options = rw,noatime,inode64,allocsize=16m</span><br><span class="line">kernel.shmmax = 57438953472</span><br><span class="line">kernel.shmmni = 4096</span><br><span class="line">kernel.shmall = 40000000000</span><br><span class="line">kernel.sem = 120 5120000 100 20480</span><br><span class="line">kernel.sysrq = 1</span><br><span class="line">kernel.core_uses_pid = 1</span><br><span class="line">kernel.msgmnb = 65536</span><br><span class="line">kernel.msgmax = 65536</span><br><span class="line">kernel.msgmni = 2048</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.ip_forward = 0</span><br><span class="line">net.ipv4.conf.default.accept_source_route = 0</span><br><span class="line">net.ipv4.tcp_tw_recycle = 1</span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 4096</span><br><span class="line">net.ipv4.conf.all.arp_filter = 1</span><br><span class="line">net.ipv4.ip_local_port_range = 1025 65535</span><br><span class="line">net.core.netdev_max_backlog = 10000</span><br><span class="line">vm.overcommit_memory = 2</span><br><span class="line"></span><br><span class="line">#net.core.rmem_max = 2097152</span><br><span class="line">#net.core.wmem_max = 2097152</span><br><span class="line"></span><br><span class="line">net.core.rmem_default = 256960</span><br><span class="line">net.core.rmem_max = 2097152</span><br><span class="line">net.core.wmem_default = 256960</span><br><span class="line">net.core.wmem_max = 2097152</span><br><span class="line">net.ipv4.tcp_timestamps = 0</span><br><span class="line">net.ipv4.tcp_sack = 0</span><br><span class="line">net.ipv4.tcp_window_scaling = 1</span><br></pre></td></tr></table></figure>
+
+<p>注意： #gp–&gt;kernel.shmmax的值:64G内存—shmmax ：68719476736，128G内存– shmmax ：137438953472，即物理内存*0.9*1024*1024*1024,如我的机器全是256G的:256*1024*1024*1024*0.9 , 其实只要超过128G 都可以默认得了…</p>
+<h6 id="配置2"><a href="#配置2" class="headerlink" title="#配置2"></a>#配置2</h6><p>#修改 vi /etc/security/limits.conf 在最后增加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#增加：</span><br><span class="line">#gp</span><br><span class="line">gpadmin soft nofile 65536</span><br><span class="line">gpadmin hard nofile 65536</span><br><span class="line">gpadmin soft nproc 131072</span><br><span class="line">gpadmin hard nproc 131072</span><br></pre></td></tr></table></figure>
+
+<p>注意： <strong>对于RedHat6.x/CENTOS 6.X系统，还需要将vi /etc/security/limits.d/90-nproc.conf文件中的1024修改为131072。</strong> <strong>对于RedHat7.x/CENTOS 7.X系统，还需要将vi 录vi /etc/security/limits.d/20-nproc.conf文件中的4096修改为131072。</strong></p>
+<h6 id="配置3"><a href="#配置3" class="headerlink" title="#配置3"></a>#配置3</h6><p>#修改 vi /etc/rc.d/rc.local 在最后增加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#添加：</span><br><span class="line">#gp</span><br><span class="line">/sbin/blockdev --setra 16384 /dev/sd*</span><br></pre></td></tr></table></figure>
+
+<p>保存修改后执行命令： #单独执行命令： echo 1 &gt; /proc/sys/vm/overcommit_memory</p>
+<h6 id="配置4（Centos6-5没有该文件，略过）"><a href="#配置4（Centos6-5没有该文件，略过）" class="headerlink" title="#配置4（Centos6.5没有该文件，略过）"></a>#配置4（Centos6.5没有该文件，略过）</h6><p>vi /boot/grub/menu.lst</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#添加后的结果：</span><br><span class="line">kernel /boot/vmlinuz-2.2.18-164.el5 ro root=LABEL=/ ro elevator=deadline rhgb quiet</span><br><span class="line">（注：根据系统不同内容会不同，只管添加elevator=deadline即可）。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h6 id="配置5"><a href="#配置5" class="headerlink" title="#配置5"></a>#配置5</h6><p>vi /etc/inittab #在最后增加： id:3:initdefault:</p>
+<h6 id="配置6"><a href="#配置6" class="headerlink" title="#配置6"></a>#配置6</h6><p>vi /etc/ssh/sshd_config [找到MaxStartups去掉#并修改为如下参数] MaxStartups=1000:30:5000</p>
+<h6 id="配置-7"><a href="#配置-7" class="headerlink" title="#配置 7"></a>#配置 7</h6><p>vi /etc/sysconfig/selinux #找到<strong>SELINUX</strong>修改： SELINUX=disabled</p>
+<h5 id="8-6-将mdw132-主服务器-配置覆盖其它节点服务器脚本："><a href="#8-6-将mdw132-主服务器-配置覆盖其它节点服务器脚本：" class="headerlink" title="8.6.将mdw132(主服务器)配置覆盖其它节点服务器脚本："></a>8.6.将mdw132(主服务器)配置覆盖其它节点服务器脚本：</h5><p>#新建cp.sh文件 vi cp.sh #添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gpscp -f hostfile_all /etc/hosts =:/etc</span><br><span class="line">gpscp -f hostfile_all /etc/sysctl.conf =:/etc</span><br><span class="line">gpscp -f hostfile_all /etc/security/limits.conf =:/etc/security</span><br><span class="line">gpscp -f hostfile_all /etc/rc.d/rc.local =:/etc/rc.d</span><br><span class="line">gpscp -f hostfile_all /proc/sys/vm/overcommit_memory =:/proc/sys/vm</span><br><span class="line">gpscp -f hostfile_all /etc/sysconfig/selinux =:/etc/sysconfig</span><br><span class="line">gpscp -f hostfile_all /etc/inittab =:/etc</span><br><span class="line">gpscp -f hostfile_all /etc/ssh/sshd_config =:/etc/ssh/sshd_config</span><br><span class="line">gpscp -f hostfile_all /etc/yum.repos.d/http.repo =:/etc/yum.repos.d/</span><br></pre></td></tr></table></figure>
+
+<p>#执行： chmod +x cp.sh ./cp.sh</p>
+<h5 id="8-7-检查配置结果"><a href="#8-7-检查配置结果" class="headerlink" title="8.7.检查配置结果"></a>8.7.检查配置结果</h5><p>#新建check文件 vi check #添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/sbin/sysctl -p</span><br><span class="line">/sbin/blockdev --setra 16384 /dev/sd*</span><br><span class="line">blockdev --getra /dev/sd*</span><br><span class="line">df -h</span><br><span class="line">/etc/init.d/iptables stop</span><br><span class="line">/etc/init.d/iptables status</span><br><span class="line">chkconfig iptables off</span><br><span class="line">chkconfig --list iptables</span><br><span class="line">setenforce 0</span><br><span class="line">getenforce</span><br><span class="line">cat /etc/sysconfig/network</span><br><span class="line">cat /etc/hosts</span><br><span class="line">grep MaxStartups /etc/ssh/sshd_config</span><br><span class="line">grep MaxSessions /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>#执行 gpssh -f hostfile_all -v &lt; check</p>
+<h5 id="8-8-安装GP数据库-mdw132上执行"><a href="#8-8-安装GP数据库-mdw132上执行" class="headerlink" title="8.8.安装GP数据库(mdw132上执行)"></a>8.8.安装GP数据库(mdw132上执行)</h5><h6 id="1-创建数据存储区，以下步骤root用户在mdw132执行，在所有节点上安装GP："><a href="#1-创建数据存储区，以下步骤root用户在mdw132执行，在所有节点上安装GP：" class="headerlink" title="#1.创建数据存储区，以下步骤root用户在mdw132执行，在所有节点上安装GP："></a>#1.<strong>创建数据存储区，以下步骤root用户在mdw132执行，在所有节点上安装GP：</strong></h6><p>gpseginstall -f hostfile_all -u gpadmin -p gpadmin</p>
+<h6 id="2-master存储创建："><a href="#2-master存储创建：" class="headerlink" title="#2.master存储创建："></a>#2.master存储创建：</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /data/master</span><br><span class="line">mkdir -p /data/master/space_fastdisk</span><br><span class="line"></span><br><span class="line">chown gpadmin /data/master</span><br><span class="line">chown -R gpadmin:gpadmin /data</span><br><span class="line">chown -R gpadmin:gpadmin /data/master</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-second-master存储（本次没备用管理smdw服务器-请忽略此步骤）"><a href="#3-second-master存储（本次没备用管理smdw服务器-请忽略此步骤）" class="headerlink" title="#3.second master存储（本次没备用管理smdw服务器,请忽略此步骤）"></a>#3.second master存储（本次没备用管理smdw服务器,请忽略此步骤）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//gpssh -h smdw -e &#x27;mkdir -p /home/data/master&#x27;</span><br><span class="line">//gpssh -h smdw -e &#x27;chown gpadmin /home/data/master&#x27;</span><br></pre></td></tr></table></figure>
+
+<h6 id="4-segment存储"><a href="#4-segment存储" class="headerlink" title="#4.segment存储"></a>#4.segment存储</h6><p>#创建mkdir文件 vi mkdir #添加： <strong>注意:正常情况都是data1到data4,因为此次服务器内存小，磁盘也不大，还是虚拟机，读写性能估计也一般，所以只做data1和data2，而机器，把盘做了raid，做n组raid就有n个盘挂载，我们就可以每个挂载盘创建一个data</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /data/data1/gp/p</span><br><span class="line">mkdir -p /data/data1/gp/m</span><br><span class="line">mkdir -p /data/data2/gp/p</span><br><span class="line">mkdir -p /data/data2/gp/m</span><br><span class="line"></span><br><span class="line">mkdir -p /data/data1/gp/p/space_fastdisk</span><br><span class="line">mkdir -p /data/data1/gp/m/space_fastdisk</span><br><span class="line">mkdir -p /data/data2/gp/p/space_fastdisk</span><br><span class="line">mkdir -p /data/data2/gp/m/space_fastdisk</span><br><span class="line"></span><br><span class="line">chown -R gpadmin:gpadmin /data/data1</span><br><span class="line">chown -R gpadmin:gpadmin /data/data2</span><br><span class="line">chown -R gpadmin:gpadmin /data/data1/gp</span><br><span class="line">chown -R gpadmin:gpadmin /data/data2/gp</span><br></pre></td></tr></table></figure>
+
+<p>#执行 gpssh -f hostfile_all -v &lt; mkdir</p>
+<h5 id="8-9-配置环境变量"><a href="#8-9-配置环境变量" class="headerlink" title="8.9.配置环境变量"></a>8.9.配置环境变量</h5><h6 id="以下步骤gpadmin用户在mdw132执行"><a href="#以下步骤gpadmin用户在mdw132执行" class="headerlink" title="#以下步骤gpadmin用户在mdw132执行."></a>#以下步骤gpadmin用户在mdw132执行.</h6><p>切换用户：su - gpadmin</p>
+<h6 id="配置gpadmin变量"><a href="#配置gpadmin变量" class="headerlink" title="#配置gpadmin变量"></a>#配置gpadmin变量</h6><p>#修改： vi /home/gpadmin/.bashrc #添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export GPHOME=/usr/local/greenplum-db</span><br><span class="line">source $GPHOME/greenplum_path.sh</span><br><span class="line">export MASTER_DATA_DIRECTORY=/data/master/gpseg-1</span><br><span class="line">export PGPORT=5432</span><br><span class="line">export PGUSER=gpadmin</span><br><span class="line">export PGDATABASE=postgres</span><br></pre></td></tr></table></figure>
+
+<p>#读取变量 source /home/gpadmin/.bashrc</p>
+<h5 id="8-10-初始化GP数据库（mdw132上执行）"><a href="#8-10-初始化GP数据库（mdw132上执行）" class="headerlink" title="8.10.初始化GP数据库（mdw132上执行）"></a>8.10.初始化GP数据库（mdw132上执行）</h5><p>#以下操作gpadmin用户在mdw132上执行:</p>
+<h6 id="创建目录"><a href="#创建目录" class="headerlink" title="#创建目录"></a>#创建目录</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su - gpadmin</span><br><span class="line">mkdir /home/gpadmin/gpconfigs</span><br><span class="line">cd /home/gpadmin/gpconfigs</span><br></pre></td></tr></table></figure>
+
+<h6 id="配置实例对应的网卡"><a href="#配置实例对应的网卡" class="headerlink" title="#配置实例对应的网卡"></a>#配置实例对应的网卡</h6><p>#创建文件: vi hostfile_gpinitsystem #添加节点服务器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mdw132</span><br><span class="line">sdw133</span><br><span class="line">sdw134</span><br><span class="line">sdw135</span><br><span class="line">sdw136</span><br><span class="line">sdw137</span><br><span class="line">sdw138</span><br><span class="line">sdw139</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong>一定要加上主服务器，不然到时候数据存不到主服务器</p>
+<h6 id="配置实例对应的磁盘等"><a href="#配置实例对应的磁盘等" class="headerlink" title="#配置实例对应的磁盘等"></a>#配置实例对应的磁盘等</h6><p>1.实例数不用太多,参考2物理cpu则8个实例即可； 2.DATA_DIRECTORY 一个目录代表一个实例,本次GP部署每台使用2块盘 vi gpinitsystem_config #添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ARRAY_NAME=&quot;EMC Greenplum DW&quot;</span><br><span class="line">SEG_PREFIX=gpseg</span><br><span class="line">PORT_BASE=40000</span><br><span class="line">declare -a DATA_DIRECTORY=(/data/data1/gp/p /data/data2/gp/p)</span><br><span class="line">MASTER_HOSTNAME=mdw11</span><br><span class="line">MASTER_DIRECTORY=/data/master</span><br><span class="line">MASTER_PORT=5432</span><br><span class="line">TRUSTED_SHELL=ssh</span><br><span class="line">CHECK_POINT_SEGMENTS=16</span><br><span class="line">ENCODING=UTF8</span><br><span class="line">MIRROR_PORT_BASE=50000</span><br><span class="line">REPLICATION_PORT_BASE=41000</span><br><span class="line">MIRROR_REPLICATION_PORT_BASE=51000</span><br><span class="line">declare -a MIRROR_DATA_DIRECTORY=(/data/data1/gp/m /data/data2/gp/m)</span><br><span class="line">DATABASE_NAME=lte_mr</span><br></pre></td></tr></table></figure>
+
+<h6 id="执行初始化"><a href="#执行初始化" class="headerlink" title="#执行初始化"></a>#执行初始化</h6><p>[无备管理服务器smdw执行] gpinitsystem -c gpinitsystem_config -h hostfile_gpinitsystem [有备管理smdw服务器] //gpinitsystem -c gpinitsystem_config -h hostfile_gpinitsystem -s smdw   运行结果中如出现如下信息则创建成功！ …… Greenplum Database instance successfully created …… <img src="http://qn.199604.com/typoraImg/image-20200517181844088.png" alt="image-20200517181844088"></p>
+<h5 id="8-11-远程访问设置（mdw132上执行）"><a href="#8-11-远程访问设置（mdw132上执行）" class="headerlink" title="8.11.远程访问设置（mdw132上执行）"></a>8.11.远程访问设置（mdw132上执行）</h5><p>#以下操作gpadmin用户在mdw132上执行 cd $MASTER_DATA_DIRECTORY vi pg_hba.conf #添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">host all gpadmin 0.0.0.0/0 md5</span><br><span class="line"></span><br><span class="line">host all dpi 0.0.0.0/0 md5</span><br></pre></td></tr></table></figure>
+
+<h5 id="8-12-配置GP数据库登录密码（mdw132上执行）"><a href="#8-12-配置GP数据库登录密码（mdw132上执行）" class="headerlink" title="8.12.配置GP数据库登录密码（mdw132上执行）"></a>8.12.配置GP数据库登录密码（mdw132上执行）</h5><p>#以下步骤gpadmin用户在mdw193执行。 切换用户：su - gpadmin 登录数据库:psql -d lte_mr &gt;alter role gpadmin with password ‘gpadmin_GP$’; 输入：\q退出数据库 <img src="http://qn.199604.com/typoraImg/image-20200517181808343.png" alt="image-20200517181808343"></p>
+<h5 id="8-13-GP数据库参数配置（mdw132上执行）"><a href="#8-13-GP数据库参数配置（mdw132上执行）" class="headerlink" title="8.13.GP数据库参数配置（mdw132上执行）"></a>8.13.GP数据库参数配置（mdw132上执行）</h5><p>[gp_vmem_protect_limit=内存总量/实例数_1024=(256_4)/8*1024 MB, 以128G内存,8实例为例，基本使用默认不修改] #以下操作gpadmin用户在mdw上执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">gpconfig -c gp_vmem_protect_limit -v 60000MB</span><br><span class="line">gpconfig -c max_statement_mem -v 21333MB</span><br><span class="line">gpconfig -c statement_mem -v 2048MB</span><br><span class="line">gpconfig -c filerep_socket_timeout -v 350 </span><br><span class="line">gpconfig -c gp_fts_probe_timeout -v 60</span><br><span class="line">gpconfig -c max_connections -v 1000 -m 200</span><br><span class="line">gpconfig -c max_appendonly_tables -v 50000 -m 50000</span><br><span class="line"> </span><br><span class="line">gpconfig -c gp_fts_probe_threadcount -v 90 -m 90 </span><br><span class="line">gpconfig -c gp_fts_probe_interval -v 120 -m 120</span><br><span class="line">gpconfig -c gp_fts_probe_retries -v 10 -m 10</span><br><span class="line">gpconfig -c gp_fts_probe_timeout -v 120 -m 120</span><br><span class="line">gpconfig -c gp_segment_connect_timeout -v 600</span><br><span class="line"></span><br><span class="line">gpconfig -c vacuum_freeze_min_age -v 999999999 -m 999999999</span><br><span class="line">gpconfig -c autovacuum_freeze_max_age -v 2000000000 -m 2000000000</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://qn.199604.com/typoraImg/image-20200517181939966.png" alt="image-20200517181939966"></p>
+<h5 id="8-14-重启GP数据库（mdw132上执行）"><a href="#8-14-重启GP数据库（mdw132上执行）" class="headerlink" title="8.14.重启GP数据库（mdw132上执行）"></a>8.14.重启GP数据库（mdw132上执行）</h5><p>#以下步骤gpadmin用户在mdw执行，切换用户：su - gpadmin 停数据库：gpstop -M fast 启数据库：gpstart -a 查看各节点状态：gpstate –m</p>
+<h5 id="8-15-性能验证（数据库安装成功后测试，mdw132上执行）"><a href="#8-15-性能验证（数据库安装成功后测试，mdw132上执行）" class="headerlink" title="8.15.性能验证（数据库安装成功后测试，mdw132上执行）"></a>8.15.性能验证（数据库安装成功后测试，mdw132上执行）</h5><h6 id="网卡性能验证，网卡-管理口"><a href="#网卡性能验证，网卡-管理口" class="headerlink" title="#网卡性能验证，网卡-管理口"></a>#网卡性能验证，网卡-管理口</h6><p>vi hostfile_gpchecknet_eth0 #添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mdw132</span><br><span class="line">sdw133</span><br><span class="line">sdw134</span><br><span class="line">sdw135</span><br><span class="line">sdw136</span><br><span class="line">sdw137</span><br><span class="line">sdw138</span><br><span class="line">sdw139</span><br></pre></td></tr></table></figure>
+
+<p>#测试： gpcheckperf -f hostfile_gpchecknet_eth0 -r N -d /tmp &gt; eth0.out #查看： cat eth0.out</p>
+<h6 id="磁盘性能验证"><a href="#磁盘性能验证" class="headerlink" title="#磁盘性能验证"></a>#磁盘性能验证</h6><p>[-S 256GB] 为内存的2倍 #测试 gpcheckperf -f hostfile_gpchecknet_eth0 -r ds -D -v -S 512GB -d /data1/gp/p &gt;disk.out #查看： cat disk.out</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1570/" title="GP&amp;CDH安装部署系列-GP安装">http://erbi.me/1570/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/CDH/" rel="tag"># CDH</a>
+              <a href="/tags/GP/" rel="tag"># GP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1568/" rel="prev" title="typora上传图片到七牛存储">
+                  <i class="fa fa-chevron-left"></i> typora上传图片到七牛存储
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1575/" rel="next" title="警惕假冒“京东金融”注销的电话-->在校类京东账户团伙诈骗">
+                  警惕假冒“京东金融”注销的电话-->在校类京东账户团伙诈骗 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="今晚学习了java-&gt;Timer 类的使用 然后回想了之前是用java-&gt;Quartz 定时执行，然后今天写了一个小程序是用Timer类，感觉还行，这个小程序我也可以后期做第二次开发嘻嘻 记录一下。  小程序就几个类而已;  pox.xml 4.0.0com.gljhdpShare0.0.1-SNAPSHOT iot-sharehttp:&#x2F;&#x2F;maven.apache.org  UTF-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个定时生成文件的java小程序">
+<meta property="og:url" content="http://erbi.me/1023/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="今晚学习了java-&gt;Timer 类的使用 然后回想了之前是用java-&gt;Quartz 定时执行，然后今天写了一个小程序是用Timer类，感觉还行，这个小程序我也可以后期做第二次开发嘻嘻 记录一下。  小程序就几个类而已;  pox.xml 4.0.0com.gljhdpShare0.0.1-SNAPSHOT iot-sharehttp:&#x2F;&#x2F;maven.apache.org  UTF-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://199604.com/wp-content/uploads/2018/12/20181226000831.png">
+<meta property="og:image" content="http://199604.com/wp-content/uploads/2018/12/20181226000832.png">
+<meta property="og:image" content="http://199604.com/wp-content/uploads/2017/07/zhifubao.png">
+<meta property="og:image" content="http://199604.com/wp-content/uploads/2017/07/weixin.png">
+<meta property="og:image" content="http://qn.199604.com/wp-content/uploads/2017/07/zhifubao.png">
+<meta property="og:image" content="http://qn.199604.com/wp-content/uploads/2017/07/weixin.png">
+<meta property="article:published_time" content="2018-12-25T16:16:47.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:14.779Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="Quartz">
+<meta property="article:tag" content="Timer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://199604.com/wp-content/uploads/2018/12/20181226000831.png">
+
+
+<link rel="canonical" href="http://erbi.me/1023/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1023&#x2F;&quot;,&quot;path&quot;:&quot;1023&#x2F;&quot;,&quot;title&quot;:&quot;一个定时生成文件的java小程序&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>一个定时生成文件的java小程序 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1023/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一个定时生成文件的java小程序
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-26 00:16:47" itemprop="dateCreated datePublished" datetime="2018-12-26T00:16:47+08:00">2018-12-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:14" itemprop="dateModified" datetime="2021-06-10T09:36:14+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JAVA%E4%BB%A3%E7%A0%81/" itemprop="url" rel="index"><span itemprop="name">JAVA代码</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>今晚学习了java-&gt;Timer 类的使用 然后回想了之前是用java-&gt;Quartz 定时执行，然后今天写了一个小程序是用Timer类，感觉还行，这个小程序我也可以后期做第二次开发嘻嘻 记录一下。</p>
+<hr>
+<p>小程序就几个类而已; <img src="http://199604.com/wp-content/uploads/2018/12/20181226000831.png"> pox.xml</p>
+<p><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"><br><modelVersion>4.0.0</modelVersion><br><groupId>com.glj</groupId><br><artifactId>hdpShare</artifactId><br><version>0.0.1-SNAPSHOT</version></p>
+<p><name>iot-share</name><br><url><a target="_blank" rel="noopener" href="http://maven.apache.org/">http://maven.apache.org</a></url></p>
+<properties>
+<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<java.version>1.7</java.version>
+</properties>
+
+<dependencies>
+<dependency>
+<groupId>junit</groupId>
+<artifactId>junit</artifactId>
+<version>3.8.1</version>
+<scope>test</scope>
+</dependency>
+<dependency>
+<groupId>log4j</groupId>
+<artifactId>log4j</artifactId>
+<version>1.2.17</version>
+</dependency>
+<dependency>
+<groupId>org.apache.commons</groupId>
+<artifactId>commons-lang3</artifactId>
+<version>3.4</version>
+</dependency>
+<dependency>
+<groupId>commons-io</groupId>
+<artifactId>commons-io</artifactId>
+<version>2.4</version>
+</dependency>
+<dependency>
+<groupId>org.quartz-scheduler</groupId>
+<artifactId>quartz</artifactId>
+<version>2.3.0</version>
+</dependency>
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.38</version>
+</dependency>
+</dependencies>
+<build>
+  <finalName>hdpShare</finalName>
+  <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-dependency-plugin</artifactId>
+                                        <versionRange>\[2.0,)</versionRange>
+                                        <goals>
+                                            <goal>copy-dependencies</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+  <plugins>
+  <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-compiler-plugin</artifactId>  
+<version>3.2</version>
+<configuration>  
+            <source>${java.version}</source>
+<target>${java.version}</target>
+<encoding>${project.build.sourceEncoding}</encoding>
+            </configuration> 
+  </plugin>
+  <plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-dependency-plugin</artifactId>
+<executions>
+<execution>
+<id>copy-dependencies</id>
+<phase>package</phase>
+<goals>
+<goal>copy-dependencies</goal>
+</goals>
+<configuration>
+<includeScope>compile</includeScope>
+<excludeScope>test</excludeScope>
+<outputDirectory>${project.build.directory}/lib</outputDirectory>
+<overWriteReleases>false</overWriteReleases>
+<overWriteSnapshots>false</overWriteSnapshots>
+<overWriteIfNewer>true</overWriteIfNewer>
+</configuration>
+</execution>
+</executions>
+</plugin>
+  </plugins>
+  </build>
+</project>
+
+<p>FileWriter（文件写入）</p>
+<p>package com.glj.main;</p>
+<p>import java.io.File;<br>import java.io.IOException;<br>import java.util.List;<br>import java.util.Map;</p>
+<p>import org.apache.commons.io.FileUtils;<br>import org.apache.log4j.Logger;</p>
+<p>import com.glj.service.ShareService;<br>import com.glj.util.ConfigUtil;</p>
+<p>public class FileWriter {<br>private static final Logger log = Logger.getLogger(FileWriter.class);<br>private static final String ENCODING = “utf-8”;<br>private String statDate;<br>private String path;</p>
+<p>public FileWriter() {}</p>
+<p>public FileWriter(String statDate,String path) {<br>this.path = path;<br>this.statDate = statDate;<br>}</p>
+<p>public void write() {<br>ShareService service = new ShareService(statDate);<br>List&lt;Map&lt;String,Object&gt;&gt; dataList = service.getShareDate();<br>StringBuffer sb = new StringBuffer();<br>for (int i = 0; i &lt; dataList.size(); i++) {<br>sb.append(dataList.get(i).get(“imei”)+”,”);<br>sb.append(dataList.get(i).get(“apn”)).append(System.lineSeparator());<br>}</p>
+<p>try {<br>File file = new File(path);<br>FileUtils.writeStringToFile(file, sb.toString(), ENCODING, false);<br>log.info(“写入数据完成！”+path);<br>} catch (IOException e) {<br>log.error(“写入数据文件出错：”+path, e);<br>}<br>}<br>public static void main(String[] args) {<br>String statDate = “2018-01-30”;<br>String path = ConfigUtil.getProperty(“share.path”)+File.separator+statDate+”.txt”;<br>FileWriter fw = new FileWriter(statDate, path);<br>fw.write();<br>}</p>
+<p>}</p>
+<p>MainSchedule定时跑的类</p>
+<p>package com.glj.main;</p>
+<p>import java.io.File;<br>import java.text.SimpleDateFormat;<br>import java.util.Calendar;<br>import java.util.Timer;<br>import java.util.TimerTask;</p>
+<p>import org.apache.log4j.Logger;</p>
+<p>import com.glj.util.ConfigUtil;</p>
+<p>public class MainSchedule {<br>private static Logger log = Logger.getLogger(MainSchedule.class);</p>
+<p>public static void main(String[] args) {<br>int startTime = Integer.parseInt(ConfigUtil.getProperty(“share.statTime”));<br>int startMin = Integer.parseInt(ConfigUtil.getProperty(“share.statMin”));<br>System.out.println(“第一次开始时间：”+startTime+”:”+startMin);</p>
+<p>Calendar calendar = Calendar.getInstance();<br>calendar.add(Calendar.DATE, 0); // 第二天开始执行<br>calendar.set(Calendar.HOUR_OF_DAY, startTime);<br>calendar.set(Calendar.MINUTE, startMin);<br>calendar.set(Calendar.SECOND, 0);<br>calendar.set(Calendar.MILLISECOND, 0);<br>Timer timer = new Timer();<br>TimerTask timerTask = new TimerTask() {<br>@Override<br>public void run() {<br>SimpleDateFormat dateFromat = new SimpleDateFormat(“yyyy-MM-dd”);<br>Calendar calendar = Calendar.getInstance();<br>calendar.add(Calendar.DATE, -1);</p>
+<p>String statDate = dateFromat.format(calendar.getTime());<br>String path = ConfigUtil.getProperty(“share.path”)+File.separator+statDate+”.txt”;<br>System.out.println(statDate);<br>System.out.println(path);<br>log.info(“开始生成文件”);<br>FileWriter fw = new FileWriter(statDate, path);<br>fw.write();<br>}<br>};<br>timer.scheduleAtFixedRate(timerTask, calendar.getTime(),24 * 60 * 60 * 1000);<br>}<br>}</p>
+<p>ShareService</p>
+<p>package com.glj.service;</p>
+<p>import java.util.List;<br>import java.util.Map;</p>
+<p>import org.apache.log4j.Logger;</p>
+<p>import com.glj.util.JDBCUtil;</p>
+<p>public class ShareService {<br>private static final Logger log = Logger.getLogger(ShareService.class);<br>private String statDate = “”;</p>
+<p>public ShareService() {<br>}<br>/**<br> * 日期格式YYYY-MM-DD<br> * @param statDate<br> */<br>public ShareService(String statDate) {<br>this.statDate = statDate;<br>}</p>
+<p>public List&lt;Map&lt;String,Object&gt;&gt; getShareDate() {<br>String sql = “select imei,apn from wajuepingfen_apn where lt =’”+statDate+”‘ “;<br>List&lt;Map&lt;String,Object&gt;&gt;  list = JDBCUtil.executeSQLWithResultList(sql);<br>return list;<br>}</p>
+<p>}</p>
+<p>ConfigUtil(工具类)</p>
+<p>package com.glj.util;</p>
+<p>import java.io.BufferedInputStream;<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.IOException;<br>import java.io.InputStream;<br>import java.net.URL;<br>import java.util.Properties;</p>
+<p>import org.apache.commons.lang3.StringUtils;<br>import org.apache.log4j.Logger;</p>
+<p>public class ConfigUtil {<br>private static final Logger log = Logger.getLogger(ConfigUtil.class);<br>private static Properties prop = null;</p>
+<p>public ConfigUtil(InputStream is) {<br>prop = new Properties();</p>
+<pre><code>    try(BufferedInputStream bis = new BufferedInputStream(is);
+    InputStream in = bis)&#123;
+    prop.load(in);
+    &#125;catch (Exception e)&#123;
+    log.error(&quot;读取&quot;+prop+&quot;配置文件错误！&quot;, e);
+    &#125;
+&#125;
+</code></pre>
+<p>public static void init(String cfgPath) {<br>String realPath = “”;<br>if(StringUtils.isNotBlank(cfgPath) &amp;&amp; new File(cfgPath).exists()) {<br>realPath = cfgPath;<br>}else {<br>//优先读取上一级目录中的cfg，如果不存在，再读取bin目录中的cfg<br>//String defPath = “../cfg.properties”;<br>String defPath = “../cfg.properties”;<br>String defExistsPath = ClassLoader.getSystemResource(“”).getPath()+File.separator+”cfg.properties”;<br>realPath = new File(defPath).exists()? defPath: defExistsPath;<br>}<br>System.out.println(realPath);<br>try{<br>InputStream is = StringUtils.isNotBlank(realPath)? new FileInputStream(realPath):<br>ConfigUtil.class.getResourceAsStream(“/cfg.properties”);<br>log.info(“读取配置文件：”+realPath);<br>new ConfigUtil(is);<br>} catch (IOException e1) {<br>log.error(“读取配置文件出错”);<br>}<br>}</p>
+<p>public static String getProperty(String propertyName) {<br>if(prop == null) {<br>ConfigUtil.init(“”);<br>}<br>if(“”.equals(propertyName)  null==propertyName) {<br>return “”;<br>}<br>return prop.getProperty(propertyName);<br>}<br>public static void main(String[] args) {<br>System.out.println(ConfigUtil.getProperty(“mysql.url”));<br>}<br>}</p>
+<p>JDBCUtil（数据库链接工具类）</p>
+<p>package com.glj.util;</p>
+<p>import java.sql.Connection;<br>import java.sql.DriverManager;<br>import java.sql.ResultSet;<br>import java.sql.SQLException;<br>import java.sql.Statement;<br>import java.util.ArrayList;<br>import java.util.HashMap;<br>import java.util.List;<br>import java.util.Map;</p>
+<p>import org.apache.log4j.Logger;</p>
+<p>public class JDBCUtil {<br>private static final Logger log = Logger.getLogger(JDBCUtil.class);</p>
+<p>public static Connection getDefaultConn() throws Exception {<br>String mysqlUrl = ConfigUtil.getProperty(“mysql.url”);<br>String mysqlUserName = ConfigUtil.getProperty(“mysql.userName”);<br>String mysqlPassWord = ConfigUtil.getProperty(“mysql.password”);<br>return getConn(mysqlUrl, mysqlUserName, mysqlPassWord);<br>}</p>
+<p>public static Connection getConn(String url, String username, String password) throws Exception{<br>String driverName = ConfigUtil.getProperty(“mysql.className”);<br>Connection conn = null;<br>try{<br>Class.forName(driverName);<br>conn = DriverManager.getConnection(url,username,password);<br>}catch (ClassNotFoundException e){<br>log.error(“数据库驱动文件不存在”);<br>throw e;<br>}catch (SQLException e) {<br>log.error(“获取数据库连接失败”);<br>throw e;<br>}<br>return conn;<br>}<br>public static void insertOrUpdateSQL(String sql) {<br>Connection conn = null;<br>Statement stat = null;<br>try {<br>conn = getDefaultConn();<br>conn.setAutoCommit(false);<br>stat = conn.createStatement();<br>stat.executeUpdate(sql);<br>conn.commit();<br>} catch (Exception e) {<br>log.error(“insertOrUpdateSQL出错:—&gt;”+e);<br>}finally{<br>close(conn, stat);<br>}</p>
+<p>}<br>public static List&lt;Map&lt;String,Object&gt;&gt; executeSQLWithResultList(String sql) {<br>List&lt;Map&lt;String,Object&gt;&gt; list = new ArrayList&lt;Map&lt;String,Object&gt;&gt;();<br>Connection conn = null;<br>Statement stat = null;<br>ResultSet rs = null;<br>Map&lt;String,Object&gt; map = null;</p>
+<p>try {<br>conn = getDefaultConn();<br>stat = conn.createStatement();<br>rs = stat.executeQuery(sql);<br>while(rs.next()){<br>map = new HashMap&lt;String,Object&gt;();<br>int colCounts = rs.getMetaData().getColumnCount();<br>for(int i=1; i&lt;=colCounts;i++){<br>map.put(rs.getMetaData().getColumnName(i).toLowerCase(), rs.getObject(i));<br>}<br>list.add(map);<br>}<br>} catch (SQLException e) {<br>log.error(“查询出错”+e);<br>} catch (Exception e) {<br>log.error(“数据链接错误”+e);<br>}finally{<br>close(conn, stat, rs);<br>}<br>return list;<br>}<br>public static void close(Connection conn, Statement stat) {<br>try {<br>if (stat != null) stat.close();<br>if (conn != null) conn.close();<br>} catch (SQLException e) {<br>e.printStackTrace();<br>}<br>}</p>
+<p>public static void close(Connection conn, Statement stat, ResultSet rs) {<br>try {<br>if (rs != null) rs.close();<br>if (stat != null) stat.close();<br>if (conn != null) conn.close();<br>} catch (SQLException e) {<br>e.printStackTrace();<br>}<br>}</p>
+<p>}</p>
+<p>cfg.properties配置文件</p>
+<p>#mysql<br>mysql.className=com.mysql.jdbc.Driver<br>mysql.url=jdbc:mysql://localhost:3306/work?characterEncoding=UTF-8<br>mysql.userName=root<br>mysql.password=root</p>
+<p>#share.path=/home/iotshare/shareFiles<br>share.path=G:\pushFile_test<br>share.statTime=23<br>share.statMin=54</p>
+<p>log4j.properties配置文件</p>
+<p>log4j.rootLogger=stdout,ERROR,logfile<br>#\u8f93\u51fa\u5230\u63a7\u5236\u53f0#<br>log4j.appender.stdout=org.apache.log4j.ConsoleAppender<br>log4j.appender.stdout.Threshold=INFO<br>log4j.appender.stdout.layout=org.apache.log4j.PatternLayout<br>log4j.appender.stdout.layout.ConversionPattern = %d %-5p [%-8t] [%-17c{1}]-%m%n</p>
+<p>#\u8f93\u51fa\u5230\u9879\u76ee\u6587\u4ef6\u4e0b#<br>log4j.appender.logfile = org.apache.log4j.DailyRollingFileAppender<br>log4j.appender.logfile.File = ./logs/info_log.log<br>log4j.appender.logfile.Append = true<br>log4j.appender.logfile.Threshold = INFO<br>log4j.appender.logfile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logfile.layout.ConversionPattern = %d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L - %m%n<br>##log4j.appender.logfile.layout.ConversionPattern= %d %-5p [%-8t] [%-17c{1}]-%m%n</p>
+<p>#\u9519\u8bef\u4fe1\u606f\u8f93\u51fa\u5230\u9879\u76ee\u5b50\u6587\u4ef6\u5939\u4e0b#<br>log4j.appender.ERROR=org.apache.log4j.DailyRollingFileAppender<br>log4j.appender.ERROR.File = ./logs/err_log.log<br>log4j.appenile.ERROR.Append = true<br>log4j.appender.ERROR.Threshold = ERROR<br>log4j.appender.ERROR.layout = org.apache.log4j.PatternLayout<br>log4j.appender.ERROR.layout.ConversionPattern = %d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L - %m%n</p>
+<p>生成文件成功… <img src="http://199604.com/wp-content/uploads/2018/12/20181226000832.png"> 好了,应该能让我再优化以后公司需求对外也能做二次开发使用吧… 记录完成睡觉…</p>
+<hr>
+<p><img src="http://199604.com/wp-content/uploads/2017/07/zhifubao.png"> <img src="http://199604.com/wp-content/uploads/2017/07/weixin.png"><img src="http://qn.199604.com/wp-content/uploads/2017/07/zhifubao.png"><img src="http://qn.199604.com/wp-content/uploads/2017/07/weixin.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1023/" title="一个定时生成文件的java小程序">http://erbi.me/1023/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+              <a href="/tags/Quartz/" rel="tag"># Quartz</a>
+              <a href="/tags/Timer/" rel="tag"># Timer</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1017/" rel="prev" title="菜鸟的shell-删除5天前的文件">
+                  <i class="fa fa-chevron-left"></i> 菜鸟的shell-删除5天前的文件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1030/" rel="next" title="连接不上SFTP报java.security.NoSuchAlgorithmException: Algorithm DH not available错误">
+                  连接不上SFTP报java.security.NoSuchAlgorithmException: Algorithm DH not available错误 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

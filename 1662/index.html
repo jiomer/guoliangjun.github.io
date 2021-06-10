@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="一、Nginx 简介1.什么是 Nginx?Nginx（engine x）是一款轻量级的 Web 服务器 、反向代理服务器及电子邮件（IMAP&#x2F;POP3）代理服务器。  2.什么是反向代理？反向代理（Reverse Proxy）方式是指以代理服务器来接受 internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 internet 上请求连接的客户端。 此时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx笔记">
+<meta property="og:url" content="http://erbi.me/1662/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="一、Nginx 简介1.什么是 Nginx?Nginx（engine x）是一款轻量级的 Web 服务器 、反向代理服务器及电子邮件（IMAP&#x2F;POP3）代理服务器。  2.什么是反向代理？反向代理（Reverse Proxy）方式是指以代理服务器来接受 internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 internet 上请求连接的客户端。 此时">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/687474703a2f2f64756e77752e746573742e757063646e2e6e65742f63732f7765622f6e67696e782f6e67696e782e6a7067217a70.jpg">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/640.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210124225931.png">
+<meta property="article:published_time" content="2021-03-02T15:59:31.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:15.116Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/typoraImg/687474703a2f2f64756e77752e746573742e757063646e2e6e65742f63732f7765622f6e67696e782f6e67696e782e6a7067217a70.jpg">
+
+
+<link rel="canonical" href="http://erbi.me/1662/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1662&#x2F;&quot;,&quot;path&quot;:&quot;1662&#x2F;&quot;,&quot;title&quot;:&quot;Nginx笔记&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Nginx笔记 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81Nginx-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">一、Nginx 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-Nginx"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是 Nginx?</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">2.什么是反向代理？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Nginx-%E5%85%A5%E9%97%A8"><span class="nav-number">2.</span> <span class="nav-text">二、Nginx 入门</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E3%80%81Nginx-%E5%AE%9E%E6%88%98"><span class="nav-number">3.</span> <span class="nav-text">三、Nginx 实战</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Http%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">Http反向代理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Https%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">Https反向代理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">3.3.</span> <span class="nav-text">负载均衡</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5"><span class="nav-number">3.4.</span> <span class="nav-text">负载均衡策略</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BD%AE%E8%AF%A2"><span class="nav-number">3.4.1.</span> <span class="nav-text">轮询</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8A%A0%E6%9D%83%E8%BD%AE%E8%AF%A2"><span class="nav-number">3.4.2.</span> <span class="nav-text">加权轮询</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%80%E5%B0%91%E8%BF%9E%E6%8E%A5%E6%95%B0"><span class="nav-number">3.4.3.</span> <span class="nav-text">最少连接数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8A%A0%E6%9D%83%E6%9C%80%E5%B0%91%E8%BF%9E%E6%8E%A5%E6%95%B0"><span class="nav-number">3.4.4.</span> <span class="nav-text">加权最少连接数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Ip-Hash"><span class="nav-number">3.4.5.</span> <span class="nav-text">Ip Hash</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%99%AE%E9%80%9AHash%EF%BC%88Url-Hash%EF%BC%89"><span class="nav-number">3.4.6.</span> <span class="nav-text">普通Hash（Url Hash）</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AAwebapp%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">3.5.</span> <span class="nav-text">多个webapp的配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">3.6.</span> <span class="nav-text">静态站点配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">3.7.</span> <span class="nav-text">解决跨域问题</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-CORS"><span class="nav-number">3.7.1.</span> <span class="nav-text">1.CORS</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-jsonp"><span class="nav-number">3.7.2.</span> <span class="nav-text">2.jsonp</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Nginx-%E9%97%AE%E9%A2%98%E9%9B%86"><span class="nav-number">4.</span> <span class="nav-text">四、Nginx 问题集</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Nginx-%E5%87%BA%E7%8E%B0%E5%A4%A7%E9%87%8F-TIME-WAIT"><span class="nav-number">4.1.</span> <span class="nav-text">Nginx 出现大量 TIME_WAIT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F%E9%99%90%E5%88%B6"><span class="nav-number">4.2.</span> <span class="nav-text">上传文件大小限制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%97%B6%E9%97%B4%E9%99%90%E5%88%B6"><span class="nav-number">4.3.</span> <span class="nav-text">请求时间限制</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1662/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nginx笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-02 23:59:31" itemprop="dateCreated datePublished" datetime="2021-03-02T23:59:31+08:00">2021-03-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:15" itemprop="dateModified" datetime="2021-06-10T09:36:15+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="一、Nginx-简介"><a href="#一、Nginx-简介" class="headerlink" title="一、Nginx 简介"></a>一、Nginx 简介</h4><h5 id="1-什么是-Nginx"><a href="#1-什么是-Nginx" class="headerlink" title="1.什么是 Nginx?"></a>1.<strong>什么是 Nginx?</strong></h5><p>Nginx（engine x）是一款轻量级的 Web 服务器 、反向代理服务器及电子邮件（IMAP/POP3）代理服务器。 <img src="http://qn.199604.com/typoraImg/687474703a2f2f64756e77752e746573742e757063646e2e6e65742f63732f7765622f6e67696e782f6e67696e782e6a7067217a70.jpg" alt="img"></p>
+<h5 id="2-什么是反向代理？"><a href="#2-什么是反向代理？" class="headerlink" title="2.什么是反向代理？"></a>2.<strong>什么是反向代理？</strong></h5><p>反向代理（Reverse Proxy）方式是指以代理服务器来接受 internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 internet 上请求连接的客户端。 此时代理服务器对外就表现为一个反向代理服务器，如下图： <img src="http://qn.199604.com/typoraImg/640.png" alt="图片"></p>
+<h4 id="二、Nginx-入门"><a href="#二、Nginx-入门" class="headerlink" title="二、Nginx 入门"></a>二、Nginx 入门</h4><blockquote>
+<p>详细安装方法请参考：<a target="_blank" rel="noopener" href="https://github.com/dunwu/nginx-tutorial/blob/master/docs/nginx-ops.md">Nginx 运维</a></p>
+</blockquote>
+<p>nginx 的使用比较简单，就是几条命令。 常用到的命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nginx -s stop       快速关闭Nginx，可能不保存相关信息，并迅速终止web服务。</span><br><span class="line">nginx -s quit       平稳关闭Nginx，保存相关信息，有安排的结束web服务。</span><br><span class="line">nginx -s reload     因改变了Nginx相关配置，需要重新加载配置而重载。</span><br><span class="line">nginx -s reopen     重新打开日志文件。</span><br><span class="line">nginx -c filename   为 Nginx 指定一个配置文件，来代替缺省的。</span><br><span class="line">nginx -t            不运行，仅仅测试配置文件。nginx 将检查配置文件的语法的正确性，并尝试打开配置文件中所引用到的文件。</span><br><span class="line">nginx -v            显示 nginx 的版本。</span><br><span class="line">nginx -V            显示 nginx 的版本，编译器版本和配置参数。</span><br></pre></td></tr></table></figure>
+
+<h4 id="三、Nginx-实战"><a href="#三、Nginx-实战" class="headerlink" title="三、Nginx 实战"></a>三、Nginx 实战</h4><p>我始终认为，各种开发工具的配置还是结合实战来讲述，会让人更易理解。</p>
+<h5 id="Http反向代理"><a href="#Http反向代理" class="headerlink" title="Http反向代理"></a>Http反向代理</h5><p>我们先实现一个小目标：不考虑复杂的配置，仅仅是完成一个 http 反向代理。 <code>nginx.conf</code> 配置文件如下：</p>
+<blockquote>
+<p>注：<code>conf/nginx.conf</code> 是 nginx 的默认配置文件。你也可以使用 nginx -c 指定你的配置文件</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">#运行用户</span><br><span class="line">#user  nginx;</span><br><span class="line"></span><br><span class="line">#启动进程,通常设置成和cpu的数量相等</span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">#全局错误日志</span><br><span class="line">error_log  /var/log/nginx/error.log;</span><br><span class="line">error_log  /var/log/nginx/warn.log warn;</span><br><span class="line">error_log  /var/log/nginx/notice.log  notice;</span><br><span class="line">error_log  /var/log/nginx/info.log  info;</span><br><span class="line"></span><br><span class="line">#PID文件，记录当前启动的nginx的进程ID</span><br><span class="line">pid        /var/run/nginx.pid;</span><br><span class="line"></span><br><span class="line">#工作模式及连接数上限</span><br><span class="line">events &#123;</span><br><span class="line">#单个后台worker process进程的最大并发链接数</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#设定http服务器，利用它的反向代理功能提供负载均衡支持</span><br><span class="line">http &#123;</span><br><span class="line">    #设定mime类型(邮件支持类型),类型由mime.types文件定义</span><br><span class="line">    include       /etc/nginx/mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">#设定日志</span><br><span class="line">    log_format  main  &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br><span class="line">                      &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">                      &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><span class="line"></span><br><span class="line">    access_log  /var/log/nginx/access.log  main;</span><br><span class="line"></span><br><span class="line">#sendfile 指令指定 nginx 是否调用 sendfile 函数（zero copy 方式）来输出文件，对于普通应用，</span><br><span class="line">    sendfile        on;</span><br><span class="line">    #tcp_nopush     on;</span><br><span class="line"></span><br><span class="line">#连接超时时间</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">#gzip压缩开关</span><br><span class="line">    gzip  on;</span><br><span class="line">    </span><br><span class="line">    #允许客户端请求的最大单文件字节数</span><br><span class="line">    client_max_body_size 50m; </span><br><span class="line">    </span><br><span class="line">    #设定实际的服务器列表</span><br><span class="line">    upstream demo_server1&#123;</span><br><span class="line">        server 127.0.0.1:8085;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    #引用/etc/nginx/conf.d/下的*.conf文件</span><br><span class="line">    include /etc/nginx/conf.d/*.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>/etc/nginx/conf.d/下的*.conf文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">#HTTP服务器</span><br><span class="line">server &#123;</span><br><span class="line">#监听8088端口，80端口是知名端口号，用于HTTP协议</span><br><span class="line">        listen       8088;</span><br><span class="line">        </span><br><span class="line">        #定义使用www.xx.com访问</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">#编码格式</span><br><span class="line">        charset utf-8;</span><br><span class="line">        #charset koi8-r;</span><br><span class="line">        </span><br><span class="line">        #代理配置参数</span><br><span class="line">        proxy_connect_timeout 180;</span><br><span class="line">        proxy_send_timeout 180;</span><br><span class="line">        proxy_read_timeout 180;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Forwarder-For $remote_addr;</span><br><span class="line"></span><br><span class="line">#设定日志格式</span><br><span class="line">access_log    /var/log/nginx/access.log;</span><br><span class="line">        #access_log  logs/host.access.log  main;</span><br><span class="line"></span><br><span class="line">#反向代理的路径（和upstream绑定），location 后面设置映射的路径</span><br><span class="line">        location / &#123;</span><br><span class="line">        #指向webapp的目录</span><br><span class="line">            root   /usr/share/nginx/html;</span><br><span class="line">            #首页</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">            </span><br><span class="line">            #proxy_pass http://zp_server1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">#设定查看api的地址</span><br><span class="line">location /api/ &#123;</span><br><span class="line">proxy_pass http://127.0.0.1:8085/api/;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#静态文件，nginx自己处理</span><br><span class="line">        location ~ ^/(imagesjavascriptjscssflashmediastatic)/ &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">            #root D:\01_Workspace\Project\github\zp\SpringNotes\spring-security\spring-shiro\src\main\webapp\views;</span><br><span class="line">            #过期30天，静态文件不怎么更新，过期可以设大一点，如果频繁更新，则可以设置得小一点。</span><br><span class="line">            expires 30d;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        #禁止访问 .htxxx 文件</span><br><span class="line">        location ~ /\.ht &#123;</span><br><span class="line">            deny all;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #error_page  404              /404.html;</span><br><span class="line"></span><br><span class="line">        # redirect server error pages to the static page /50x.html</span><br><span class="line">        #</span><br><span class="line">        error_page   500 502 503 504  /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        # proxy the PHP scripts to Apache listening on 127.0.0.1:80</span><br><span class="line">        #</span><br><span class="line">        #location ~ \.php$ &#123;</span><br><span class="line">        #    proxy_pass   http://127.0.0.1;</span><br><span class="line">        #&#125;</span><br><span class="line"></span><br><span class="line">        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">        #</span><br><span class="line">        #location ~ \.php$ &#123;</span><br><span class="line">        #    root           html;</span><br><span class="line">        #    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">        #    fastcgi_index  index.php;</span><br><span class="line">        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span><br><span class="line">        #    include        fastcgi_params;</span><br><span class="line">        #&#125;</span><br><span class="line"></span><br><span class="line">        # deny access to .htaccess files, if Apache&#x27;s document root</span><br><span class="line">        # concurs with nginx&#x27;s one</span><br><span class="line">        #</span><br><span class="line">        #location ~ /\.ht &#123;</span><br><span class="line">        #    deny  all;</span><br><span class="line">        #&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Https反向代理"><a href="#Https反向代理" class="headerlink" title="Https反向代理"></a>Https反向代理</h5><p>一些对安全性要求比较高的站点，可能会使用 HTTPS（一种使用 ssl 通信标准的安全 HTTP 协议）。 这里不科普 HTTP 协议和 SSL 标准。但是，使用 nginx 配置 https 需要知道几点：</p>
+<ul>
+<li>  HTTPS 的固定端口号是 443，不同于 HTTP 的 80 端口</li>
+<li>  SSL 标准需要引入安全证书，所以在 nginx.conf 中你需要指定证书和它对应的 key</li>
+</ul>
+<p>其他和 http 反向代理基本一样，只是在 <code>Server</code> 部分配置有些不同。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#HTTP服务器</span><br><span class="line">  server &#123;</span><br><span class="line">      #监听443端口。443为知名端口号，主要用于HTTPS协议</span><br><span class="line">      listen       443 ssl;</span><br><span class="line"></span><br><span class="line">      #定义使用www.xx.com访问</span><br><span class="line">      server_name  localhost;</span><br><span class="line"></span><br><span class="line">      #ssl证书文件位置(常见证书文件格式为：crt/pem)</span><br><span class="line">      ssl_certificate      cert.pem;</span><br><span class="line">      #ssl证书key位置</span><br><span class="line">      ssl_certificate_key  cert.key;</span><br><span class="line"></span><br><span class="line">      #ssl配置参数（选择性配置）</span><br><span class="line">      ssl_session_cache    shared:SSL:1m;</span><br><span class="line">      ssl_session_timeout  5m;</span><br><span class="line">      #数字签名，此处使用MD5</span><br><span class="line">      ssl_ciphers  HIGH:!aNULL:!MD5;</span><br><span class="line">      ssl_prefer_server_ciphers  on;</span><br><span class="line"></span><br><span class="line">      location / &#123;</span><br><span class="line">          root   /usr/share/nginx/html;</span><br><span class="line">          index  index.html index.htm;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h5><p>前面的例子中，代理仅仅指向一个服务器。 但是，网站在实际运营过程中，大部分都是以集群的方式运行，这时需要使用负载均衡来分流。 nginx 也可以实现简单的负载均衡功能。 <img src="http://qn.199604.com/typoraImg/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210124225931.png" alt="微信图片_20210124225931"> 假设这样一个应用场景：将应用部署在 192.168.1.11:80、192.168.1.12:80、192.168.1.13:80 三台 Linux 环境的服务器上。网站域名叫 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a>，公网 IP 为 192.168.1.11。 在公网 IP 所在的服务器上部署 Nginx，对所有请求做负载均衡处理（下面例子中使用的是加权轮询策略）。 nginx.conf 配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    #设定mime类型,类型由mime.type文件定义</span><br><span class="line">    include       /etc/nginx/mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    #设定日志格式</span><br><span class="line">    access_log    /var/log/nginx/access.log;</span><br><span class="line"></span><br><span class="line">    #设定负载均衡的服务器列表</span><br><span class="line">    upstream load_balance_server &#123;</span><br><span class="line">        #weigth参数表示权值，权值越高被分配到的几率越大</span><br><span class="line">        server 192.168.1.11:80   weight=5;</span><br><span class="line">        server 192.168.1.12:80   weight=1;</span><br><span class="line">        server 192.168.1.13:80   weight=6;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   #HTTP服务器</span><br><span class="line">   server &#123;</span><br><span class="line">        #侦听80端口</span><br><span class="line">        listen       80;</span><br><span class="line"></span><br><span class="line">        #定义使用www.xx.com访问</span><br><span class="line">        server_name  www.baidu.com;</span><br><span class="line"></span><br><span class="line">        #对所有请求进行负载均衡请求</span><br><span class="line">        location / &#123;</span><br><span class="line">            root        /usr/share/nginx/html;                 #定义服务器的默认网站根目录位置</span><br><span class="line">            index       index.html index.htm;  #定义首页索引文件的名称</span><br><span class="line">            proxy_pass  http://load_balance_server ;#请求转向load_balance_server 定义的服务器列表</span><br><span class="line"></span><br><span class="line">            #以下是一些反向代理的配置(可选择性配置)</span><br><span class="line">            #proxy_redirect off;</span><br><span class="line">            proxy_set_header Host $host;</span><br><span class="line">            proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">            #后端的Web服务器可以通过X-Forwarded-For获取用户真实IP</span><br><span class="line">            proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line">            proxy_connect_timeout 90;          #nginx跟后端服务器连接超时时间(代理连接超时)</span><br><span class="line">            proxy_send_timeout 90;             #后端服务器数据回传时间(代理发送超时)</span><br><span class="line">            proxy_read_timeout 90;             #连接成功后，后端服务器响应时间(代理接收超时)</span><br><span class="line">            proxy_buffer_size 4k;              #设置代理服务器（nginx）保存用户头信息的缓冲区大小</span><br><span class="line">            proxy_buffers 4 32k;               #proxy_buffers缓冲区，网页平均在32k以下的话，这样设置</span><br><span class="line">            proxy_busy_buffers_size 64k;       #高负荷下缓冲大小（proxy_buffers*2）</span><br><span class="line">            proxy_temp_file_write_size 64k;    #设定缓存文件夹大小，大于这个值，将从upstream服务器传</span><br><span class="line"></span><br><span class="line">            client_max_body_size 10m;          #允许客户端请求的最大单文件字节数</span><br><span class="line">            client_body_buffer_size 128k;      #缓冲区代理缓冲用户端请求的最大字节数</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="负载均衡策略"><a href="#负载均衡策略" class="headerlink" title="负载均衡策略"></a>负载均衡策略</h5><p>Nginx 提供了多种负载均衡策略，让我们来一一了解一下：</p>
+<h6 id="轮询"><a href="#轮询" class="headerlink" title="轮询"></a>轮询</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">upstream bck_testing_01 &#123;</span><br><span class="line">  # 默认所有服务器权重为 1</span><br><span class="line">  server 192.168.250.220:8080;</span><br><span class="line">  server 192.168.250.221:8080;</span><br><span class="line">  server 192.168.250.222:8080;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="加权轮询"><a href="#加权轮询" class="headerlink" title="加权轮询"></a>加权轮询</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream bck_testing_01 &#123;</span><br><span class="line">  server 192.168.250.220:8080   weight=3;</span><br><span class="line">  server 192.168.250.221:8080     ;         # default weight=1</span><br><span class="line">  server 192.168.250.222:8080     ;        # default weight=1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="最少连接数"><a href="#最少连接数" class="headerlink" title="最少连接数"></a>最少连接数</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">upstream bck_testing_01 &#123;</span><br><span class="line">  least_conn;</span><br><span class="line"></span><br><span class="line">  # with default weight for all (weight=1)</span><br><span class="line">  server 192.168.250.220:8080;</span><br><span class="line">  server 192.168.250.221:8080;</span><br><span class="line">  server 192.168.250.222:8080;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="加权最少连接数"><a href="#加权最少连接数" class="headerlink" title="加权最少连接数"></a>加权最少连接数</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">upstream bck_testing_01 &#123;</span><br><span class="line">  least_conn;</span><br><span class="line"></span><br><span class="line">  server 192.168.250.220:8080   weight=3;</span><br><span class="line">  server 192.168.250.221:8080   ;           # default weight=1</span><br><span class="line">  server 192.168.250.222:8080   ;           # default weight=1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="Ip-Hash"><a href="#Ip-Hash" class="headerlink" title="Ip Hash"></a>Ip Hash</h6><p>通过客户端请求ip进行hash，再通过hash值选择后端server 当你服务端的一个特定url路径会被同一个用户连续访问时，如果负载均衡策略还是轮询的话，那该用户的多次访问会被打到各台服务器上，这显然并不高效（会建立多次http链接等问题）。甚至考虑一种极端情况，用户需要分片上传文件到服务器下，然后再由服务器将分片合并，这时如果用户的请求到达了不同的服务器，那么分片将存储于不同的服务器目录中，导致无法将分片合并。所以，此类场景可以考虑采用nginx提供的ip_hash策略。既能满足每个用户请求到同一台服务器，又能满足不同用户之间负载均衡。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">upstream bck_testing_01 &#123;</span><br><span class="line">  ip_hash;</span><br><span class="line"></span><br><span class="line">  # with default weight for all (weight=1)</span><br><span class="line">  server 192.168.250.220:8080;</span><br><span class="line">  server 192.168.250.221:8080;</span><br><span class="line">  server 192.168.250.222:8080 down;#表示下线的意思</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="普通Hash（Url-Hash）"><a href="#普通Hash（Url-Hash）" class="headerlink" title="普通Hash（Url Hash）"></a>普通Hash（Url Hash）</h6><p>通过请求url进行hash，再通过hash值选择后端server 一般来讲，要用到urlhash，是要配合缓存命中来使用。举一个我遇到的实例：有一个服务器集群A，需要对外提供文件下载，由于文件上传量巨大，没法存储到服务器磁盘中，所以用到了第三方云存储来做文件存储。服务器集群A收到客户端请求之后，需要从云存储中下载文件然后返回，为了省去不必要的网络带宽和下载耗时，在服务器集群A上做了一层临时缓存（缓存一个月）。由于是服务器集群，所以同一个资源多次请求，可能会到达不同的服务器上，导致不必要的多次下载，缓存命中率不高，以及一些资源时间的浪费。在此类场景下，为了使得缓存命中率提高，很适合使用url_hash策略，同一个url（也就是同一个资源请求）会到达同一台机器，一旦缓存住了资源，再此收到请求，就可以从缓存中读取，既减少了带宽，也减少的下载时间。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">upstream bck_testing_01 &#123;</span><br><span class="line">  hash $request_uri;</span><br><span class="line"></span><br><span class="line">  # with default weight for all (weight=1)</span><br><span class="line">  server 192.168.250.220:8080;</span><br><span class="line">  server 192.168.250.221:8080;</span><br><span class="line">  server 192.168.250.222:8080;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="多个webapp的配置"><a href="#多个webapp的配置" class="headerlink" title="多个webapp的配置"></a>多个webapp的配置</h5><p>当一个网站功能越来越丰富时，往往需要将一些功能相对独立的模块剥离出来，独立维护。这样的话，通常，会有多个 webapp。 举个例子：假如 <a target="_blank" rel="noopener" href="http://www.baidu.com.com/">www.baidu.com.com</a> 站点有好几个 webapp，finance（金融）、product（产品）、admin（用户中心）。 访问这些应用的方式通过上下文(context)来进行区分:</p>
+<ul>
+<li>  <a target="_blank" rel="noopener" href="http://www.baidu.com.com/finance/">www.baidu.com.com/finance/</a></li>
+<li>  <a target="_blank" rel="noopener" href="http://www.baidu.com.com/product/">www.baidu.com.com/product/</a></li>
+<li>  <a target="_blank" rel="noopener" href="http://www.baidu.com.com/admin/">www.baidu.com.com/admin/</a></li>
+</ul>
+<p>我们知道，http 的默认端口号是 80，如果在一台服务器上同时启动这 3 个 webapp 应用，都用 80 端口，肯定是不成的。所以，这三个应用需要分别绑定不同的端口号。 那么，问题来了，用户在实际访问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 站点时，访问不同 webapp，总不会还带着对应的端口号去访问吧。所以，你再次需要用到反向代理来做处理。 配置也不难，来看看怎么做吧：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    #此处省略一些基本配置</span><br><span class="line"></span><br><span class="line">    upstream product_server&#123;</span><br><span class="line">        server www.baidu.com:8081;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    upstream admin_server&#123;</span><br><span class="line">        server www.baidu.com:8082;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    upstream finance_server&#123;</span><br><span class="line">        server www.baidu.com:8083;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        #此处省略一些基本配置</span><br><span class="line">        #默认指向product的server</span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://product_server;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /product/&#123;</span><br><span class="line">            proxy_pass http://product_server;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /admin/ &#123;</span><br><span class="line">            proxy_pass http://admin_server;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /finance/ &#123;</span><br><span class="line">            proxy_pass http://finance_server;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="静态站点配置"><a href="#静态站点配置" class="headerlink" title="静态站点配置"></a>静态站点配置</h5><p>有时候，我们需要配置静态站点(即 html 文件和一堆静态资源)。 举例来说：如果所有的静态资源都放在了 <code>/usr/share/nginx/html</code> 目录下，我们只需要在 <code>nginx.conf</code> 中指定首页以及这个站点的 host 即可。 配置如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    gzip on;</span><br><span class="line">    gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/javascript image/jpeg image/gif image/png;</span><br><span class="line">    gzip_vary on;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  location;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root /usr/share/nginx/html;</span><br><span class="line">            index index.html;</span><br><span class="line">            #转发任何请求到 index.html</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时，在本地浏览器访问 location ，就可以访问静态站点了。</p>
+<h5 id="解决跨域问题"><a href="#解决跨域问题" class="headerlink" title="解决跨域问题"></a>解决跨域问题</h5><p>web 领域开发中，经常采用前后端分离模式。这种模式下，前端和后端分别是独立的 web 应用程序，例如：后端是 Java 程序，前端是 React 或 Vue 应用。 各自独立的 web app 在互相访问时，势必存在跨域问题。解决跨域问题一般有两种思路：</p>
+<h6 id="1-CORS"><a href="#1-CORS" class="headerlink" title="1.CORS"></a>1.CORS</h6><p>在后端服务器设置 HTTP 响应头，把你需要允许访问的域名加入 <code>Access-Control-Allow-Origin</code> 中.</p>
+<h6 id="2-jsonp"><a href="#2-jsonp" class="headerlink" title="2.jsonp"></a>2.jsonp</h6><p>把后端根据请求，构造 json 数据，并返回，前端用 jsonp 跨域。 这两种思路，本文不展开讨论。 需要说明的是，nginx 根据第一种思路，也提供了一种解决跨域的解决方案。 举例：<a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 网站是由一个前端 app ，一个后端 app 组成的。前端端口号为 9000， 后端端口号为 8080。 前端和后端如果使用 http 进行交互时，请求会被拒绝，因为存在跨域问题。来看看，nginx 是怎么解决的吧： 首先，在 enable-cors.conf 文件中设置 cors ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># allow origin list</span><br><span class="line">set $ACAO &#x27;*&#x27;;</span><br><span class="line"></span><br><span class="line"># set single origin</span><br><span class="line">if ($http_origin ~* (www.helloworld.com)$) &#123;</span><br><span class="line">  set $ACAO $http_origin;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ($cors = &quot;trueget&quot;) &#123;</span><br><span class="line">    add_header &#x27;Access-Control-Allow-Origin&#x27; &quot;$http_origin&quot;;</span><br><span class="line">    add_header &#x27;Access-Control-Allow-Credentials&#x27; &#x27;true&#x27;;</span><br><span class="line">    add_header &#x27;Access-Control-Allow-Methods&#x27; &#x27;GET, POST, OPTIONS&#x27;;</span><br><span class="line">    add_header &#x27;Access-Control-Allow-Headers&#x27; &#x27;DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type&#x27;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ($request_method = &#x27;OPTIONS&#x27;) &#123;</span><br><span class="line">  set $cors &quot;$&#123;cors&#125;options&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ($request_method = &#x27;GET&#x27;) &#123;</span><br><span class="line">  set $cors &quot;$&#123;cors&#125;get&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ($request_method = &#x27;POST&#x27;) &#123;</span><br><span class="line">  set $cors &quot;$&#123;cors&#125;post&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来，在你的服务器中 <code>include enable-cors.conf</code> 来引入跨域配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># ----------------------------------------------------</span><br><span class="line"># 此文件为项目 nginx 配置片段</span><br><span class="line"># 可以直接在 nginx config 中 include（推荐）</span><br><span class="line"># 或者 copy 到现有 nginx 中，自行配置</span><br><span class="line"># www.baidu.com 域名需配合 dns hosts 进行配置</span><br><span class="line"># 其中，api 开启了 cors，需配合本目录下另一份配置文件</span><br><span class="line"># ----------------------------------------------------</span><br><span class="line">upstream front_server&#123;</span><br><span class="line">  server www.baidu.com:9000;</span><br><span class="line">&#125;</span><br><span class="line">upstream api_server&#123;</span><br><span class="line">  server www.baidu.com:8080;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">  listen       80;</span><br><span class="line">  server_name  www.baidu.com;</span><br><span class="line"></span><br><span class="line">  location ~ ^/api/ &#123;</span><br><span class="line">    include enable-cors.conf;</span><br><span class="line">    proxy_pass http://api_server;</span><br><span class="line">    rewrite &quot;^/api/(.*)$&quot; /$1 break;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  location ~ ^/ &#123;</span><br><span class="line">    proxy_pass http://front_server;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="四、Nginx-问题集"><a href="#四、Nginx-问题集" class="headerlink" title="四、Nginx 问题集"></a>四、Nginx 问题集</h4><h5 id="Nginx-出现大量-TIME-WAIT"><a href="#Nginx-出现大量-TIME-WAIT" class="headerlink" title="Nginx 出现大量 TIME_WAIT"></a>Nginx 出现大量 TIME_WAIT</h5><p>检测TIME_WAIT状态语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@izf8zf4p0dwlngmnn6hinkz conf.d]# netstat -n  awk &#x27;/^tcp/ &#123;++S[$NF]&#125; END &#123;for(a in S) print a, S[a]&#125;&#x27;</span><br><span class="line">SYN_RECV 7</span><br><span class="line">ESTABLISHED 756</span><br><span class="line">FIN_WAIT1 21</span><br><span class="line">SYN_SENT 3</span><br><span class="line">TIME_WAIT 2000</span><br></pre></td></tr></table></figure>
+
+<p>状态解析：</p>
+<ul>
+<li>  <code>CLOSED</code> - 无连接是活动的或正在进行</li>
+<li>  <code>LISTEN</code> - 服务器在等待进入呼叫</li>
+<li>  <code>SYN_RECV</code> - 一个连接请求已经到达，等待确认</li>
+<li>  <code>SYN_SENT</code> - 应用已经开始，打开一个连接</li>
+<li>  <code>ESTABLISHED</code> - 正常数据传输状态</li>
+<li>  <code>FIN_WAIT1</code> - 应用说它已经完成</li>
+<li>  <code>FIN_WAIT2</code> - 另一边已同意释放</li>
+<li>  <code>ITMED_WAIT</code> - 等待所有分组死掉</li>
+<li>  <code>CLOSING</code> - 两边同时尝试关闭</li>
+<li>  <code>TIME_WAIT</code> - 另一边已初始化一个释放</li>
+<li>  <code>LAST_ACK</code> - 等待所有分组死掉</li>
+</ul>
+<p>解决办法 执行 <code>vim /etc/sysctl.conf</code>，并添加下面字段：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_tw_recycle = 1</span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br></pre></td></tr></table></figure>
+
+<p>执行 /<code>sbin/sysctl -p</code> 让修改生效。</p>
+<h5 id="上传文件大小限制"><a href="#上传文件大小限制" class="headerlink" title="上传文件大小限制"></a>上传文件大小限制</h5><p>问题现象： 显示错误信息：<strong>413 Request Entity Too Large</strong>。 意思是请求的内容过大，浏览器不能正确显示。常见的情况是发送 <code>POST</code> 请求来上传大文件。 解决办法：</p>
+<ul>
+<li>  可以在 <code>http</code> 模块中设置：<code>client_max_body_size 20m;</code></li>
+<li>  可以在 <code>server</code> 模块中设置：<code>client_max_body_size 20m;</code></li>
+<li>  可以在 <code>location</code> 模块中设置：<code>client_max_body_size 20m;</code></li>
+</ul>
+<p>三者区别是：</p>
+<ul>
+<li>  如果文大小限制设置在 <code>http</code> 模块中，则对所有 Nginx 收到的请求。</li>
+<li>  如果文大小限制设置在 <code>server</code> 模块中，则只对该 <code>server</code> 收到的请求生效。</li>
+<li>  如果文大小限制设置在 <code>location</code> 模块中，则只对匹配了 <code>location</code> 路由规则的请求生效。</li>
+</ul>
+<h5 id="请求时间限制"><a href="#请求时间限制" class="headerlink" title="请求时间限制"></a>请求时间限制</h5><p>问题现象： 请求时间较长，链接被重置页面刷新。常见的情况是：上传、下载大文件。 解决办法： 修改超时时间   参考： <a target="_blank" rel="noopener" href="https://dunwu.github.io/nginx-tutorial/#/README">https://dunwu.github.io/nginx-tutorial/#/README</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1662/" title="Nginx笔记">http://erbi.me/1662/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/nginx/" rel="tag"># nginx</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1657/" rel="prev" title="GP&CDH安装部署系列-chrony时钟同步">
+                  <i class="fa fa-chevron-left"></i> GP&CDH安装部署系列-chrony时钟同步
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1660/" rel="next" title="postgresql导出表结构">
+                  postgresql导出表结构 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

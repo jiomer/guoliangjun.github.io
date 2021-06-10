@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="postgreSQL之数据类型以下是自己结合postgreSQL文档手册总结整理的入门手札，如有不严谨，请到官方文档手册查看：http:&#x2F;&#x2F;www.postgres.cn&#x2F;docs&#x2F;10&#x2F;index.html 数字类型pgsql支持的数字类型有整数类型、用户指定精度类型、浮点型、和serial类型(自增) 数字类型图： 整数类型smallint、integer、bigint都是整数类型，存储一定范">
+<meta property="og:type" content="article">
+<meta property="og:title" content="postgreSQL之数据类型">
+<meta property="og:url" content="http://erbi.me/1353/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="postgreSQL之数据类型以下是自己结合postgreSQL文档手册总结整理的入门手札，如有不严谨，请到官方文档手册查看：http:&#x2F;&#x2F;www.postgres.cn&#x2F;docs&#x2F;10&#x2F;index.html 数字类型pgsql支持的数字类型有整数类型、用户指定精度类型、浮点型、和serial类型(自增) 数字类型图： 整数类型smallint、integer、bigint都是整数类型，存储一定范">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/20191019224145.jpg">
+<meta property="og:image" content="http://qn.199604.com/zifuchuang_20191019233548.jpg">
+<meta property="og:image" content="http://qn.199604.com/time_20191020001423.jpg">
+<meta property="og:image" content="http://qn.199604.com/ipaddr_20191020111715.jpg">
+<meta property="og:image" content="http://qn.199604.com/addr_lizi_20191020114415.png">
+<meta property="og:image" content="http://qn.199604.com/ipadrr_azf_20191020114050.jpg">
+<meta property="og:image" content="http://qn.199604.com/array_czf_20191020192536.jpg">
+<meta property="og:image" content="http://qn.199604.com/json_czf1_20191020213424.png">
+<meta property="og:image" content="http://qn.199604.com/json_czf2_20191020213424.png">
+<meta property="article:published_time" content="2019-10-25T01:23:31.000Z">
+<meta property="article:modified_time" content="2021-06-10T06:16:57.044Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="postgresql">
+<meta property="article:tag" content="pgsql">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/20191019224145.jpg">
+
+
+<link rel="canonical" href="http://erbi.me/1353/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1353&#x2F;&quot;,&quot;path&quot;:&quot;1353&#x2F;&quot;,&quot;title&quot;:&quot;postgreSQL之数据类型&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>postgreSQL之数据类型 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#postgreSQL%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">postgreSQL之数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">数字类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%BB%E6%84%8F%E7%B2%BE%E5%BA%A6%E6%95%B0%E5%AD%97"><span class="nav-number">1.1.2.</span> <span class="nav-text">任意精度数字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.3.</span> <span class="nav-text">浮点类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%8F%B7%E7%B1%BB%E5%9E%8B%EF%BC%88%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E2%80%93-gt-%E5%BA%8F%E6%95%B0%E7%B1%BB%E5%9E%8B%EF%BC%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">序列号类型（官方文档–&gt;序数类型）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">字符类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F-%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">日期&#x2F;时间类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B-boolean%E2%80%93-gt-true-false"><span class="nav-number">1.4.</span> <span class="nav-text">布尔类型(boolean–&gt;true&#x2F;false)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.5.</span> <span class="nav-text">网络地址类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#macaddr%E5%92%8Cmacaddr8"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">macaddr和macaddr8</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.6.</span> <span class="nav-text">数组类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">查询数组元素</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E8%BF%BD%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E3%80%81%E6%9B%B4%E6%96%B0"><span class="nav-number">1.6.1.</span> <span class="nav-text">数组元素追加、删除、更新</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E7%BB%84"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">修改数组</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#json-jsonb%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.7.</span> <span class="nav-text">json&#x2F;jsonb类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#json%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.7.1.</span> <span class="nav-text">json类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2json%E6%95%B0%E6%8D%AE"><span class="nav-number">1.7.1.1.</span> <span class="nav-text">查询json数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jsonb%E9%94%AE-%E5%80%BC%E5%BE%97%E8%BF%BD%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E3%80%81%E6%9B%B4%E6%96%B0"><span class="nav-number">1.7.1.2.</span> <span class="nav-text">jsonb键&#x2F;值得追加、删除、更新</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#json%E5%92%8Cjsonb%E7%9A%84%E5%AF%B9%E6%AF%94%E5%B7%AE%E5%BC%82"><span class="nav-number">1.7.1.3.</span> <span class="nav-text">json和jsonb的对比差异</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jsonb%E5%92%8Cjson%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">1.7.2.</span> <span class="nav-text">jsonb和json操作符</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1353/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          postgreSQL之数据类型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-25 09:23:31" itemprop="dateCreated datePublished" datetime="2019-10-25T09:23:31+08:00">2019-10-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 14:16:57" itemprop="dateModified" datetime="2021-06-10T14:16:57+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="postgreSQL之数据类型"><a href="#postgreSQL之数据类型" class="headerlink" title="postgreSQL之数据类型"></a>postgreSQL之数据类型</h2><p>以下是自己结合postgreSQL文档手册总结整理的入门手札，如有不严谨，请到官方文档手册查看：<a target="_blank" rel="noopener" href="http://www.postgres.cn/docs/10/index.html">http://www.postgres.cn/docs/10/index.html</a></p>
+<h3 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a>数字类型</h3><p>pgsql支持的数字类型有整数类型、用户指定精度类型、浮点型、和serial类型(自增)</p>
+<p>数字类型图：<br><img src="http://qn.199604.com/20191019224145.jpg" alt="image"></p>
+<h4 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h4><p>smallint、integer、bigint都是整数类型，存储一定范围的整数，超出范围将会报错。</p>
+<p>PS：</p>
+<blockquote>
+<p>smallint字段定义时可以写成int2,integer比smallint大，所以是int4(最常用的整数类型），同理bigint可写成int8.</p>
+</blockquote>
+<h4 id="任意精度数字"><a href="#任意精度数字" class="headerlink" title="任意精度数字"></a>任意精度数字</h4><p>类型decimal和numeric是等效的,可以存储非常多位的数字.<br>比如numeric的语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.numberic(precision,scale)</span><br><span class="line">precision:指全部位数，必须为正整数--&gt;（精度）</span><br><span class="line">scale:指小数部分的数字位数，可以为0或者整数--&gt;(标度)</span><br><span class="line">2.numberic(precision)</span><br><span class="line">3.numberic</span><br></pre></td></tr></table></figure>
+<p>PS:</p>
+<blockquote>
+<p>numberic类型性能比整数类型性能低，所以如果两种类型都能满足需求，建议使用整数类型。<br>最后：为了增强程序的移植性，最好同时指定numeric的精度和标度。</p>
+</blockquote>
+<h4 id="浮点类型"><a href="#浮点类型" class="headerlink" title="浮点类型"></a>浮点类型</h4><p>数据类型real和double precision是指浮点数据类型(不准确的、变精度的数字类型),real支持4字节，double precision是支持8字节。</p>
+<h4 id="序列号类型（官方文档–-gt-序数类型）"><a href="#序列号类型（官方文档–-gt-序数类型）" class="headerlink" title="序列号类型（官方文档–&gt;序数类型）"></a>序列号类型（官方文档–&gt;序数类型）</h4><p>smallserial、serial和bigserial是自增类型，但严格意义上它不是真正的类型，它们只是为了创建唯一标识符列而存在的方便符号（类似其它一些数据库中支持的AUTO_INCREMENT属性），如下代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE test_serial (</span><br><span class="line">    id serial,</span><br><span class="line">    flag text</span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>等价于以下语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE SEQUENCE test_serial_seq;</span><br><span class="line">CREATE TABLE test_serial (</span><br><span class="line">    id integer NOT NULL DEFAULT,</span><br><span class="line">    flag text</span><br><span class="line">    nextval(&#x27;test_serial_seq&#x27;)</span><br><span class="line">);</span><br><span class="line">ALTER SEQUENCE test_serial_seq OWNED BY test_serial.id;</span><br></pre></td></tr></table></figure>
+<p>简单的说，就是mysql自增(AUTO_INCREMENT).</p>
+<p>PS:</p>
+<blockquote>
+<p>类型名serial和serial4是等效的, 两个都创建integer列。</p>
+<p>类型名bigserial和serial8也一样，只不过它们创建一个 bigint列。</p>
+<p>类型名smallserial和serial2也以相同方式工作，只不过它们创建一个smallint列。</p>
+</blockquote>
+<hr>
+<h3 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a>字符类型</h3><p>字符串类型图，如下：<br><img src="http://qn.199604.com/zifuchuang_20191019233548.jpg" alt="image"></p>
+<p>character varying(n)存储的是变长字符类型， 其中n是一个正整数，如果存储的字符串长度超过n会报错喔,但是如果存储字符串比n小的话，character varying(n)只会存储实际的字符串。</p>
+<p>character(n)存储的是定长字符串，如果存储的字符串长度超过n会报错，比它小则会用空白填充…</p>
+<p>说了那么多，还是用一个例子吧：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">创建一个表</span><br><span class="line">create table test_char(col1 varchar(4),col2 char(4));</span><br><span class="line">---</span><br><span class="line">插入数据</span><br><span class="line">insert into test_char(col1,col2) values(&#x27;a&#x27;,&#x27;a&#x27;);</span><br><span class="line">---</span><br><span class="line">比较字符串长度</span><br><span class="line">select char_length(col1),char_length(col2) from test_char;</span><br><span class="line">----</span><br><span class="line">char_length	char_length1</span><br><span class="line">1	1</span><br><span class="line">----</span><br><span class="line">比较字符串占用的字节数</span><br><span class="line">select octet_length(col1),octet_length(col2) from test_char</span><br><span class="line">----</span><br><span class="line">octet_length	octet_length1</span><br><span class="line">1	4</span><br></pre></td></tr></table></figure>
+<p>PS:</p>
+<blockquote>
+<p>varchar(n)和char(n)的概念分别是character varying(n)和character(n)的别名。没有长度声明词的character等效于character(1)。如果不带长度说明词使用character varying，那么该类型接受任何长度的串。后者是一个PostgreSQL的扩展。</p>
+</blockquote>
+<p>text字符类型，它可以存储任何长度的串。和没有什么字符长度的character varying(n)字符类型几乎没有差别。</p>
+<p>PS:</p>
+<blockquote>
+<p>这三种类型之间没有性能差别，只不过是在使用填充空白的类型的时候需要更多存储尺寸，以及在存储到一个有长度约束的列时需要少量额外CPU周期来检查长度。虽然在某些其它的数据库系统里，character(n)有一定的性能优势，但在PostgreSQL里没有。事实上，character(n)通常是这三种类型之中最慢的一个，因为它需要额外的存储开销。在大多数情况下，应该使用text或者character varying.（postgreSQL支持字符串存储的最长字串大概是 1 GB）</p>
+</blockquote>
+<hr>
+<h3 id="日期-时间类型"><a href="#日期-时间类型" class="headerlink" title="日期/时间类型"></a>日期/时间类型</h3><p>PostgreSQL 支持 SQL标准中所有的日期和时间类型。<br>具体如下：<br><img src="http://qn.199604.com/time_20191020001423.jpg" alt="image"><br>PS:</p>
+<blockquote>
+<p>SQL要求只写timestamp等效于timestamp without time zone，并且PostgreSQL鼓励这种行为。timestamptz被接受为timestamp with time zone的一种简写，这是一种PostgreSQL的扩展</p>
+</blockquote>
+<p>time、timestamp和interval接受一个可选的精度值 p，这个精度值声明在秒域中小数点之后保留的位数。缺省情况下，在精度上没有明确的边界，p允许的范围是从 0 到 6。</p>
+<p>说了那么多，我们还是用实例说话吧…<br>首先先用系统自带的now()函数，now()函数显示是当前时间，并返回类型为：timestamp with time zone,如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select now();</span><br><span class="line">---</span><br><span class="line">now</span><br><span class="line">2019-10-20 00:23:25.288484+08</span><br></pre></td></tr></table></figure>
+<p>如果需要转到timestamp without time zone,并且不需要保留小数点，如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select now()::timestamp(0) without time zone;</span><br><span class="line">----</span><br><span class="line">now</span><br><span class="line">2019-10-20 00:24:42</span><br></pre></td></tr></table></figure>
+<p>转换到date类型，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select now()::date;</span><br><span class="line">----</span><br><span class="line">now</span><br><span class="line">2019-10-20</span><br></pre></td></tr></table></figure>
+<p>转到time without time zone，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select now()::time without time zone;</span><br><span class="line">----</span><br><span class="line">now</span><br><span class="line">00:26:33.661496</span><br></pre></td></tr></table></figure>
+<p>最后就是interval类型，其实interval类型是有一个附加选项，它可以通过写下面之一的短语来限制存储的fields的集合：</p>
+<blockquote>
+<p>year,month,day,hour,minute,second,yeartomonth,daytohour,daytominute,daytosecond,hourtominute,hourtosecond,minutetosecond</p>
+</blockquote>
+<p>又来举个例子吧：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select now(),now()+interval &#x27;1 day&#x27;</span><br><span class="line">----</span><br><span class="line">now	?column?</span><br><span class="line">2019-10-20 00:29:49.530872+08	2019-10-21 00:29:49.530872+08</span><br></pre></td></tr></table></figure>
+<p>剩下那么多附加选项，自己测吧…</p>
+<hr>
+<h3 id="布尔类型-boolean–-gt-true-false"><a href="#布尔类型-boolean–-gt-true-false" class="headerlink" title="布尔类型(boolean–&gt;true/false)"></a>布尔类型(boolean–&gt;true/false)</h3><p>“真(true)”状态的有效文字值是:</p>
+<blockquote>
+<p>TRUE、’t’、’true’、’y’、’yes’、’on’、’1’</p>
+</blockquote>
+<p>而对于“假”状态有效文字值是:</p>
+<blockquote>
+<p>FALSE、’f’、’false’、’n’、’no’、’off’、’0’</p>
+</blockquote>
+<p>知道我们的通病都不喜欢看文字，而看例子，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">create table test_boolean(col1 boolean,col2 boolean);</span><br><span class="line">----</span><br><span class="line">insert into test_boolean(col1,col2) values(&#x27;true&#x27;,&#x27;false&#x27;);</span><br><span class="line"></span><br><span class="line">insert into test_boolean(col1,col2) values(&#x27;true&#x27;,&#x27;false&#x27;);</span><br><span class="line"></span><br><span class="line">insert into test_boolean(col1,col2) values(&#x27;t&#x27;,&#x27;f&#x27;);</span><br><span class="line"></span><br><span class="line">insert into test_boolean(col1,col2) values(&#x27;TRUE&#x27;,&#x27;FALSE&#x27;);</span><br><span class="line"></span><br><span class="line">insert into test_boolean(col1,col2) values(&#x27;yes&#x27;,&#x27;no&#x27;);</span><br><span class="line"></span><br><span class="line">insert into test_boolean(col1,col2) values(&#x27;y&#x27;,&#x27;n&#x27;);</span><br><span class="line"></span><br><span class="line">insert into test_boolean(col1,col2) values(&#x27;1&#x27;,&#x27;0&#x27;);</span><br><span class="line"></span><br><span class="line">insert into test_boolean(col1,col2) values(null,null);</span><br><span class="line"></span><br><span class="line">---------</span><br><span class="line"></span><br><span class="line">select * from test_boolean</span><br><span class="line">----</span><br><span class="line">col1	col2</span><br><span class="line">t	f</span><br><span class="line">t	f</span><br><span class="line">t	f</span><br><span class="line">t	f</span><br><span class="line">t	f</span><br><span class="line">t	f</span><br><span class="line">	</span><br><span class="line">ps:一共有7条数据，其中布尔类型可以支持插入null字符...</span><br></pre></td></tr></table></figure>
+
+<h3 id="网络地址类型"><a href="#网络地址类型" class="headerlink" title="网络地址类型"></a>网络地址类型</h3><p>PostgreSQL提供用于存储 IPv4、IPv6 和 MAC 地址的数据类型,使用网络地址类型存储IP地址会优于字符类型，因为网络地址类型一方面会对数据合法性进行检查，另一方面也提供了网络地址类型相关的函数，方便我们使用吧..</p>
+<p>网络地址数据类型，如下：<br><img src="http://qn.199604.com/ipaddr_20191020111715.jpg" alt="image"></p>
+<p>inet或者cidr类型存储的网络地址格式都为：address(地址)/y(网络掩码的位数)</p>
+<p>address就是表示ipv4或者ipv6的网络地址<br>y表示网络掩码位数，如果y省略，则对于ipv4的网络掩码就为32，而ipv6则为128,因此该值表示只有一台主机。</p>
+<p>如果y显示时，如果y部分指定一个单台主机，它将不会被显示出来。</p>
+<p>之前说了inet或者cidr类型都会对数据合法性进行检查，如果数据不合法则会报错，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[SQL]select &#x27;192.168.1.1000&#x27;::inet</span><br><span class="line"></span><br><span class="line">[Err] ERROR:  invalid input syntax for type inet: &quot;192.168.1.1000&quot;</span><br><span class="line">LINE 1: select &#x27;192.168.1.1000&#x27;::inet</span><br></pre></td></tr></table></figure>
+
+<p>inet和cidr网络类型也存在一定的差别哒。</p>
+<p>1.cidr类型的输出默认带子网掩码信息，而inte不一定。如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select &#x27;192.168.1.100&#x27;::cidr,&#x27;192.168.1.100&#x27;::inet</span><br><span class="line">---</span><br><span class="line">cidr	inet</span><br><span class="line">192.168.1.100/32	192.168.1.100</span><br><span class="line">---------</span><br><span class="line">select &#x27;192.168.1.100/32&#x27;::cidr,&#x27;192.168.1.100/32&#x27;::inet</span><br><span class="line">---</span><br><span class="line">cidr	inet</span><br><span class="line">192.168.1.100/32	192.168.1.100</span><br><span class="line">--------</span><br><span class="line">select &#x27;192.168.1.100&#x27;::cidr,&#x27;192.168.1.100/16&#x27;::inet</span><br><span class="line">---</span><br><span class="line">cidr	inet</span><br><span class="line">192.168.1.100/32	192.168.1.100/16</span><br></pre></td></tr></table></figure>
+<p>2.cidr类型对ip地址和子网掩码合法性进行检查，而inte不会，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[SQL]select &#x27;192.168.1.100/8&#x27;::cidr</span><br><span class="line"></span><br><span class="line">[Err] ERROR:  invalid cidr value: &quot;192.168.1.100/8&quot;</span><br><span class="line">LINE 1: select &#x27;192.168.1.100/8&#x27;::cidr</span><br><span class="line">               ^</span><br><span class="line">DETAIL:  Value has bits set to right of mask.</span><br><span class="line"></span><br><span class="line">--------------------</span><br><span class="line"></span><br><span class="line">select &#x27;192.168.1.100/8&#x27;::inet</span><br><span class="line">----</span><br><span class="line">inet</span><br><span class="line">192.168.1.100/8</span><br></pre></td></tr></table></figure>
+<p>从上面的例子看出，cidr比inet网络类型更加得严谨吧…<br>简单的说就是：</p>
+<blockquote>
+<p>inet和cidr类型之间的本质区别是inet接受右边有非零位的网络掩码， 而cidr不接受。 例如，192.168.1.100/24对inet来说是有效的， 但是cidr来说是无效的。</p>
+</blockquote>
+<hr>
+<p><img src="http://qn.199604.com/addr_lizi_20191020114415.png" alt="image"></p>
+<p>顺便记录一下网络操作符吧，因为oracle和mysql我自己也没有用到过网络类型的。<br><img src="http://qn.199604.com/ipadrr_azf_20191020114050.jpg" alt="image"></p>
+<hr>
+<h5 id="macaddr和macaddr8"><a href="#macaddr和macaddr8" class="headerlink" title="macaddr和macaddr8"></a>macaddr和macaddr8</h5><p>macaddr和macaddr8是存储mac地址。对于mac的介绍更多可到：<a target="_blank" rel="noopener" href="http://www.postgres.cn/docs/10/datatype-net-types.html">http://www.postgres.cn/docs/10/datatype-net-types.html</a></p>
+<hr>
+<h3 id="数组类型"><a href="#数组类型" class="headerlink" title="数组类型"></a>数组类型</h3><p>postgreSQL支持一维数据or多维数组，常用的数据类型为数字类型的数组和字符串的数据，但也支持其他类型的吧?枚举类型、复合类型数组…怎么支持自己去全球最大的同性恋交友网站看官网手册..(github.com)</p>
+<p>怎么用数组类型?噗,开玩笑我也不会…<br>那么我们就从怎么创建表开始吧..如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table test_array(</span><br><span class="line">id INTEGER,</span><br><span class="line">array_i INTEGER[],</span><br><span class="line">arrat_t TEXT[]</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>从创表语句看，INTEGER[]就是Integer类型的一维数组了，同样，TEXT[]就是text类型的一维数据.<br>什么?那么二维数组呢???喵喵喵???不就是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table test_array_er(</span><br><span class="line">id INTEGER,</span><br><span class="line">array_i INTEGER[][],</span><br><span class="line">arrat_t TEXT[][]</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>数组类型插入数据有两种方式，一种方式使用花括号的方式，即：{}–&gt;:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#123;val1 delim val2 delim ...&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>说白了，就是将数组元素值用花括号“{}”包围并用delim分隔符分开，delim分隔符常用基本上为逗号?如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select &#x27;&#123;1,2,3&#125;&#x27;</span><br><span class="line">----</span><br><span class="line">?column?</span><br><span class="line">&#123;1,2,3&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>往表test_array 插入一条数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">insert into test_array(id,array_i,arrat_t)</span><br><span class="line">values (1,&#x27;&#123;1,2,3&#125;&#x27;,&#x27;&#123;&quot;a&quot;,&quot;b&quot;,&quot;c&quot;&#125;&#x27;);</span><br></pre></td></tr></table></figure>
+<p>往数组插入的第二张方式为使用array关键字，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select array[1,2,3]</span><br><span class="line">----</span><br><span class="line">array</span><br><span class="line">&#123;1,2,3&#125;</span><br></pre></td></tr></table></figure>
+<p>往表test_array 插入一条数组：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">insert into test_array(id,array_i,arrat_t)</span><br><span class="line">values (2,array[1,2,3],array[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;]);</span><br></pre></td></tr></table></figure>
+<p>同理，如果插入多维数组表，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">insert into test_array_er(id,array_i,arrat_t)</span><br><span class="line">values (1,&#x27;&#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;&#125;&#x27;,&#x27;&#123;&#123;&quot;a&quot;,&quot;b&quot;,&quot;c&quot;&#125;,&#123;&quot;e&quot;,&quot;f&quot;,&quot;g&quot;&#125;&#125;&#x27;);</span><br><span class="line">----</span><br><span class="line">insert into test_array_er(id,array_i,arrat_t)</span><br><span class="line">values (2,array[[1,2,3],[4,5,6]],array[[&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;],[&#x27;e&#x27;,&#x27;f&#x27;,&#x27;g&#x27;]]);</span><br></pre></td></tr></table></figure>
+
+<h5 id="查询数组元素"><a href="#查询数组元素" class="headerlink" title="查询数组元素"></a>查询数组元素</h5><p>如果要查询数组所有元素值，只需要查询数组字段名称即可，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select array_i from test_array</span><br></pre></td></tr></table></figure>
+<p>数组元素的引用可以通过方括号[]方式，数据下表卸载方括号里面，范围基本上是1到n，n为数组长度，超出数据范围返回null，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select array_i[1],arrat_t[1] from test_array</span><br></pre></td></tr></table></figure>
+
+<h4 id="数组元素追加、删除、更新"><a href="#数组元素追加、删除、更新" class="headerlink" title="数组元素追加、删除、更新"></a>数组元素追加、删除、更新</h4><p>数组元素的追加使用array_append函数，如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array_append(anyarray,anyelement)</span><br></pre></td></tr></table></figure>
+<p>使用array_append函数向数组末端追加一个元素，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select array_append(array[1,2,3],4)</span><br><span class="line">----</span><br><span class="line">array_append</span><br><span class="line">&#123;1,2,3,4&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以用array_prepend函数，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT array_prepend(1, ARRAY[2,3]);</span><br><span class="line">----</span><br><span class="line">array_prepend</span><br><span class="line">&#123;1,2,3&#125;</span><br></pre></td></tr></table></figure>
+<p>更可以用array_cat函数，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SELECT array_cat(ARRAY[1,2], ARRAY[3,4]);</span><br><span class="line">----</span><br><span class="line">array_cat</span><br><span class="line">&#123;1,2,3,4&#125;</span><br><span class="line"></span><br><span class="line">------------</span><br><span class="line">SELECT array_cat(ARRAY[[1,2],[3,4]], ARRAY[5,6]);</span><br><span class="line">array_cat</span><br><span class="line">---------------------</span><br><span class="line"> &#123;&#123;1,2&#125;,&#123;3,4&#125;,&#123;5,6&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>array_prepend、array_append或array_cat这三个函数区别就是前两个函数仅支持一维数组，但array_cat支持多维数组。</p>
+<p>数据元素追加到数组也可以使用||，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select array[1,2,3]||4</span><br><span class="line">----</span><br><span class="line">?column?</span><br><span class="line">&#123;1,2,3,4&#125;</span><br></pre></td></tr></table></figure>
+<p>数组元素的删除是使用array_remove函数，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array_remove(anyarray,anyelement)</span><br></pre></td></tr></table></figure>
+<p>使用array_remove函数将移除数组中等于给定值的所有数组元素，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select array[1,2,2,3],array_remove(array[1,2,2,3],2)</span><br><span class="line">----</span><br><span class="line">array	array_remove</span><br><span class="line">&#123;1,2,2,3&#125;	&#123;1,3&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改数组"><a href="#修改数组" class="headerlink" title="修改数组"></a>修改数组</h5><p>1.一个数组值可以被整个替换：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">花括号的语法方式：</span><br><span class="line">update test_array set array_i=&#x27;&#123;2,3,4&#125;&#x27; where id =1</span><br><span class="line">----</span><br><span class="line">使用ARRAY表达式语法:</span><br><span class="line">update test_array set array_i=array[1,3,4] where id =1</span><br></pre></td></tr></table></figure>
+<p>2.可以在一个元素上被更新，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update test_array set array_i[3] = 5 where id =1</span><br></pre></td></tr></table></figure>
+<p>或者是二维数组的切片更新，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update test_array_er set array_i[1:2] = array[[7,8,9],[8,9,10]] where id =1</span><br></pre></td></tr></table></figure>
+<p>数组元素丰富的操作符：<br><img src="http://qn.199604.com/array_czf_20191020192536.jpg" alt="image"></p>
+<p>想要更深入了解数组类型，可到：<a target="_blank" rel="noopener" href="http://www.postgres.cn/docs/10/arrays.html">http://www.postgres.cn/docs/10/arrays.html</a> </p>
+<hr>
+<h3 id="json-jsonb类型"><a href="#json-jsonb类型" class="headerlink" title="json/jsonb类型"></a>json/jsonb类型</h3><h4 id="json类型"><a href="#json类型" class="headerlink" title="json类型"></a>json类型</h4><p>开始我们先用一个简单的json例子开启json类型的使用吧~</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select &#x27;&#123;&quot;a&quot;:1,&quot;b&quot;:2&#125;&#x27;::json</span><br><span class="line">----</span><br><span class="line">json</span><br><span class="line">&#123;&quot;a&quot;:1,&quot;b&quot;:2&#125;</span><br></pre></td></tr></table></figure>
+<p>这就是强转的一个小例子，我们还是创一个表吧，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">create table test_json(</span><br><span class="line">id serial primary key,</span><br><span class="line">name json</span><br><span class="line">);</span><br><span class="line">insert into test_json(name) values(&#x27;&#123;&quot;col1&quot;:1,&quot;col2&quot;:&quot;glj&quot;,&quot;col3&quot;:&quot;male&quot;&#125;&#x27;);</span><br><span class="line">insert into test_json(name) values(&#x27;&#123;&quot;col1&quot;:2,&quot;col2&quot;:&quot;hhm&quot;,&quot;col3&quot;:&quot;famale&quot;&#125;&#x27;);</span><br><span class="line">select * from test_json;</span><br><span class="line">-----</span><br><span class="line">id	name</span><br><span class="line">1	&#123;&quot;col1&quot;:1,&quot;col2&quot;:&quot;glj&quot;,&quot;col3&quot;:&quot;male&quot;&#125;</span><br><span class="line">2	&#123;&quot;col1&quot;:2,&quot;col2&quot;:&quot;hhm&quot;,&quot;col3&quot;:&quot;famale&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="查询json数据"><a href="#查询json数据" class="headerlink" title="查询json数据"></a>查询json数据</h5><p>通过‘-&gt;’操作符可以查询json数据的键值，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select name-&gt;&#x27;col2&#x27; from test_json</span><br><span class="line">----</span><br><span class="line">?column?</span><br><span class="line">&quot;glj&quot;</span><br><span class="line">&quot;hhm&quot;</span><br></pre></td></tr></table></figure>
+<p>如果想以文本格式返回json字段的键值可以使用<br>‘-&gt;&gt;’操作符，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select name-&gt;&gt;&#x27;col2&#x27; from test_json</span><br><span class="line">----</span><br><span class="line">?column?</span><br><span class="line">glj</span><br><span class="line">hhm</span><br></pre></td></tr></table></figure>
+<h5 id="jsonb键-值得追加、删除、更新"><a href="#jsonb键-值得追加、删除、更新" class="headerlink" title="jsonb键/值得追加、删除、更新"></a>jsonb键/值得追加、删除、更新</h5><p>jsonb键/值追加可以通过||操作符，例如增加sex的键值，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select &#x27;&#123;&quot;name&quot;:&quot;glj&quot;,&quot;age&quot;:23&#125;&#x27;::jsonb || &#x27;&#123;&quot;sex&quot;:&quot;male&quot;&#125;&#x27;::jsonb</span><br><span class="line">----</span><br><span class="line">?column?</span><br><span class="line">&#123;&quot;age&quot;: 23, &quot;sex&quot;: &quot;male&quot;, &quot;name&quot;: &quot;glj&quot;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>jsonb键/值删除有两种办法，一是通过操作符-删除，另一种是通过操作符 #- 删除指定的键/值，<br>首先先通过操作符- 删除键/值，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select &#x27;&#123;&quot;name&quot;:&quot;glj&quot;,&quot;age&quot;:23,&quot;sex&quot;:&quot;male&quot;&#125;&#x27;::jsonb - &#x27;sex&#x27;</span><br><span class="line">----</span><br><span class="line">?column?</span><br><span class="line">&#123;&quot;age&quot;: 23, &quot;name&quot;: &quot;glj&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>再通过操作符 #- 删除键/值，但这种方式通常用于嵌套json的数据删除的，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select 	&#x27;&#123;&quot;name&quot;:&quot;glj&quot;,&quot;contact&quot;:&#123;&quot;phone&quot;:&quot;123456779&quot;,&quot;blogAddrUrl&quot;:&quot;http://199604.com&quot;&#125;&#125;&#x27;::jsonb #- &#x27;&#123;contact,phone&#125;&#x27;</span><br><span class="line">------</span><br><span class="line">?column?</span><br><span class="line">&#123;&quot;name&quot;: &quot;glj&quot;, &quot;contact&quot;: &#123;&quot;blogAddrUrl&quot;: &quot;http://199604.com&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>方式二：删除contact中位置1的键/值，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select 	&#x27;&#123;&quot;name&quot;:&quot;glj&quot;,&quot;contact&quot;:[&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;]&#125;&#x27;::jsonb #- &#x27;&#123;contact,1&#125;&#x27;</span><br><span class="line">-----</span><br><span class="line">?column?</span><br><span class="line">&#123;&quot;name&quot;: &quot;glj&quot;, &quot;contact&quot;: [&quot;0&quot;, &quot;2&quot;, &quot;3&quot;]&#125;</span><br></pre></td></tr></table></figure>
+<p>jsonb键/值更新也有两种办法，一种是操作符 ||的方式，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select &#x27;&#123;&quot;name&quot;:&quot;glj&quot;,&quot;age&quot;:22&#125;&#x27;::jsonb || &#x27;&#123;&quot;age&quot;:23&#125;&#x27;</span><br><span class="line">----</span><br><span class="line">?column?</span><br><span class="line">&#123;&quot;age&quot;: 24, &quot;name&quot;: &quot;glj&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方式其实就是之前的笔记，jsonb的特点后续会说，就是jsonb会删除重复的键，仅仅保留最后一个。</p>
+<p>第二种方式是通过jsonb_set函数，语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsonb_set(target jsonb, path text[], new_value jsonb[, create_missing boolean])</span><br></pre></td></tr></table></figure>
+<p>target 指的是jsonb源数据，path 指的是路径<br>new_value指的是更新后的键值，create_missing当为true是，表示键不存在时，则添加，反之，不存在就不添加，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select jsonb_set(&#x27;&#123;&quot;name&quot;:&quot;glj&quot;,&quot;age&quot;:22&#125;&#x27;::jsonb,&#x27;&#123;age&#125;&#x27;,&#x27;&quot;23&quot;&#x27;::jsonb,false)</span><br><span class="line">----</span><br><span class="line">jsonb_set</span><br><span class="line">&#123;&quot;age&quot;: &quot;23&quot;, &quot;name&quot;: &quot;glj&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="json和jsonb的对比差异"><a href="#json和jsonb的对比差异" class="headerlink" title="json和jsonb的对比差异"></a>json和jsonb的对比差异</h5><p>JSON 数据类型：json 和 jsonb，其实他们基本上一样哒，主要的实际区别之一是效率。因为json存储格式为文本，而jsonb存储格式为二进制，由于存储格式的不同使得两者数据类型的处理效率就不太一样了吧~json类型以文本存储并且存储的内容和输入的内容是一样的，当要检索json数据的时候，就需要重新解析，而jsonb不需要，因为它是二进制形式存储，已经解析好了数据，所以检索jsonb的数据时，不要重新解析即可查找，因此json写入比jsonb快，而检索时候就相反了。</p>
+<p>说了那么多，我们用一个简单的例子看看吧，例如就是jsonb的输出键顺畅就和输入时候不一样，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select &#x27;&#123;&quot;name&quot;:&quot;glj&quot;,&quot;age&quot;:23,&quot;sex&quot;:&quot;male&quot;&#125;&#x27;::jsonb,&#x27;&#123;&quot;name&quot;:&quot;glj&quot;,&quot;age&quot;:23,&quot;sex&quot;:&quot;male&quot;&#125;&#x27;::json</span><br><span class="line">------</span><br><span class="line">jsonb	json</span><br><span class="line">&#123;&quot;age&quot;: 23, &quot;sex&quot;: &quot;male&quot;, &quot;name&quot;: &quot;glj&quot;&#125;	&#123;&quot;name&quot;:&quot;glj&quot;,&quot;age&quot;:23,&quot;sex&quot;:&quot;male&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面看出来，json输入和输出顺序是一致的。<br>还有，就是jsonb类型会去掉输入数据中的键值空格，而json则不会，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select &#x27;&#123;&quot;name&quot;:&quot;glj&quot;,        &quot;age&quot;:23,&quot;sex&quot;:&quot;male&quot;&#125;&#x27;::jsonb,</span><br><span class="line">&#x27;&#123;&quot;name&quot;:&quot;glj&quot;,       &quot;age&quot;:23,&quot;sex&quot;:&quot;male&quot;&#125;&#x27;::json</span><br><span class="line">---------</span><br><span class="line">jsonb	json</span><br><span class="line">&#123;&quot;age&quot;: 23, &quot;sex&quot;: &quot;male&quot;, &quot;name&quot;: &quot;glj&quot;&#125;	&#123;&quot;name&quot;:&quot;glj&quot;,       &quot;age&quot;:23,&quot;sex&quot;:&quot;male&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>最最最后，就是jsonb会删除重复的键，仅仅保留最后一个，如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select &#x27;&#123;&quot;name&quot;:&quot;glj&quot;,&quot;age&quot;:23,&quot;sex&quot;:&quot;male&quot;,&quot;name&quot;:&quot;hhm&quot;&#125;&#x27;::jsonb,</span><br><span class="line">&#x27;&#123;&quot;name&quot;:&quot;glj&quot;,&quot;age&quot;:23,&quot;sex&quot;:&quot;male&quot;,&quot;name&quot;:&quot;hhm&quot;&#125;&#x27;::json</span><br><span class="line">-----</span><br><span class="line">jsonb	json</span><br><span class="line">&#123;&quot;age&quot;: 23, &quot;sex&quot;: &quot;male&quot;, &quot;name&quot;: &quot;hhm&quot;&#125;	&#123;&quot;name&quot;:&quot;glj&quot;,&quot;age&quot;:23,&quot;sex&quot;:&quot;male&quot;,&quot;name&quot;:&quot;hhm&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>看看吧，上面的name重复了，但是jsonb它是保留了最后一个name键的值，而json鸡巴没有这个校验的规则，它是你输入啥它就给你输出啥..所以建议尽量使用jsonb，而除非是那种鸡巴特殊需求除外，比如就是对json的键值有顺序要求的..（这句话说得好没有底气，因为我tm也是小白..）</p>
+<h4 id="jsonb和json操作符"><a href="#jsonb和json操作符" class="headerlink" title="jsonb和json操作符"></a>jsonb和json操作符</h4><p><img src="http://qn.199604.com/json_czf1_20191020213424.png" alt="image"><br><img src="http://qn.199604.com/json_czf2_20191020213424.png" alt="image"></p>
+<p>想要更深入了解json/jsonb类型，可到：<a target="_blank" rel="noopener" href="http://www.postgres.cn/docs/10/datatype-json.html">http://www.postgres.cn/docs/10/datatype-json.html</a></p>
+<hr>
+<p>码字挺辛苦哒~要不打个赏吧，郭良俊博客：<a target="_blank" rel="noopener" href="https://199604.com/">https://199604.com/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1353/" title="postgreSQL之数据类型">http://erbi.me/1353/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/postgresql/" rel="tag"># postgresql</a>
+              <a href="/tags/pgsql/" rel="tag"># pgsql</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1351/" rel="prev" title="postgreSQL之存储过程">
+                  <i class="fa fa-chevron-left"></i> postgreSQL之存储过程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1362/" rel="next" title="记录下最近最火的JAVA格式化时间用了YYYY-MM-dd问题">
+                  记录下最近最火的JAVA格式化时间用了YYYY-MM-dd问题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

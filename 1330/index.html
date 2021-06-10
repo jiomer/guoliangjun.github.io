@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="第1题，什么是JavaScript？ JavaScript是一门编程语言，既可以在客户端用，又可以在服务器端使用。它是一门基于对象的编程语言。 第2题，列举一下Java和JavaScript的不同。 Java是面向对象的编程语言，定义各方面都非常的严格和完整。 JavaScript是基于对象的编程语言。在使用的过程中，它的风格相对比较开放，自由度很高。 第3题，在JavaScript中的数据类型有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript面试78题">
+<meta property="og:url" content="http://erbi.me/1330/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="第1题，什么是JavaScript？ JavaScript是一门编程语言，既可以在客户端用，又可以在服务器端使用。它是一门基于对象的编程语言。 第2题，列举一下Java和JavaScript的不同。 Java是面向对象的编程语言，定义各方面都非常的严格和完整。 JavaScript是基于对象的编程语言。在使用的过程中，它的风格相对比较开放，自由度很高。 第3题，在JavaScript中的数据类型有">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-17T13:35:20.000Z">
+<meta property="article:modified_time" content="2021-06-10T07:40:46.025Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/1330/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1330&#x2F;&quot;,&quot;path&quot;:&quot;1330&#x2F;&quot;,&quot;title&quot;:&quot;JavaScript面试78题&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>JavaScript面试78题 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1330/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript面试78题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-17 21:35:20" itemprop="dateCreated datePublished" datetime="2019-10-17T21:35:20+08:00">2019-10-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 15:40:46" itemprop="dateModified" datetime="2021-06-10T15:40:46+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>第1题，什么是JavaScript？</strong></p>
+<p>JavaScript是一门编程语言，既可以在客户端用，又可以在服务器端使用。它是一门基于对象的编程语言。</p>
+<p><strong>第2题，列举一下Java和JavaScript的不同。</strong></p>
+<p>Java是面向对象的编程语言，定义各方面都非常的严格和完整。</p>
+<p>JavaScript是基于对象的编程语言。在使用的过程中，它的风格相对比较开放，自由度很高。</p>
+<p><strong>第3题，在JavaScript中的数据类型有哪些?</strong></p>
+<p>Number, String, Bollean, Object, Undefined.</p>
+<p><strong>第4题，isNaN函数的作用是什么?</strong></p>
+<p>如果输入值不是一个数字的话，这个函数会返回真，否则的话返回false。</p>
+<p><strong>第5题，JavaScript和ASP script，哪一个更快一些？</strong></p>
+<p>JavaScript更快一些。因为JavaScript直接可以在客户端运行不需要依赖于网络服务器端。ASP script需要借助服务器端才能够运行,所以要比JavaScript要慢一些。</p>
+<p>当然，现在JavaScript也可以用于开发服务器端的代码了。</p>
+<p><strong>第6题，什么是negative infinity？</strong></p>
+<p>Negative infinity是用一个负数除以0得出的数字。</p>
+<p><strong>第7题，有没有可能把JavaScript的一行代码分成几行?</strong></p>
+<p>可以， 虽然不建议这么做，但是可以。</p>
+<p><strong>第8题，JavaScript是哪家公司开发的?</strong></p>
+<p>Netscape.</p>
+<p><strong>第9题，什么是undeclared和undefined变量?</strong></p>
+<p>undeclared变量是指在程序中不存在，没有被声明过的，如果程序试图访问这样的变量，应该会返回run time error.</p>
+<p>Undefined变量是那些没有赋值的变量。把程序读取这些变量的值的时候，读到的值就是undefined。</p>
+<p><strong>第10题, 如何动态的添加html的元素?</strong></p>
+<p>一些方法可以使用，比如create element, create text node, append child等等。</p>
+<p><strong>第11题，什么是全局变量？这些变量是如何定义的，程序应该如何用他们?</strong></p>
+<p>全局变量是在程序运行整个过程中可以被访问量的变量，他们没有scope, var关键字是用来define一个局部或者全局变量或者对象的。</p>
+<p>全局变量的最大问题就是它会跟局部变量的名字发生冲突，代码中如果依赖于大量的全局变量非常不容易debug。</p>
+<p><strong>第12题，什么是prompt box?</strong></p>
+<p>Prompt box就是一个对话框，用户可以提供自己的输入。</p>
+<p><strong>第13题，this关键字是什么？</strong></p>
+<p>这一次关键字表示的是一个对象, 这个对象对应着被调用的地方。</p>
+<p><strong>第14题，解释一下timers. 用timers有什么坏处吗？</strong></p>
+<p>JavaScript中有如下timer函数: setTimeOut, setInterval, clearInterval.</p>
+<p>Set time out会在一个时间延迟以后调用一个函数。</p>
+<p>setInterval会在一个时间延迟以后重复的调用一个函数。Clear interval是用来终止这个过程。</p>
+<p>这些timers也是运行在一个单线程中，因此事件可能会排队等待被处理。</p>
+<p><strong>第15题, 哪些符号可以在JavaScript中用来做注释?</strong></p>
+<p>//</p>
+<p>/* */</p>
+<p><strong>第16题，view state和session state的区别是什么？</strong></p>
+<p>view state 指的是在session中的一个页面。</p>
+<p>Session state，指的是用户特定的数据， 这些数据可以用于访问所有的页面。</p>
+<p><strong>第17题，什么是三个等号操作符？</strong></p>
+<p>三个等号操作符只有当两边的值相等并且类型相等才会返回真。</p>
+<p><strong>第18题，解释一下你如何用JavaScript提交一个form？</strong></p>
+<p>submit方法。</p>
+<p><strong>第19题，JavaScript支持自动类型转换吗？</strong></p>
+<p>是的，JavaScript支持自动类型转换。</p>
+<p><strong>第20题, 如何用JavaScript来改变一个元素的style/class?</strong></p>
+<p>.style.fontSize=”20px”</p>
+<p>.className=”any class name”</p>
+<p><strong>第21题, 解释一下如何读写一个文件。</strong></p>
+<p>两种方法，一个是用JavaScript扩展, 一个是使用一个网页和activeX 对象。</p>
+<p><strong>第22题， 如何在JavaScript中使用循环?</strong></p>
+<p>For</p>
+<p>While</p>
+<p>do while</p>
+<p><strong>第23题, 什么是called variable typing?</strong></p>
+<p>在JavaScript中，一个变量可以赋值为数字，同时这个变量还可以赋值为一个字符串，这就叫called variable typing。</p>
+<p><strong>第24题, 如何把字符串转换成不同进制的整数?</strong></p>
+<p>使用parseInt函数。</p>
+<p>parseInt(“4f”, 16)</p>
+<p><strong>第25题, 两个等号和三个等号的区别是什么?</strong></p>
+<p>两个等号只检查值是否相等。三个等号即既检查值是否相等，也检查类型是否相等。</p>
+<p><strong>第26题，1+2+”5”的结果是什么?</strong></p>
+<p>35</p>
+<p>两个数字先相加得三， 数字跟后面的字符串相加都变成字符串，所以得出有35。</p>
+<p><strong>第27题， 如何在客户端检查操作系统?</strong></p>
+<p>navigator.platform</p>
+<p><strong>第28题, null 是什么?</strong></p>
+<p>Null是一个对象，它标识的是没有值的空对象。</p>
+<p><strong>第29题，Delete操作符的作用是什么?</strong></p>
+<p>Delete用来删除属性及其值。</p>
+<p>delete student.age</p>
+<p><strong>第30题, undefined指的是什么值?</strong></p>
+<p>这个变量不存在。</p>
+<p>这个变量未赋值。</p>
+<p>这个属性不存在。</p>
+<p><strong>第31题，在JavaScript中有几种类型的弹出框?</strong></p>
+<p>alert</p>
+<p>confirm</p>
+<p>prompt</p>
+<p><strong>第32题, void(0)的作用是什么?</strong></p>
+<p>void(0)是为了防止页面刷新，0是调用以后的传送值。</p>
+<p>是用来调用另一个方法，而不需要刷新页面。</p>
+<p><strong>第33题，在javascript中如何在一个页面中加载另一个页面?</strong></p>
+<script language="Javascript" type="text/javascript">
+
+<!-- location.href="[http://newhost/newpath/newfile.html](https://link.zhihu.com/?target=http%3A//newhost/newpath/newfile.html)"; // --></script>
+
+<p><strong>第34题, JavaScript中变量的数据类型是什么?</strong></p>
+<p>所有的变量都是对象数据类型。</p>
+<p><strong>第35题, Alert跟confirmation的区别是什么?</strong></p>
+<p>Alert只有一个按钮，就是OK。</p>
+<p>Confirmation有两个按钮，一个是OK，一个是cancel。</p>
+<p><strong>第36题，什么是escape字符？</strong></p>
+<p>在显示单引号, 双引号, 撇号,地址号时需要escape:\。</p>
+<p><strong>第37题，什么是JavaScript的cookies？</strong></p>
+<p>Cookies是用来在电脑上存储用户少量的信息的。比如购物信息，用户名的信息。</p>
+<p><strong>第38题，解释一下pop方法。</strong></p>
+<p>这个是数组中的一个方法。pop跟shift很相似，但是shift方法会从数组的开头取值，而pop是从数组的尾部取值。</p>
+<p>Pop从数组取值以后会把尾部的值删掉，因此数组会被改变。</p>
+<p>array.pop()</p>
+<p><strong>第39题, JavaScript是否有concept level scope?</strong></p>
+<p>没有。JavaScript没有concept level of scope，在函数中定义的变量，有函数内的scope。</p>
+<p><strong>第40题, 在JavaScript中使用inner html的缺点有哪些?</strong></p>
+<p>缺点有:</p>
+<p>内容随时随处会被改变。</p>
+<p>我们不能使用像append to inner html的方法。</p>
+<p>即使我们使用plus equal, innerHtml+=, 原先的内容也会被替换掉。</p>
+<p>整个inner html的内容会被重新解析，然后再添加到元素当中，因此非常慢。</p>
+<p>Inner html的添加过程没有验证，因此我们有可能添加一些无效的内容，从而导致整个文档崩溃。</p>
+<p><strong>第41题, 什么是break 和 continue?</strong></p>
+<p>Break是为了中断当前的循环，continue会中断当前的操作但会继续当前的循环。</p>
+<p><strong>第42题，在JavaScript中有哪两类基本的数据类型?</strong></p>
+<p>一种是原始数据类型，一种是引用数据类型。</p>
+<p>数据类型包含像数字，布尔类型。引用数据类型比较复杂一些，像字符串，日期。</p>
+<p><strong>第43题，通用对象是如何创建的?</strong></p>
+<p>var obj=new object();</p>
+<p><strong>第44题, Type of操作符是干什么用的?</strong></p>
+<p>Typeof操作符是返回一个变量的类型, 是用字符串来表述的。</p>
+<p><strong>第45题, 哪些关键字用来处理异常?</strong></p>
+<p>Try catch finally.</p>
+<p><strong>第46题，哪个关键字用来在屏幕上打印文字？</strong></p>
+<p>document.write()</p>
+<p><strong>第47题，blur函数的作用是什么?</strong></p>
+<p>blur函数是用来去除某个指定对象的焦点。</p>
+<p><strong>第48题, 什么是variable typing?</strong></p>
+<p>这个问题上面提到过一次了，就是把一个数字赋给一个变量，然后又把字符串赋给相同的这个变量。</p>
+<p><strong>第49题, 如何在客户端找到操作系统的名字?</strong></p>
+<p>Navigator.appversion.</p>
+<p><strong>第50题, 在JavaScript中有多少种错误类型?</strong></p>
+<p>Load time errors.</p>
+<p>Run time errors,</p>
+<p>logical errors.</p>
+<p><strong>第51题，push method的用处是什么？</strong></p>
+<p>这个方法是用来向一个数组尾部添加一个和多个元素的。</p>
+<p><strong>第52题, unshift method是干什么的?</strong></p>
+<p>umshift跟push method类似，只不过它是在数组的前面添加元素。</p>
+<p><strong>第53题, JavaScript和JScript的区别是什么?</strong></p>
+<p>他们非常接近，只是JavaScript是netscape开发的，JScript是Microsoft开发的。</p>
+<p><strong>第54题， 对象的属性是如何分配的?</strong></p>
+<p>obj.prop=12</p>
+<p>或者</p>
+<p>obj[“prop”]=12</p>
+<p><strong>第55题，什么是strict mode？怎么激活它？</strong></p>
+<p>Strict mode可以使JavaScript代码更整洁更安全，它会实时的显示代码中的错误。</p>
+<p>启动strict mode，调用下面的语句</p>
+<p>“use strict”;</p>
+<p>。</p>
+<p><strong>第56题, 如何获取checkbox的状态?</strong></p>
+<p>document.getElementById(“id”).checked</p>
+<p><strong>第57题，解释一下window.onload和ondocumentready.</strong></p>
+<p>onload在所有的配置信息加载完成以后才会调用。</p>
+<p>Ondocumentready, 会在dom加载完成以后启动。</p>
+<p>它比onload要早一些被调用。</p>
+<p><strong>第58题, 解释一下JavaScript中的closures, 它们应该何时被使用?</strong></p>
+<p>Closure是一个局部的声明变量，跟一个函数相关， 在函数返回时，会存在内存里面。</p>
+<p><strong>第59题, 给出一种方法，在数组的尾部添加元素。</strong></p>
+<p>arr[arr.length]=value</p>
+<p><strong>第60题, 解释一下for-in循环。</strong></p>
+<p>这个循环是用来遍历一个对象的所有属性。</p>
+<p><strong>第61题, 解释一下匿名函数。</strong></p>
+<p>匿名函数是被定义的时候没有指定名字的函数。</p>
+<p><strong>第62题, Call和apply的区别是什么?</strong></p>
+<p>Call和apply非常相近，只有一点不同。当函数的调用参数可知的时候, Call可以被使用。当函数的调用参数不可知时，apply应该被用到。</p>
+<p><strong>第63题， 什么是event bubbling?</strong></p>
+<p>JavaScript允许dom元素嵌套使用。在这种情况下，如果一个子元素被点击了，那么它的父元素也会同样的被点击。</p>
+<p><strong>第64题，JavaScript大小写敏感吗？</strong></p>
+<p>是的。是大小写敏感的。</p>
+<p><strong>第65题，有哪些boolean操作符？</strong></p>
+<p>and, or, not</p>
+<p><strong>第66题, 在超级链接的时候，能不能指定一个特定的frame?</strong></p>
+<p>可以通过target属性设定这个frame的名字。</p>
+<p><strong>第67题， Web garden和web farm的区别是什么?</strong></p>
+<p>Web garden和web farm都是网络hosting系统。它们的区别是Web garden在一台服务器上。I verb form, 是更大的配置，常常用在多于一台服务器的时候。</p>
+<p><strong>第68题， JavaScript中如何操作dom?</strong></p>
+<p>通过dom API.</p>
+<p><strong>第69题，Event handler如何使用?</strong></p>
+<p>event handler用于设定一个函数属性来对应一个事件的发生。</p>
+<p><strong>第70题， 解释一下deferred脚本的作用是什么。</strong></p>
+<p>Deferred脚本会推迟运行从而加快页面加载的时间。</p>
+<p><strong>第71题， 有哪些不同的functional组件?</strong></p>
+<p>First class functions. 这些函数可以作为参数传入另一个函数当中。可以作为函数的返回值返回，也可以存放在数据结构当中。</p>
+<p>Nested functions. 这种函数是嵌套的另一个函数里面，每次它们被调用，它们的主函数也会比较有。</p>
+<p><strong>第72题， 什么是屏幕对象?</strong></p>
+<p>屏幕对象是读取客户端屏幕信息的对象。</p>
+<p>这些信息包含availHeight, availWidth, ColorDepth, Height, Width。</p>
+<p><strong>第73题, 解释一下unescape和escape函数。</strong></p>
+<p>escape函数是用来对一些字符串进行编码，以便于从一个计算机传到另一台计算机上。</p>
+<p>unescape函数是为了把上述的编码后的字符串，转化成可以阅读的字符串。</p>
+<p><strong>第74题, 什么是decodeURI和encodeURI?</strong></p>
+<p>encodeURI是把url转化成hex编码。</p>
+<p>decodeURI是把hex编码转回成url。</p>
+<p><strong>第75题， 下面这个语句是干什么用的?</strong></p>
+<p>var arr=[[[]]]</p>
+<p>它定义了一个三维数组。</p>
+<p><strong>第76题, JavaScript跟ecma script有什么关联?</strong></p>
+<p>ecma script是标准, 是JavaScript开发的依据。</p>
+<p>JavaScript是面向网络开发的脚本语言。</p>
+<p><strong>第77题， 什么是JavaScript的命名空间，如何使用?</strong></p>
+<p>命名空间是用来分组管理函数变量等等，有一个独有的名字。在这个名字下面啊，附属着一系列的函数，对象，属性等等。这些大大改善了代码的模块化，增强了代码的重用性。</p>
+<p><strong>第78题， 当不支持JavaScript的时候，在老的浏览器中如何隐藏JavaScript?</strong></p>
+<p>在script 标记之后添加”&lt;!–”。</p>
+<p>在script标记之前添加”//–&gt;”。</p>
+<p>这样在老的浏览器中，会把这部分代码当做很长的html的注释。</p>
+<p>在现代浏览器中会把&lt;!–和//→当成一行注释。</p>
+<p>转载：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/81902166">https://zhuanlan.zhihu.com/p/81902166</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1330/" title="JavaScript面试78题">http://erbi.me/1330/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1328/" rel="prev" title="linux上安装postgresql-9.6数据库">
+                  <i class="fa fa-chevron-left"></i> linux上安装postgresql-9.6数据库
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1335/" rel="next" title="postgreSQL之开窗函数用法">
+                  postgreSQL之开窗函数用法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

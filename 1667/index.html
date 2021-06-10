@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="压缩工具-zstd 1.工具解释主要介绍 zstd 工具的作用和性能测试 我们称 Zstandard 或 Zstd 是一种快速的无损压缩算法，是针对 zlib 级别的实时压缩方案，以及更好的压缩比。它由一个非常快的熵阶段，由 Huff0 和 FSE 库提供。这个项目是作为开源的 BSD 许可收费的库，以及一个生成和解码 .zst 格式。 开源地址：https:&#x2F;&#x2F;github.com&#x2F;facebo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="压缩工具-zstd">
+<meta property="og:url" content="http://erbi.me/1667/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="压缩工具-zstd 1.工具解释主要介绍 zstd 工具的作用和性能测试 我们称 Zstandard 或 Zstd 是一种快速的无损压缩算法，是针对 zlib 级别的实时压缩方案，以及更好的压缩比。它由一个非常快的熵阶段，由 Huff0 和 FSE 库提供。这个项目是作为开源的 BSD 许可收费的库，以及一个生成和解码 .zst 格式。 开源地址：https:&#x2F;&#x2F;github.com&#x2F;facebo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20210311234402942.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20210311234549475.png">
+<meta property="article:published_time" content="2021-03-11T16:01:32.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:15.122Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="zstd">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/typoraImg/image-20210311234402942.png">
+
+
+<link rel="canonical" href="http://erbi.me/1667/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1667&#x2F;&quot;,&quot;path&quot;:&quot;1667&#x2F;&quot;,&quot;title&quot;:&quot;压缩工具-zstd&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>压缩工具-zstd | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7-zstd"><span class="nav-number">1.</span> <span class="nav-text">压缩工具-zstd</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%B7%A5%E5%85%B7%E8%A7%A3%E9%87%8A"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">1.工具解释</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.0.0.1.1.</span> <span class="nav-text">性能介绍</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%8F%82%E6%95%B0%E5%91%BD%E4%BB%A4"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">2.参数命令</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F"><span class="nav-number">1.0.0.2.1.</span> <span class="nav-text">安装方式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%91%BD%E4%BB%A4"><span class="nav-number">1.0.0.2.2.</span> <span class="nav-text">参数命令</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E5%91%BD%E4%BB%A4%E6%BC%94%E7%A4%BA"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">3.命令演示</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.0.0.3.1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="nav-number">1.0.0.3.2.</span> <span class="nav-text">高级用法</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1667/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          压缩工具-zstd
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-12 00:01:32" itemprop="dateCreated datePublished" datetime="2021-03-12T00:01:32+08:00">2021-03-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:15" itemprop="dateModified" datetime="2021-06-10T09:36:15+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="压缩工具-zstd"><a href="#压缩工具-zstd" class="headerlink" title="压缩工具-zstd"></a>压缩工具-zstd</h2><p><img src="http://qn.199604.com/typoraImg/image-20210311234402942.png" alt="image-20210311234402942"></p>
+<h5 id="1-工具解释"><a href="#1-工具解释" class="headerlink" title="1.工具解释"></a>1.工具解释</h5><p>主要介绍 zstd 工具的作用和性能测试 我们称 Zstandard 或 Zstd 是一种快速的无损压缩算法，是针对 zlib 级别的实时压缩方案，以及更好的压缩比。它由一个非常快的熵阶段，由 Huff0 和 FSE 库提供。这个项目是作为开源的 BSD 许可收费的库，以及一个生成和解码 .zst 格式。 开源地址：<a target="_blank" rel="noopener" href="https://github.com/facebook/zstd">https://github.com/facebook/zstd</a> 介绍：<a target="_blank" rel="noopener" href="https://facebook.github.io/zstd/">https://facebook.github.io/zstd/</a></p>
+<h6 id="性能介绍"><a href="#性能介绍" class="headerlink" title="性能介绍"></a>性能介绍</h6><p><img src="http://qn.199604.com/typoraImg/image-20210311234549475.png" alt="image-20210311234549475"> Zstd 还可以压缩速度为代价提供更强的压缩比，Speed vs Rtrade 可以通过小增量进行配置。在所有设置中，解压速度保持不变，并在所有 LZ压缩算法( 比如 zlib 或者lzma) 共享的属性中保持不变。 更加具体可到：<a target="_blank" rel="noopener" href="https://facebook.github.io/zstd/">https://facebook.github.io/zstd/</a> 查看介绍</p>
+<h5 id="2-参数命令"><a href="#2-参数命令" class="headerlink" title="2.参数命令"></a>2.参数命令</h5><p>主要介绍 zstd 工具的安装和全部的参数命令</p>
+<h6 id="安装方式"><a href="#安装方式" class="headerlink" title="安装方式"></a>安装方式</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># Ubuntu</span><br><span class="line">$ apt install zstd</span><br><span class="line"></span><br><span class="line"># CentOS</span><br><span class="line">$ yum install zstd</span><br><span class="line"></span><br><span class="line"># 编译安装</span><br><span class="line">$ git clone https://github.com/facebook/zstd.git</span><br><span class="line">$ cd zstd; make; sudo make install</span><br><span class="line"></span><br><span class="line"># RPM包安装</span><br><span class="line"># http://rpmfind.net/linux/rpm2html/search.php?query=zstd 搜索下载#</span><br><span class="line">#如：zstd-1.4.7-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
+
+<h6 id="参数命令"><a href="#参数命令" class="headerlink" title="参数命令"></a>参数命令</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line">$ zstd --help</span><br><span class="line">使用方式 :</span><br><span class="line">      zstd [args] [FILE(s)] [-o file]</span><br><span class="line"></span><br><span class="line">参数选项 :</span><br><span class="line"> -#     : 压缩级别(1-19，默认值为3)</span><br><span class="line"> -d     : 解压</span><br><span class="line"> -D file: 使用文件作为字典</span><br><span class="line"> -o file: 结果存储在文件中</span><br><span class="line"> -f     : 在没有提示的情况下覆盖输出并(解压)压缩链接</span><br><span class="line">--rm    : 成功解压缩后删除源文件</span><br><span class="line"> -k     : 保存源文件(默认)</span><br><span class="line"> -h/-H  : 显示帮助/长帮助并退出</span><br><span class="line"></span><br><span class="line">高级选项 :</span><br><span class="line"> -V     : 显示版本号并退出</span><br><span class="line"> -v     : 详细模式</span><br><span class="line"> -q     : 静默输出</span><br><span class="line"> -c     : 强制写入标准输出</span><br><span class="line"> -l     : 输出zstd压缩包中的信息</span><br><span class="line">--ultra : 启用超过19级，最多22级(需要更多内存)</span><br><span class="line"> -T#    : 使用几个线程进行压缩(默认值:1个)</span><br><span class="line"> -r     : 递归地操作目录</span><br><span class="line">--format=gzip : 将文件压缩为.gz格式</span><br><span class="line"> -M#    : 为解压设置内存使用限制</span><br><span class="line"></span><br><span class="line">字典生成器 :</span><br><span class="line">--train ## : 从一组训练文件中创建一个字典</span><br><span class="line">--train-cover[=k=#,d=#,steps=#] : 使用带有可选参数的cover算法</span><br><span class="line">--train-legacy[=s=#] : 有选择性地使用遗留算法(默认值:9)</span><br><span class="line"> -o file : “file”是字典名(默认:字典)</span><br><span class="line">--maxdict=# : 将字典限制为指定大小(默认值:112640)</span><br><span class="line">--dictID=# : 强制字典ID为指定值(默认:随机)</span><br><span class="line"></span><br><span class="line">性能测试参数 :</span><br><span class="line"> -b#    : 基准测试文件，使用#压缩级别(默认为1)</span><br><span class="line"> -e#    : 测试从-bX到#的所有压缩级别(默认值:1)</span><br><span class="line"> -i#    : 最小计算时间(秒)(默认为3s)</span><br><span class="line"> -B#    : 将文件切成大小为#个独立块(默认:无块)</span><br><span class="line">--priority=rt : 将进程优先级设置为实时</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#---------------------------</span><br><span class="line">英文解释：</span><br><span class="line">[gpadmin@mdw34: /data3/data_bk_tmp/lte_min]$zstd --help</span><br><span class="line">*** zstd command line interface 64-bits v1.4.7, by Yann Collet ***</span><br><span class="line">Usage : </span><br><span class="line">      zstd [args] [FILE(s)] [-o file] </span><br><span class="line"></span><br><span class="line">FILE    : a filename </span><br><span class="line">          with no FILE, or when FILE is - , read standard input</span><br><span class="line">Arguments : </span><br><span class="line"> -#     : # compression level (1-19, default: 3) </span><br><span class="line"> -d     : decompression </span><br><span class="line"> -D DICT: use DICT as Dictionary for compression or decompression </span><br><span class="line"> -o file: result stored into `file` (only 1 output file) </span><br><span class="line"> -f     : overwrite output without prompting, also (de)compress links </span><br><span class="line">--rm    : remove source file(s) after successful de/compression </span><br><span class="line"> -k     : preserve source file(s) (default) </span><br><span class="line"> -h/-H  : display help/long help and exit </span><br><span class="line"></span><br><span class="line">Advanced arguments : </span><br><span class="line"> -V     : display Version number and exit </span><br><span class="line"> -c     : force write to standard output, even if it is the console </span><br><span class="line"> -v     : verbose mode; specify multiple times to increase verbosity </span><br><span class="line"> -q     : suppress warnings; specify twice to suppress errors too </span><br><span class="line">--no-progress : do not display the progress counter </span><br><span class="line"> -r     : operate recursively on directories </span><br><span class="line">--filelist FILE : read list of files to operate upon from FILE </span><br><span class="line">--output-dir-flat DIR : processed files are stored into DIR </span><br><span class="line">--output-dir-mirror DIR : processed files are stored into DIR respecting original directory structure </span><br><span class="line">--[no-]check : during compression, add XXH64 integrity checksum to frame (default: enabled). If specified with -d, decompressor will ignore/validate checksums in compressed frame (default: validate).</span><br><span class="line">--      : All arguments after &quot;--&quot; are treated as files </span><br><span class="line"></span><br><span class="line">Advanced compression arguments : </span><br><span class="line">--ultra : enable levels beyond 19, up to 22 (requires more memory) </span><br><span class="line">--long[=#]: enable long distance matching with given window log (default: 27) </span><br><span class="line">--fast[=#]: switch to very fast compression levels (default: 1) </span><br><span class="line">--adapt : dynamically adapt compression level to I/O conditions </span><br><span class="line"> -T#    : spawns # compression threads (default: 1, 0==# cores) </span><br><span class="line"> -B#    : select size of each job (default: 0==automatic) </span><br><span class="line">--single-thread : use a single thread for both I/O and compression (result slightly different than -T1) </span><br><span class="line">--rsyncable : compress using a rsync-friendly method (-B sets block size) </span><br><span class="line">--exclude-compressed: only compress files that are not already compressed </span><br><span class="line">--stream-size=# : specify size of streaming input from `stdin` </span><br><span class="line">--size-hint=# optimize compression parameters for streaming input of approximately this size </span><br><span class="line">--target-compressed-block-size=# : generate compressed block of approximately targeted size </span><br><span class="line">--no-dictID : don&#x27;t write dictID into header (dictionary compression only) </span><br><span class="line">--[no-]compress-literals : force (un)compressed literals </span><br><span class="line">--format=zstd : compress files to the .zst format (default) </span><br><span class="line"></span><br><span class="line">Advanced decompression arguments : </span><br><span class="line"> -l     : print information about zstd compressed files </span><br><span class="line">--test  : test compressed file integrity </span><br><span class="line"> -M#    : Set a memory usage limit for decompression </span><br><span class="line">--[no-]sparse : sparse mode (default: enabled on file, disabled on stdout) </span><br><span class="line"></span><br><span class="line">Dictionary builder : </span><br><span class="line">--train ## : create a dictionary from a training set of files </span><br><span class="line">--train-cover[=k=#,d=#,steps=#,split=#,shrink[=#]] : use the cover algorithm with optional args </span><br><span class="line">--train-fastcover[=k=#,d=#,f=#,steps=#,split=#,accel=#,shrink[=#]] : use the fast cover algorithm with optional args </span><br><span class="line">--train-legacy[=s=#] : use the legacy algorithm with selectivity (default: 9) </span><br><span class="line"> -o DICT : DICT is dictionary name (default: dictionary) </span><br><span class="line">--maxdict=# : limit dictionary to specified size (default: 112640) </span><br><span class="line">--dictID=# : force dictionary ID to specified value (default: random) </span><br><span class="line"></span><br><span class="line">Benchmark arguments : </span><br><span class="line"> -b#    : benchmark file(s), using # compression level (default: 3) </span><br><span class="line"> -e#    : test all compression levels successively from -b# to -e# (default: 1) </span><br><span class="line"> -i#    : minimum evaluation time in seconds (default: 3s) </span><br><span class="line"> -B#    : cut file into independent blocks of size # (default: no block) </span><br><span class="line"> -S     : output one benchmark result per input file (default: consolidated result) </span><br><span class="line">--priority=rt : set process priority to real-time </span><br></pre></td></tr></table></figure>
+
+<h5 id="3-命令演示"><a href="#3-命令演示" class="headerlink" title="3.命令演示"></a>3.命令演示</h5><h6 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 将一个文件压缩成一个后缀为.zst的新文件</span><br><span class="line"># 如果命令后面没有文件或文件为-的话，则读取标准输入</span><br><span class="line">$ zstd file</span><br><span class="line"></span><br><span class="line"># 在压缩操作后删除源文件</span><br><span class="line"># 默认情况下，源文件在成功压缩或解压缩后不会被删除</span><br><span class="line">$ zstd --rm file</span><br><span class="line"></span><br><span class="line"># 解压zst压缩包</span><br><span class="line">$ zstd -d file.zst</span><br><span class="line"></span><br><span class="line"># 解压zst压缩包到标准输出</span><br><span class="line">$ zstd -dc file.zst</span><br><span class="line"></span><br><span class="line"># 查看zst压缩包</span><br><span class="line">$ zstd -l file.zst</span><br><span class="line">$ zstdcat file.zst</span><br></pre></td></tr></table></figure>
+
+<h6 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 输出详细信息</span><br><span class="line">$ zstd -v file</span><br><span class="line">$ zstd -v -d file.zst</span><br><span class="line"></span><br><span class="line"># 压缩一个文件同时指定压缩级别(19最高，0最低，3为默认)</span><br><span class="line">$ zstd -level file</span><br><span class="line">$ zstd -9 file</span><br><span class="line"></span><br><span class="line"># 使用更多的内存(压缩和解压时)以达到更高的压缩比</span><br><span class="line">$ zstd --ultra -level file</span><br><span class="line"></span><br><span class="line"># 解压缩为单进程</span><br><span class="line"># 多个进程并发执行压缩过程(0表示自动使用所有CPU核心)</span><br><span class="line">$ zstd -T0 file</span><br><span class="line">$ zstd -T4 file</span><br><span class="line">$ zstd -T4 -d file.zst</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1667/" title="压缩工具-zstd">http://erbi.me/1667/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/zstd/" rel="tag"># zstd</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1660/" rel="prev" title="postgresql导出表结构">
+                  <i class="fa fa-chevron-left"></i> postgresql导出表结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1669/" rel="next" title="域名后缀整理~">
+                  域名后缀整理~ <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

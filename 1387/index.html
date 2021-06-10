@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1.什么是重载和重写？Java 里方法的重写(Overriding)和重载(Overloading)就是指的 java 里多态。 重写就是父类与子类之间的多态，重载是在一个类中多态对的体现 ： (1)方法重载是一个类中定义了多个方法名相同,而他们的参数的数量不同或数量相同而类型和次序不同,则称为方法的重载(Overloading)。 (2)方法重写是在子类存在方法与父类的方法的名字相同,而且参数的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java面试题1">
+<meta property="og:url" content="http://erbi.me/1387/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="1.什么是重载和重写？Java 里方法的重写(Overriding)和重载(Overloading)就是指的 java 里多态。 重写就是父类与子类之间的多态，重载是在一个类中多态对的体现 ： (1)方法重载是一个类中定义了多个方法名相同,而他们的参数的数量不同或数量相同而类型和次序不同,则称为方法的重载(Overloading)。 (2)方法重写是在子类存在方法与父类的方法的名字相同,而且参数的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://199604.com/wp-content/uploads/2020/04/weixin.png">
+<meta property="article:published_time" content="2020-04-07T02:54:30.000Z">
+<meta property="article:modified_time" content="2021-06-10T06:47:54.817Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="JAVA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://199604.com/wp-content/uploads/2020/04/weixin.png">
+
+
+<link rel="canonical" href="http://erbi.me/1387/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1387&#x2F;&quot;,&quot;path&quot;:&quot;1387&#x2F;&quot;,&quot;title&quot;:&quot;java面试题1&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>java面试题1 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E9%87%8D%E8%BD%BD%E5%92%8C%E9%87%8D%E5%86%99%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">1.什么是重载和重写？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-String-%E4%B8%AD%E7%9A%84-%E5%92%8C-equals-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">2.String 中的&#x3D;&#x3D;和 equals 的区别?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Final-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">3.</span> <span class="nav-text">3.Final 关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-final-%E5%92%8C-finally-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.</span> <span class="nav-text">4.final 和 finally 的区别?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-HashMap-%E5%92%8C-Hashtable-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">5.HashMap 和 Hashtable 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-int-%E5%92%8C-Integer-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">6.int 和 Integer 的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-Java-%E7%9A%84%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">7.</span> <span class="nav-text">7.Java 的三大特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-ArrayList-%E4%B8%8E-LinkedList-%E5%8C%BA%E5%88%AB"><span class="nav-number">8.</span> <span class="nav-text">8.ArrayList 与 LinkedList 区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E5%9C%A8-Java-%E4%B8%AD%E8%A6%81%E6%83%B3%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%9C%89%E4%B8%89%E7%A7%8D%E6%89%8B%E6%AE%B5"><span class="nav-number">9.</span> <span class="nav-text">9.在 Java 中要想实现多线程代码有三种手段?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">10.</span> <span class="nav-text">10.线程的状态</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1387/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java面试题1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-07 10:54:30" itemprop="dateCreated datePublished" datetime="2020-04-07T10:54:30+08:00">2020-04-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 14:47:54" itemprop="dateModified" datetime="2021-06-10T14:47:54+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JAVA%E4%BB%A3%E7%A0%81/" itemprop="url" rel="index"><span itemprop="name">JAVA代码</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="1-什么是重载和重写？"><a href="#1-什么是重载和重写？" class="headerlink" title="1.什么是重载和重写？"></a>1.什么是重载和重写？</h4><p>Java 里方法的重写(Overriding)和重载(Overloading)就是指的 java 里多态。</p>
+<p>重写就是父类与子类之间的多态，重载是在一个类中多态对的体现 ：</p>
+<p>(1)方法重载是一个类中定义了多个方法名相同,而他们的参数的数量不同或数量相同而类型和次序不同,则称为方法的重载(Overloading)。</p>
+<p>(2)方法重写是在子类存在方法与父类的方法的名字相同,而且参数的个数与类型一样,返回值也一样的方法,就称为重写(Overriding)。</p>
+<h4 id="2-String-中的-和-equals-的区别"><a href="#2-String-中的-和-equals-的区别" class="headerlink" title="2.String 中的==和 equals 的区别?"></a>2.String 中的==和 equals 的区别?</h4><p>== 比 较 的 是 内 存 地 址 , equals 比 较 的 是 内 容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String a=&quot;abc&quot;</span><br><span class="line"></span><br><span class="line">String b=&quot;abc&quot;</span><br><span class="line"></span><br><span class="line">System.out.println(a==b)</span><br><span class="line"></span><br><span class="line">输出的是 false.</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-Final-关键字"><a href="#3-Final-关键字" class="headerlink" title="3.Final 关键字"></a>3.Final 关键字</h4><p>其实 final是一个安全修饰符,就是用 final 修饰的类不能被继承,用 final 声明的方法不能被重写,使用 final 声明的变量就相当于常量,不能被修改。</p>
+<h4 id="4-final-和-finally-的区别"><a href="#4-final-和-finally-的区别" class="headerlink" title="4.final 和 finally 的区别?"></a>4.final 和 finally 的区别?</h4><p>finally是在异常里经常用到的, 就是 try 和 cach 里的代码执行完以后,必须要执行的方法,我们经常在 finally 里写一些关闭资源的方法,比如说关闭数据库连接,或者关闭 IO 流什么的.–&gt;<a target="_blank" rel="noopener" href="https://199604.com/1241">Java自我进阶知识整理1：使用try-with-resources优雅关闭资源</a></p>
+<h4 id="5-HashMap-和-Hashtable-的区别"><a href="#5-HashMap-和-Hashtable-的区别" class="headerlink" title="5.HashMap 和 Hashtable 的区别"></a>5.HashMap 和 Hashtable 的区别</h4><p>这两个都是是 Map 接口下的实现类，我们开发的时候经常用的是 HashMap 虽然 HashMap不是线程安全的但是他的存储效率比较高,Hashtable 是线程安全我们看过他底层的 put 方法前面加的 synchronized关键字,但是他的效率太低,我们开发很少用.为什么说 hashTable是线程安全的? 因为看源码的时候里面的 put 方法前面加了 synchronized 关键字,什么情况下用 hashMap? 我们有时候在自定义返回 json 字符串的时候,封装到 List 中进行返回.</p>
+<h4 id="6-int-和-Integer-的区别？"><a href="#6-int-和-Integer-的区别？" class="headerlink" title="6.int 和 Integer 的区别？"></a>6.int 和 Integer 的区别？</h4><p>Int 是基本数据类型呀 Integer 是 java 为 int 提供的封装类，是引用数据类型；<br>Int 的默认值为 0，而 integer 的默认值为 null</p>
+<h4 id="7-Java-的三大特性"><a href="#7-Java-的三大特性" class="headerlink" title="7.Java 的三大特性"></a>7.Java 的三大特性</h4><p>这个 java 的三大特性无非就是封装，继承，多态嘛 封装体现到我们把方法和变量都封装到一个类里,直接用对象调用就可以了<br>继承的体现是我们可以复用父类里的代码,我们在项目中可以把公有的方法写到 base 的一个类中,让其他类继承就可以了. 多态就是 Java 里的继承，重写，重载,都是多态,如果两边是数字的化,那就是一 个运算符,如果两边是字符串的话,那他就是个连接符.</p>
+<h4 id="8-ArrayList-与-LinkedList-区别"><a href="#8-ArrayList-与-LinkedList-区别" class="headerlink" title="8.ArrayList 与 LinkedList 区别"></a>8.ArrayList 与 LinkedList 区别</h4><p>ArrayList 使用数组方式存储数据，所以根据索引查询数据速度快，而新增或者删除元素时需要设计到位移操作，所以比较慢。<br>LinkedList 使用双向链接方式存储数据，每个元素都记录前后元素的指针，所以插入、删除数据时只是更改前后元素的指针指向即可，速度非常快，然后通过下标查询元素时需要从头开始索引，所以比较慢，但是如果查询前几个元素或后几个元素速度比较快。开发中什么时候到 ArrayList?,我们在做查询的时候把查询出来的数据经常存到 arraylist 里.</p>
+<h4 id="9-在-Java-中要想实现多线程代码有三种手段"><a href="#9-在-Java-中要想实现多线程代码有三种手段" class="headerlink" title="9.在 Java 中要想实现多线程代码有三种手段?"></a>9.在 Java 中要想实现多线程代码有三种手段?</h4><p>一种是继承 Thread 类<br>另一种就是实现 Runnable 接口<br>最后一种就是实现 Callable 接口(第四种也是实现 callable 接口，只不过有返回值而已)</p>
+<h4 id="10-线程的状态"><a href="#10-线程的状态" class="headerlink" title="10.线程的状态"></a>10.线程的状态</h4><p>其实线程一般具有五种状态，即创建、就绪、运行、阻塞、终止。（这个可以去找一下图，有助于理解）<img src="http://199604.com/wp-content/uploads/2020/04/weixin.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1387/" title="java面试题1">http://erbi.me/1387/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1433/" rel="prev" title="记录一下最近很火的用一行代码实现网页变灰">
+                  <i class="fa fa-chevron-left"></i> 记录一下最近很火的用一行代码实现网页变灰
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1437/" rel="next" title="JavaSE基础:JDK8日期操作">
+                  JavaSE基础:JDK8日期操作 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

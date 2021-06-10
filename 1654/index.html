@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1.电脑端登录易统计官网获取token通过几个账号不间断测试，判断出每个用户都有固定的且不变的一个token值。但需要每周手机登录一次，至于为什么我还真的不知道~ 登录官网：https:&#x2F;&#x2F;www.ioteams.com&#x2F;ncov&#x2F;#&#x2F;login，如下图 输入对应账号(手机号码)  登录后，F12打开浏览器开发调试工具，点击Network(网络)，之后刷新一下页面，找到ncov,点击，选择cook">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动小one易统计定时打卡(python)">
+<meta property="og:url" content="http://erbi.me/1654/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="1.电脑端登录易统计官网获取token通过几个账号不间断测试，判断出每个用户都有固定的且不变的一个token值。但需要每周手机登录一次，至于为什么我还真的不知道~ 登录官网：https:&#x2F;&#x2F;www.ioteams.com&#x2F;ncov&#x2F;#&#x2F;login，如下图 输入对应账号(手机号码)  登录后，F12打开浏览器开发调试工具，点击Network(网络)，之后刷新一下页面，找到ncov,点击，选择cook">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20210227193607099.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20210227194044032.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20210227195207888.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20210227195132798.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20210227195503629.png">
+<meta property="article:published_time" content="2021-02-27T12:03:55.000Z">
+<meta property="article:modified_time" content="2021-06-10T07:23:58.444Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="易统计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/typoraImg/image-20210227193607099.png">
+
+
+<link rel="canonical" href="http://erbi.me/1654/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1654&#x2F;&quot;,&quot;path&quot;:&quot;1654&#x2F;&quot;,&quot;title&quot;:&quot;移动小one易统计定时打卡(python)&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>移动小one易统计定时打卡(python) | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E7%94%B5%E8%84%91%E7%AB%AF%E7%99%BB%E5%BD%95%E6%98%93%E7%BB%9F%E8%AE%A1%E5%AE%98%E7%BD%91%E8%8E%B7%E5%8F%96token"><span class="nav-number">1.</span> <span class="nav-text">1.电脑端登录易统计官网获取token</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E4%BF%AE%E6%94%B9python%E4%BB%A3%E7%A0%81%E5%AF%B9%E5%BA%94%E7%9A%84%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">2.修改python代码对应的值</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">最后代码如下：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-%E6%AF%8F%E6%97%A5%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C"><span class="nav-number">2.2.</span> <span class="nav-text">3.每日定时执行</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1654/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          移动小one易统计定时打卡(python)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-27 20:03:55" itemprop="dateCreated datePublished" datetime="2021-02-27T20:03:55+08:00">2021-02-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 15:23:58" itemprop="dateModified" datetime="2021-06-10T15:23:58+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/pyhton/" itemprop="url" rel="index"><span itemprop="name">pyhton</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h5 id="1-电脑端登录易统计官网获取token"><a href="#1-电脑端登录易统计官网获取token" class="headerlink" title="1.电脑端登录易统计官网获取token"></a>1.电脑端登录易统计官网获取token</h5><p>通过几个账号不间断测试，判断出每个用户都有固定的且不变的一个token值。但需要每周手机登录一次，至于为什么我还真的不知道~</p>
+<p>登录官网：<a target="_blank" rel="noopener" href="https://www.ioteams.com/ncov/#/login%EF%BC%8C%E5%A6%82%E4%B8%8B%E5%9B%BE">https://www.ioteams.com/ncov/#/login，如下图</a></p>
+<p>输入对应账号(手机号码)</p>
+<p><img src="http://qn.199604.com/typoraImg/image-20210227193607099.png" alt="image-20210227193607099"></p>
+<p>登录后，F12打开浏览器开发调试工具，点击Network(网络)，之后刷新一下页面，找到ncov,点击，选择cookie,再找到对应ncov-access-token-h5的值，如下红框：</p>
+<p><img src="http://qn.199604.com/typoraImg/image-20210227194044032.png" alt="image-20210227194044032"></p>
+<h5 id="2-修改python代码对应的值"><a href="#2-修改python代码对应的值" class="headerlink" title="2.修改python代码对应的值"></a>2.修改python代码对应的值</h5><p>修改的值如下：</p>
+<ol>
+<li>ncov-access-token值为步骤一获取的</li>
+<li>address的地址数据，可通过点击 立即上报/重新上报按钮 获取上一次签到信息：</li>
+</ol>
+<p><img src="http://qn.199604.com/typoraImg/image-20210227195207888.png" alt="image-20210227195207888"></p>
+<p><img src="http://qn.199604.com/typoraImg/image-20210227195132798.png" alt="image-20210227195132798"></p>
+<p>返回数据只需要获取address下的数据补充即可，如下：</p>
+<p><img src="http://qn.199604.com/typoraImg/image-20210227195503629.png" alt="image-20210227195503629"></p>
+<h6 id="最后代码如下："><a href="#最后代码如下：" class="headerlink" title="最后代码如下："></a>最后代码如下：</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"># coding=utf-8</span><br><span class="line">import time</span><br><span class="line">import random</span><br><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#接口header</span><br><span class="line">headers = &#123;</span><br><span class="line">    &quot;Content-Type&quot;: &quot;application/json;charset=utf-8&quot;,</span><br><span class="line">    &quot;Connection&quot;: &quot;keep-alive&quot;,</span><br><span class="line">    &quot;Host&quot;: &quot;www.ioteams.com&quot;,</span><br><span class="line">    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36 Edg/88.0.705.74&quot;,</span><br><span class="line">    &quot;ncov-access-token&quot;: &quot;&quot;,#用户token是唯一且不变的，获取方法见上文。</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">#打卡信息</span><br><span class="line">data = &#123;</span><br><span class="line">    &quot;address&quot;: &#123;</span><br><span class="line">        &quot;province&quot;: &quot;440000&quot;,#省份代码</span><br><span class="line">        &quot;city&quot;: &quot;440100&quot;,#市区代码</span><br><span class="line">        &quot;county&quot;: &quot;440113&quot;,#县级代码</span><br><span class="line">        &quot;autoFetch&quot;: True,</span><br><span class="line">        &quot;lng&quot;: &quot;113.3896&quot;,#填写当前地区经度</span><br><span class="line">        &quot;lat&quot;: &quot;22.9709&quot;#填写当前地区纬度</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;at_home&quot;: True,</span><br><span class="line">    &quot;contacted&quot;: False,</span><br><span class="line">    &quot;custom&quot;: &#123;</span><br><span class="line">        &quot;dzmgi&quot;: &quot;在家远程办公&quot;,</span><br><span class="line">        &quot;egdtb&quot;: &quot;否&quot;,</span><br><span class="line">        &quot;fykat&quot;: &quot;否&quot;,</span><br><span class="line">        &quot;otqdu&quot;: &quot;否&quot;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    # &quot;family_suspected&quot;: False,</span><br><span class="line">    # &quot;family_confirmed&quot;: False,</span><br><span class="line">    &quot;fever&quot;: False,#是否发热</span><br><span class="line">    &quot;infected&quot;: False,#是否感染</span><br><span class="line">    &quot;self_suspected&quot;: False,</span><br><span class="line">    &quot;self_confirmed&quot;: False,</span><br><span class="line">    &quot;description&quot;: &quot;&quot;</span><br><span class="line">    # &quot;contacted_beijing&quot;:False,</span><br><span class="line">    # &quot;passed_beijing&quot;:False,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_login():</span><br><span class="line">    random_sleep()</span><br><span class="line">    link = &#x27;https://www.ioteams.com/ncov/#/index&#x27;</span><br><span class="line">    try:</span><br><span class="line">        req = requests.get(link, headers=headers)</span><br><span class="line">        print(req.content)</span><br><span class="line">    except Exception as e:</span><br><span class="line">        print(e)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 获取当前日报id</span><br><span class="line">def get_dailyCode():</span><br><span class="line">    link = &#x27;https://www.ioteams.com/ncov/api/users/dailyReport&#x27;</span><br><span class="line">    # link = &#x27;https://www.ioteams.com/ncov/api/companies/default/question&#x27;</span><br><span class="line">    # link = &#x27;https://www.ioteams.com/ncov/api/statistical/latest&#x27;</span><br><span class="line">    try:</span><br><span class="line">        # req = requests.get(link, headers=headers)</span><br><span class="line">        req = requests.post(link, headers=headers, data=json.dumps(data))</span><br><span class="line">        response = req.json()</span><br><span class="line">        print(req.json())</span><br><span class="line">        user_id = response[&#x27;data&#x27;][&#x27;data&#x27;][&#x27;_id&#x27;]</span><br><span class="line">        print(user_id)</span><br><span class="line">        return user_id</span><br><span class="line">    except Exception as e:</span><br><span class="line">        print(e)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 打卡</span><br><span class="line">def report_health():</span><br><span class="line">    get_login()</span><br><span class="line">    user_id = get_dailyCode()</span><br><span class="line">    time.sleep(5)</span><br><span class="line">    url = &#x27;https://www.ioteams.com/ncov/api/users/dailyReports/&#123;&#125;&#x27;</span><br><span class="line">    req = requests.put(url.format(user_id), headers=headers, data=json.dumps(data))</span><br><span class="line">    print(req)</span><br><span class="line">    print(req.json())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def random_sleep():</span><br><span class="line">    sleep_time = random.randint(200, 1000)</span><br><span class="line">    print(sleep_time)</span><br><span class="line">    time.sleep(sleep_time)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    report_health()</span><br><span class="line">    # get_dailyCode()</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-每日定时执行"><a href="#3-每日定时执行" class="headerlink" title="3.每日定时执行"></a>3.每日定时执行</h6><p>通过自己Linux服务器每日定时执行即可：</p>
+<p>我是直接crontab 每天0点10分定时执行的…..</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10 0 * * * python /data/glj/oneSign.py &gt; log.log</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1654/" title="移动小one易统计定时打卡(python)">http://erbi.me/1654/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E6%98%93%E7%BB%9F%E8%AE%A1/" rel="tag"># 易统计</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1647/" rel="prev" title="GreenPlum删除节点">
+                  <i class="fa fa-chevron-left"></i> GreenPlum删除节点
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1657/" rel="next" title="GP&CDH安装部署系列-chrony时钟同步">
+                  GP&CDH安装部署系列-chrony时钟同步 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

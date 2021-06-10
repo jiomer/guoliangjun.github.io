@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="CentOS上离线安装mono检查是否安装了依赖库1yum -y install gcc gcc-c++ bison pkgconfig glib2-devel gettext make libpng-devel libjpeg-devel libtiff-devel libexif-devel giflib-devel libX11-devel freetype-devel fontconfig">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS上离线安装mono">
+<meta property="og:url" content="http://erbi.me/1595/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="CentOS上离线安装mono检查是否安装了依赖库1yum -y install gcc gcc-c++ bison pkgconfig glib2-devel gettext make libpng-devel libjpeg-devel libtiff-devel libexif-devel giflib-devel libX11-devel freetype-devel fontconfig">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/image-20200609154414318.png">
+<meta property="article:published_time" content="2020-07-01T02:24:11.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:15.062Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="mono">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/typoraImg/image-20200609154414318.png">
+
+
+<link rel="canonical" href="http://erbi.me/1595/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1595&#x2F;&quot;,&quot;path&quot;:&quot;1595&#x2F;&quot;,&quot;title&quot;:&quot;CentOS上离线安装mono&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>CentOS上离线安装mono | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CentOS%E4%B8%8A%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85mono"><span class="nav-number">1.</span> <span class="nav-text">CentOS上离线安装mono</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E4%BA%86%E4%BE%9D%E8%B5%96%E5%BA%93"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">检查是否安装了依赖库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDmono%E5%AE%89%E8%A3%85%E6%BA%90"><span class="nav-number">1.0.0.0.2.</span> <span class="nav-text">下载mono安装源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mono-%E9%85%8D%E7%BD%AE%EF%BC%8C%E7%BC%96%E8%AF%91%EF%BC%8C%E5%AE%89%E8%A3%85%EF%BC%8C%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.0.0.0.3.</span> <span class="nav-text">mono 配置，编译，安装，设置环境变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E8%83%BD%E4%BD%BF%E7%94%A8"><span class="nav-number">1.0.0.0.4.</span> <span class="nav-text">测试是否能使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98"><span class="nav-number">1.0.0.0.5.</span> <span class="nav-text">遇到问题</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-configure-error-%E2%80%9Ccmake-not-found%E2%80%9D"><span class="nav-number">1.0.0.0.5.1.</span> <span class="nav-text">1.configure: error: “cmake not found”</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85%E5%AE%8CMono%E5%90%8E%EF%BC%8C%E5%85%B6%E4%BB%96%E7%94%A8%E6%88%B7%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8mono"><span class="nav-number">1.0.0.0.5.2.</span> <span class="nav-text">2.安装完Mono后，其他用户无法使用mono</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1595/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CentOS上离线安装mono
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-07-01 10:24:11" itemprop="dateCreated datePublished" datetime="2020-07-01T10:24:11+08:00">2020-07-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:15" itemprop="dateModified" datetime="2021-06-10T09:36:15+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="CentOS上离线安装mono"><a href="#CentOS上离线安装mono" class="headerlink" title="CentOS上离线安装mono"></a>CentOS上离线安装mono</h1><h5 id="检查是否安装了依赖库"><a href="#检查是否安装了依赖库" class="headerlink" title="检查是否安装了依赖库"></a>检查是否安装了依赖库</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc gcc-c++ bison pkgconfig glib2-devel gettext make libpng-devel libjpeg-devel libtiff-devel libexif-devel giflib-devel libX11-devel freetype-devel fontconfig-devel  cairo-devel</span><br></pre></td></tr></table></figure>
+
+<p>如果是离线机器没这些依赖包，也最需要安装这些依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc、gcc-c++、make、cmake</span><br></pre></td></tr></table></figure>
+
+<h5 id="下载mono安装源"><a href="#下载mono安装源" class="headerlink" title="下载mono安装源"></a>下载mono安装源</h5><p><a target="_blank" rel="noopener" href="http://download.mono-project.com/sources/mono/mono-5.16.0.179.tar.bz2">http://download.mono-project.com/sources/mono/mono-5.16.0.179.tar.bz2</a> 上传到你离线的服务器上</p>
+<h5 id="mono-配置，编译，安装，设置环境变量"><a href="#mono-配置，编译，安装，设置环境变量" class="headerlink" title="mono 配置，编译，安装，设置环境变量"></a>mono 配置，编译，安装，设置环境变量</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">tar -jxvf mono-5.16.0.179.tar.bz2</span><br><span class="line"></span><br><span class="line">cd mono-5.16.0.179</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/mono</span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">vi /etc/profile</span><br><span class="line">在最后添加环境变量：</span><br><span class="line">PATH=$PATH:/usr/local/mono/bin</span><br><span class="line">export PATH</span><br><span class="line">:wq保存并退出</span><br><span class="line"></span><br><span class="line"># 设置生效</span><br><span class="line">source /etc/profile</span><br><span class="line"># 输出环境变量PATH的值，验证添加的变量是否生效</span><br><span class="line">echo $PATH</span><br><span class="line"># 查看 mono 版本</span><br><span class="line">mono -V               </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>说明</strong>: –prefix=/usr/local/mono是设置mono安装的目录，因此PATH添加的就是该安装目录下的bin目录路径。</p>
+</blockquote>
+<h5 id="测试是否能使用"><a href="#测试是否能使用" class="headerlink" title="测试是否能使用"></a>测试是否能使用</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">vi hello.cs</span><br><span class="line"></span><br><span class="line">using System;</span><br><span class="line">using System.Text;</span><br><span class="line">namespace Hello</span><br><span class="line">&#123;</span><br><span class="line">        class hello</span><br><span class="line">        &#123;</span><br><span class="line">                static void Main(string[] args)</span><br><span class="line">                &#123;</span><br><span class="line">                        Console.WriteLine(&quot;hello world!&quot;);</span><br><span class="line">                        Console.ReadKey();</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">:wq保存并退出</span><br><span class="line"></span><br><span class="line"># 编译生成可执行程序hello.exe</span><br><span class="line">mcs hello.cs</span><br><span class="line"># 执行可执行程序</span><br><span class="line">mono hello.exe</span><br></pre></td></tr></table></figure>
+
+<h5 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h5><h6 id="1-configure-error-“cmake-not-found”"><a href="#1-configure-error-“cmake-not-found”" class="headerlink" title="1.configure: error: “cmake not found”"></a>1.configure: error: “cmake not found”</h6><p>在configure环节就报了configure: error: “cmake not found”，表示没有安装到cmake依赖库。于是需要安装cmake。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">1、安装gcc等必备程序包（已安装则略过此步）</span><br><span class="line">yum install -y gcc gcc-c++ make automake</span><br><span class="line"></span><br><span class="line">2、安装wget （已安装则略过此步）</span><br><span class="line">yum install -y wget</span><br><span class="line"></span><br><span class="line">3、获取CMake源码包(或者手动自己windows下载)</span><br><span class="line">wget https://cmake.org/files/v3.5/cmake-3.5.2.tar.gz</span><br><span class="line"></span><br><span class="line">4、解压CMake源码包</span><br><span class="line">tar -zxvf cmake-3.5.2.tar.gz</span><br><span class="line"></span><br><span class="line">5、进入cmark的源码目录</span><br><span class="line">cd cmake-3.5.2</span><br><span class="line"></span><br><span class="line">6、运行当前目录下的一个文件</span><br><span class="line">./bootstrap --prefix=/usr</span><br><span class="line"></span><br><span class="line">ps:如果没有指定prefix，后面使用时会报错Could not find CMAKE_ROOT</span><br><span class="line"></span><br><span class="line">7、运行命令（这步时间有点长）</span><br><span class="line">gmake</span><br><span class="line"></span><br><span class="line">8、进行安装</span><br><span class="line">gmake install</span><br><span class="line"></span><br><span class="line">9、检查是否安装完成</span><br><span class="line">cmake --version</span><br><span class="line">or</span><br><span class="line">which cmake</span><br></pre></td></tr></table></figure>
+
+<p>安装完cmake后，把原来的mono解压文件删除，重新解压进行即可。</p>
+<h6 id="2-安装完Mono后，其他用户无法使用mono"><a href="#2-安装完Mono后，其他用户无法使用mono" class="headerlink" title="2.安装完Mono后，其他用户无法使用mono"></a>2.安装完Mono后，其他用户无法使用mono</h6><p>1.检查 /etc/profile是否设置了环境变量 2.查看mono目录权限是否为下图所示： <img src="http://qn.199604.com/typoraImg/image-20200609154414318.png" alt="image-20200609154414318"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1595/" title="CentOS上离线安装mono">http://erbi.me/1595/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/mono/" rel="tag"># mono</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1593/" rel="prev" title="centos7.X设置本地YUM源">
+                  <i class="fa fa-chevron-left"></i> centos7.X设置本地YUM源
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1599/" rel="next" title="Centos安装zookeeper+kafka集群">
+                  Centos安装zookeeper+kafka集群 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

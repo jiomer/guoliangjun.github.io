@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="YAML是”YAML Ain’t a Markup Language”（YAML不是一种标记语言）的递归缩写。YAML的意思其实是：“Yet Another Markup Language”（仍是一种标记语言）。主要强度这种语音是以数据为中心，而不是以标记语音为重心，例如像xml语言就会使用大量的标记。 YAML是一个可读性高，易于理解，用来表达数据序列化的格式。它的语法和其他高级语言类似，并且可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是YAML">
+<meta property="og:url" content="http://erbi.me/1720/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="YAML是”YAML Ain’t a Markup Language”（YAML不是一种标记语言）的递归缩写。YAML的意思其实是：“Yet Another Markup Language”（仍是一种标记语言）。主要强度这种语音是以数据为中心，而不是以标记语音为重心，例如像xml语言就会使用大量的标记。 YAML是一个可读性高，易于理解，用来表达数据序列化的格式。它的语法和其他高级语言类似，并且可">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-26T02:24:43.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:15.171Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="yaml">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/1720/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1720&#x2F;&quot;,&quot;path&quot;:&quot;1720&#x2F;&quot;,&quot;title&quot;:&quot;什么是YAML&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>什么是YAML | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E9%87%8F"><span class="nav-number">2.1.</span> <span class="nav-text">标量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.2.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">2.3.</span> <span class="nav-text">数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%9D%97"><span class="nav-number">3.</span> <span class="nav-text">文本块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E6%8C%87%E5%AE%9A%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">显示指定类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E6%96%87%E4%BB%B6%E5%A4%9A%E9%85%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">单文件多配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F"><span class="nav-number">6.0.1.</span> <span class="nav-text">激活配置文件方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F"><span class="nav-number">6.0.2.</span> <span class="nav-text">配置文件加载顺序</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1720/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          什么是YAML
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-26 10:24:43" itemprop="dateCreated datePublished" datetime="2021-04-26T10:24:43+08:00">2021-04-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:15" itemprop="dateModified" datetime="2021-06-10T09:36:15+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/yaml/" itemprop="url" rel="index"><span itemprop="name">yaml</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>YAML是”YAML Ain’t a Markup Language”（YAML不是一种标记语言）的递归缩写。YAML的意思其实是：“Yet Another Markup Language”（仍是一种标记语言）。主要强度这种语音是以数据为中心，而不是以标记语音为重心，例如像xml语言就会使用大量的标记。 YAML是一个可读性高，易于理解，用来表达数据序列化的格式。它的语法和其他高级语言类似，并且可以简单表达清单（数组）、散列表，标量等数据形态。它使用空白符号缩进和大量依赖外观的特色，特别适合用来表达或编辑数据结构、各种配置文件等。 YAML的配置文件后缀为 .yml，例如Springboot项目中使用到的配置文件 application.yml 。</p>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><ul>
+<li>  YAML使用可打印的Unicode字符，可使用UTF-8或UTF-16。</li>
+<li>  数据结构采用键值对的形式，即 键名称: 值，注意冒号后面要有空格。</li>
+<li>  每个清单（数组）成员以单行表示，并用短杠+空白（- ）起始。或使用方括号（[]），并用逗号+空白（, ）分开成员。</li>
+<li>  每个散列表的成员用冒号+空白（: ）分开键值和内容。或使用大括号（{ }），并用逗号+空白（, ）分开。</li>
+<li>  字符串值一般不使用引号，必要时可使用，使用双引号表示字符串时，会转义字符串中的特殊字符（例如\n）。使用单引号时不会转义字符串中的特殊字符。</li>
+<li>  大小写敏感</li>
+<li>  使用缩进表示层级关系，缩进不允许使用tab，只允许空格，因为有可能在不同系统下tab长度不一样</li>
+<li>  缩进的空格数可以任意，只要相同层级的元素左对齐即可</li>
+<li>  在单一文件中，可用连续三个连字号（—）区分多个文件。还有选择性的连续三个点号（…）用来表示文件结尾。</li>
+<li>  ‘#’表示注释，可以出现在一行中的任何位置，单行注释</li>
+<li>  在使用逗号及冒号时，后面都必须接一个空白字符，所以可以在字符串或数值中自由加入分隔符号（例如：1,5,280或<a target="_blank" rel="noopener" href="http://199604.com/">http://199604.com</a>）而不需要使用引号。</li>
+</ul>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><ul>
+<li>  纯量（标量）（scalars）：单个的、不可再分的值</li>
+<li>  对象：键值对的集合，又称为映射（mapping）/ 哈希（hashes） / 字典（dictionary）</li>
+<li>  数组：一组按次序排列的值，又称为序列（sequence） / 列表（list）</li>
+</ul>
+<h3 id="标量"><a href="#标量" class="headerlink" title="标量"></a>标量</h3><p>标量是最基础的数据类型，不可再分的值，他们一般用于表示单个的变量，有以下七种：</p>
+<ul>
+<li>  字符串</li>
+<li>  布尔值</li>
+<li>  整数</li>
+<li>  浮点数</li>
+<li>  Null</li>
+<li>  时间</li>
+<li>  日期</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字符串</span></span><br><span class="line"><span class="attr">string.value:</span> <span class="string">Hello!您好呀!</span></span><br><span class="line"><span class="comment"># 布尔值，true或false</span></span><br><span class="line"><span class="attr">boolean.value:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">boolean.value1:</span> <span class="literal">false</span></span><br><span class="line"><span class="comment"># 整数</span></span><br><span class="line"><span class="attr">int.value:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">int.value1:</span> <span class="string">0b1010_0111_0100_1010_1110</span> <span class="comment"># 二进制</span></span><br><span class="line"><span class="comment"># 浮点数</span></span><br><span class="line"><span class="attr">float.value:</span> <span class="number">3.14159</span></span><br><span class="line"><span class="attr">float.value1:</span> <span class="number">314159e-5</span> <span class="comment"># 科学计数法</span></span><br><span class="line"><span class="comment"># Null，~代表null</span></span><br><span class="line"><span class="attr">null.value:</span> <span class="string">~</span></span><br><span class="line"><span class="comment"># 时间，时间使用ISO 8601格式，时间和日期之间使用T连接，最后使用+代表时区</span></span><br><span class="line"><span class="attr">datetime.value:</span> <span class="type">!!timestamp</span> <span class="number">2021-04-13T10:31:00+08:00</span></span><br><span class="line"><span class="comment"># 日期,日期必须使用ISO 8601格式，即yyyy-MM-dd</span></span><br><span class="line"><span class="attr">date.value:</span> <span class="type">!!timestamp</span> <span class="number">2021-04-13</span></span><br></pre></td></tr></table></figure>
+
+<p>这样，我们就可以在程序中引入了，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestEntity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;string.value&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String stringValue;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;boolean.value&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> booleanValue;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;boolean.value1&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> booleanValue1;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;int.value&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> intValue;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;int.value1&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> intValue1;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;float.value&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">float</span> floatValue;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;float.value1&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">float</span> floatValue1;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;null.value&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String nullValue;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;datetime.value&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Date datetimeValue;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;date.value&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Date datevalue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>我们知道单个变量可以用键值对，使用冒号结构表示 key: value，注意冒号后面要加一个空格。可以使用缩进层级的键值对表示一个对象，如下所示：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pre-user:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">郭良俊只狗</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">25</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在程序对这几个属性进行赋值到user对象中。使用@ConfigurationProperties注入对象，@value不能很好的解析复杂对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: GuoLiangJun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2021/4/21</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Time</span>: 0:15</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;pre-user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>可以用短横杆加空格 -开头的行组成数组的每一个元素，如下的address字段：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pre-user:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">郭良俊只狗</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">25</span></span><br><span class="line">  <span class="attr">address:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">广州</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">清远</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">韶关</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以使用中括号进行行内显示形式，如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pre-user:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">郭良俊只狗</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">25</span></span><br><span class="line">  <span class="attr">address:</span> [<span class="string">广州</span>,<span class="string">清远，韶关</span>]</span><br></pre></td></tr></table></figure>
+
+<p>在代码中引入方式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: GuoLiangJun</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2021/4/21</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Time</span>: 0:15</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;pre-user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; address;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文本块"><a href="#文本块" class="headerlink" title="文本块"></a>文本块</h2><p>如果你想引入多行的文本块，可以使用符号，注意在冒号:和 符号之间要有空格。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pre-user:</span></span><br><span class="line">  <span class="attr">name:</span> </span><br><span class="line">    <span class="string">Hello</span> <span class="string">Javaer!!</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">25</span></span><br><span class="line">  <span class="attr">address:</span> [<span class="string">广州</span>,<span class="string">清远</span>,<span class="string">韶关</span>]</span><br></pre></td></tr></table></figure>
+
+<p>它和加双引号的效果一样，双引号能转义特殊字符：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pre-user:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">&quot;Hello Java!!\nI am fine!\nThanks! GoodBye!&quot;</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">25</span></span><br><span class="line">  <span class="attr">address:</span> [<span class="string">广州</span>,<span class="string">清远</span>,<span class="string">韶关</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="显示指定类型"><a href="#显示指定类型" class="headerlink" title="显示指定类型"></a>显示指定类型</h2><p>有时我们需要显示指定某些值的类型，可以使用 !（感叹号）显式指定类型。!单叹号通常是自定义类型，!!双叹号是内置类型，例如：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定为字符串</span></span><br><span class="line"><span class="attr">string.value:</span> <span class="type">!!str</span> <span class="string">HelloWorld!</span></span><br><span class="line"><span class="comment"># !!timestamp指定为日期时间类型</span></span><br><span class="line"><span class="attr">datetime.value:</span> <span class="type">!!timestamp</span> <span class="number">2021-04-13T02:31:00+08:00</span></span><br></pre></td></tr></table></figure>
+
+<p>内置的类型如下：</p>
+<ul>
+<li>  !!int：整数类型</li>
+<li>  !!float：浮点类型</li>
+<li>  !!bool：布尔类型</li>
+<li>  !!str：字符串类型</li>
+<li>  !!binary：二进制类型</li>
+<li>  !!timestamp：日期时间类型</li>
+<li>  !!null：空值</li>
+<li>  !!set：集合类型</li>
+<li>  !!omap，!!pairs：键值列表或对象列表</li>
+<li>  !!seq：序列</li>
+<li>  !!map：散列表类型</li>
+</ul>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用会用到 &amp;锚点符合和 <em>星号符号，&amp;用来建立锚点，&lt;&lt; 表示合并到当前数据，</em> 用来引用锚点。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">guoliangjun:</span> <span class="meta">&amp;guoliangjun</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">郭良俊</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">25</span></span><br><span class="line"></span><br><span class="line"><span class="attr">dept:</span></span><br><span class="line">  <span class="attr">id:</span> <span class="string">dd001</span></span><br><span class="line">  <span class="string">&lt;&lt;:</span> <span class="meta">*guoliangjun</span></span><br></pre></td></tr></table></figure>
+
+<p>上面最终相当于如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">guoliangjun:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">郭良俊</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="attr">dept:</span></span><br><span class="line">  <span class="attr">id:</span> <span class="string">dd001</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">郭良俊</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">20</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>还有一种文件内引用，引用已经定义好的变量，如下:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">base.host:</span> <span class="string">https://199604.com</span></span><br><span class="line"><span class="attr">add.person.url:</span> <span class="string">$&#123;base.host&#125;?s=hive</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="单文件多配置"><a href="#单文件多配置" class="headerlink" title="单文件多配置"></a>单文件多配置</h2><p>可以在同一个文件中，实现多文档分区，即多配置。在一个yml文件中，通过 — 分隔多个不同配置，根据spring.profiles.active 的值来决定启用哪个配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#公共配置</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">pro</span> <span class="comment"># 指定使用哪个文档块</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">#开发环境配置</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span> <span class="string">dev</span> <span class="comment"># profiles属性代表配置的名称</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">#生产环境配置</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span> <span class="string">pro</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="激活配置文件方式"><a href="#激活配置文件方式" class="headerlink" title="激活配置文件方式"></a>激活配置文件方式</h4><ol>
+<li> 通过在主配置文件中（application.yml或application.properties）指定变量spring.profiles.active的值，例如spring.profiles.active=dev</li>
+<li> 命令行指定：java -jar springboot-demo.jar –spring.profiles.active=dev</li>
+<li> 虚拟机参数指定：-Dspring.profiles.active=dev</li>
+</ol>
+<h4 id="配置文件加载顺序"><a href="#配置文件加载顺序" class="headerlink" title="配置文件加载顺序"></a>配置文件加载顺序</h4><p>springBoot启动会扫描读取以下位置中的配置文件，优先级由高到低：</p>
+<ol>
+<li> -file:./config/，即当前项目下的config文件夹（src同级目录）</li>
+<li> -file:./，即当前项目下</li>
+<li> -classpath:./config/，即当前项目中resources资源文件夹下的config文件夹</li>
+<li> -classpath:./，即当前项目中resources资源文件夹下</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1720/" title="什么是YAML">http://erbi.me/1720/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+              <a href="/tags/yaml/" rel="tag"># yaml</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1718/" rel="prev" title="GreenPlum维护年龄的处理">
+                  <i class="fa fa-chevron-left"></i> GreenPlum维护年龄的处理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1722/" rel="next" title="ip地址后边加个/8(16,24,32)含义">
+                  ip地址后边加个/8(16,24,32)含义 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

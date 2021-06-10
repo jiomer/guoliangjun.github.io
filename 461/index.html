@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="字体属性：(font) 大小 {font-size: x-large;}(特大) xx-small;(极小) 一般中文用不到，只要用数值就可以，单位：PX、PD 样式 {font-style: oblique;}(偏斜体) italic;(斜体) normal;(正常) 行高 {line-height: normal;}(正常) 单位：PX、PD、EM 粗细 {font-weight: bold;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css样式">
+<meta property="og:url" content="http://erbi.me/461/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="字体属性：(font) 大小 {font-size: x-large;}(特大) xx-small;(极小) 一般中文用不到，只要用数值就可以，单位：PX、PD 样式 {font-style: oblique;}(偏斜体) italic;(斜体) normal;(正常) 行高 {line-height: normal;}(正常) 单位：PX、PD、EM 粗细 {font-weight: bold;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2015-12-11T18:40:03.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:14.321Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="css">
+<meta property="article:tag" content="HTML">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/461/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;461&#x2F;&quot;,&quot;path&quot;:&quot;461&#x2F;&quot;,&quot;title&quot;:&quot;css样式&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>css样式 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/461/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          css样式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-12-12 02:40:03" itemprop="dateCreated datePublished" datetime="2015-12-12T02:40:03+08:00">2015-12-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:14" itemprop="dateModified" datetime="2021-06-10T09:36:14+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%86%E4%BA%AB%E8%B5%84%E8%AE%AF/" itemprop="url" rel="index"><span itemprop="name">分享资讯</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>字体属性：(font)</p>
+<p>大小 {font-size: x-large;}(特大) xx-small;(极小) 一般中文用不到，只要用数值就可以，单位：PX、PD</p>
+<p>样式 {font-style: oblique;}(偏斜体) italic;(斜体) normal;(正常)</p>
+<p>行高 {line-height: normal;}(正常) 单位：PX、PD、EM</p>
+<p>粗细 {font-weight: bold;}(粗体) lighter;(细体) normal;(正常)</p>
+<p>变体 {font-variant: small-caps;}(小型大写字母) normal;(正常)</p>
+<p>大小写 {text-transform: capitalize;}(首字母大写) uppercase;(大写) lowercase;(小写) none;(无)</p>
+<p>修饰 {text-decoration: underline;}(下划线) overline;(上划线) line-through;(删除线) blink;(闪烁)</p>
+<p>常用字体： (font-family)</p>
+<p>“Courier New”, Courier, monospace, “Times New Roman”, Times, serif, Arial, Helvetica, sans-serif, Verdana</p>
+<p>背景属性： (background)</p>
+<p>色彩 {background-color: #FFFFFF;}</p>
+<p>图片 {background-image: url();}</p>
+<p>重复 {background-repeat: no-repeat;}</p>
+<p>滚动 {background-attachment: fixed;}(固定) scroll;(滚动)</p>
+<p>位置 {background-position: left;}(水平) top(垂直);</p>
+<p>简写方法 {background:#000 url(..) repeat fixed left top;} /*简写?这个在阅读代码中经常出现，要认真的研究*/</p>
+<p>区块属性： (Block) /*这个属性第一次认识，要多多研究*/</p>
+<p>字间距 {letter-spacing: normal;} 数值 /*这个属性似乎有用，多实践下*/</p>
+<p>对齐 {text-align: justify;}(两端对齐) left;(左对齐) right;(右对齐) center;(居中)</p>
+<p>缩进 {text-indent: 数值px;}</p>
+<p>垂直对齐 {vertical-align: baseline;}(基线) sub;(下标) super;(下标) top; text-top; middle; bottom; text-bottom;</p>
+<p>词间距word-spacing: normal; 数值</p>
+<p>空格white-space: pre;(保留) nowrap;(不换行)</p>
+<p>显示 {display:block;}(块) inline;(内嵌) list-item;(列表项) run-in;(追加部分) compact;(紧凑) marker;(标记) table; inline-table; table-raw-group; table-header-group; table-footer-group; table-raw; table-column-group; table-column; table-cell; table-caption;(表格标题) /*display 属性的了解很模糊*/</p>
+<p>方框属性： (Box)</p>
+<p>width:; height:; float:; clear:both; margin:; padding:; 顺序：上右下左</p>
+<p>边框属性： (Border)</p>
+<p>border-style: dotted;(点线) dashed;(虚线) solid; double;(双线) groove;(槽线) ridge;(脊状) inset;(凹陷) outset;</p>
+<p>border-width:; 边框宽度</p>
+<p>border-color:#;</p>
+<p>简写方法border：width style color; /*简写*/</p>
+<p>列表属性： (List-style)</p>
+<p>类型list-style-type: disc;(圆点) circle;(圆圈) square;(方块) decimal;(数字) lower-roman;(小罗码数字) upper-roman; lower-alpha; upper-alpha;</p>
+<p>位置list-style-position: outside;(外) inside;</p>
+<p>图像list-style-image: url(..);</p>
+<p>定位属性： (Position)</p>
+<p>Position: absolute; relative; static;</p>
+<p>visibility: inherit; visible; hidden;</p>
+<p>overflow: visible; hidden; scroll; auto;</p>
+<p>clip: rect(12px,auto,12px,auto) (裁切)</p>
+<p>css属性代码大全</p>
+<p>一 CSS文字属性：</p>
+<p>color : #999999; /*文字颜色*/</p>
+<p>font-family : 宋体,sans-serif; /*文字字体*/</p>
+<p>font-size : 9pt; /*文字大小*/</p>
+<p>font-style:itelic; /*文字斜体*/</p>
+<p>font-variant:small-caps; /*小字体*/</p>
+<p>letter-spacing : 1pt; /*字间距离*/</p>
+<p>line-height : 200%; /*设置行高*/</p>
+<p>font-weight:bold; /*文字粗体*/</p>
+<p>vertical-align:sub; /*下标字*/</p>
+<p>vertical-align:super; /*上标字*/</p>
+<p>text-decoration:line-through; /*加删除线*/</p>
+<p>text-decoration: overline; /*加顶线*/</p>
+<p>text-decoration:underline; /*加下划线*/</p>
+<p>text-decoration:none; /*删除链接下划线*/</p>
+<p>text-transform : capitalize; /*首字大写*/</p>
+<p>text-transform : uppercase; /*英文大写*/</p>
+<p>text-transform : lowercase; /*英文小写*/</p>
+<p>text-align:right; /*文字右对齐*/</p>
+<p>text-align:left; /*文字左对齐*/</p>
+<p>text-align:center; /*文字居中对齐*/</p>
+<p>text-align:justify; /*文字分散对齐*/</p>
+<p>vertical-align属性</p>
+<p>vertical-align:top; /*垂直向上对齐*/</p>
+<p>vertical-align:bottom; /*垂直向下对齐*/</p>
+<p>vertical-align:middle; /*垂直居中对齐*/</p>
+<p>vertical-align:text-top; /*文字垂直向上对齐*/</p>
+<p>vertical-align:text-bottom; /*文字垂直向下对齐*/</p>
+<p>二、CSS边框空白</p>
+<p>padding-top:10px; /*上边框留空白*/</p>
+<p>padding-right:10px; /*右边框留空白*/</p>
+<p>padding-bottom:10px; /*下边框留空白*/</p>
+<p>padding-left:10px; /*左边框留空白</p>
+<p>三、CSS符号属性：</p>
+<p>list-style-type:none; /*不编号*/</p>
+<p>list-style-type:decimal; /*阿拉伯数字*/</p>
+<p>list-style-type:lower-roman; /*小写罗马数字*/</p>
+<p>list-style-type:upper-roman; /*大写罗马数字*/</p>
+<p>list-style-type:lower-alpha; /*小写英文字母*/</p>
+<p>list-style-type:upper-alpha; /*大写英文字母*/</p>
+<p>list-style-type:disc; /*实心圆形符号*/</p>
+<p>list-style-type:circle; /*空心圆形符号*/</p>
+<p>list-style-type:square; /*实心方形符号*/</p>
+<p>list-style-image:url(/dot.gif); /*图片式符号*/</p>
+<p>list-style-position: outside; /*凸排*/</p>
+<p>list-style-position:inside; /*缩进*/</p>
+<p>四、CSS背景样式：</p>
+<p>background-color:#F5E2EC; /*背景颜色*/</p>
+<p>background:transparent; /*透视背景*/</p>
+<p>background-image : url(/image/bg.gif); /*背景图片*/</p>
+<p>background-attachment : fixed; /*浮水印固定背景*/</p>
+<p>background-repeat : repeat; /*重复排列-网页默认*/</p>
+<p>background-repeat : no-repeat; /*不重复排列*/</p>
+<p>background-repeat : repeat-x; /*在x轴重复排列*/</p>
+<p>background-repeat : repeat-y; /*在y轴重复排列*/</p>
+<p>指定背景位置</p>
+<p>background-position : 90% 90%; /*背景图片x与y轴的位置*/</p>
+<p>background-position : top; /*向上对齐*/</p>
+<p>background-position : buttom; /*向下对齐*/</p>
+<p>background-position : left; /*向左对齐*/</p>
+<p>background-position : right; /*向右对齐*/</p>
+<p>background-position : center; /*居中对齐*/</p>
+<p>五、CSS连接属性：</p>
+<p>a /*所有超链接*/</p>
+<p>a:link /*超链接文字格式*/</p>
+<p>a:visited /*浏览过的链接文字格式*/</p>
+<p>a:active /*按下链接的格式*/</p>
+<p>a:hover /*鼠标转到链接*/</p>
+<p>鼠标光标样式：</p>
+<p>链接手指 CURSOR: hand</p>
+<p>十字体 cursor:crosshair</p>
+<p>箭头朝下 cursor:s-resize</p>
+<p>十字箭头 cursor:move</p>
+<p>箭头朝右 cursor:move</p>
+<p>加一问号 cursor:help</p>
+<p>箭头朝左 cursor:w-resize</p>
+<p>箭头朝上 cursor:n-resize</p>
+<p>箭头朝右上 cursor:ne-resize</p>
+<p>箭头朝左上 cursor:nw-resize</p>
+<p>文字I型 cursor:text</p>
+<p>箭头斜右下 cursor:se-resize</p>
+<p>箭头斜左下 cursor:sw-resize</p>
+<p>漏斗 cursor:wait</p>
+<p>光标图案(IE6) p {cursor:url(“光标文件名.cur”),text;}</p>
+<p>六、CSS框线一览表：</p>
+<p>border-top : 1px solid #6699cc; /*上框线*/</p>
+<p>border-bottom : 1px solid #6699cc; /*下框线*/</p>
+<p>border-left : 1px solid #6699cc; /*左框线*/</p>
+<p>border-right : 1px solid #6699cc; /*右框线*/</p>
+<p>以上是建议书写方式,但也可以使用常规的方式 如下:</p>
+<p>border-top-color : #369 /*设置上框线top颜色*/</p>
+<p>border-top-width :1px /*设置上框线top宽度*/</p>
+<p>border-top-style : solid/*设置上框线top样式*/</p>
+<p>其他框线样式</p>
+<p>solid /*实线框*/</p>
+<p>dotted /*虚线框*/</p>
+<p>double /*双线框*/</p>
+<p>groove /*立体内凸框*/</p>
+<p>ridge /*立体浮雕框*/</p>
+<p>inset /*凹框*/</p>
+<p>outset /*凸框*/</p>
+<p>七、CSS表单运用：</p>
+<p>文字方块</p>
+<p>按钮</p>
+<p>复选框</p>
+<p>选择钮</p>
+<p>多行文字方块</p>
+<p>下拉式菜单 选项1选项2</p>
+<p>八、CSS边界样式：</p>
+<p>margin-top:10px; /*上边界*/</p>
+<p>margin-right:10px; /*右边界值*/</p>
+<p>margin-bottom:10px; /*下边界值*/</p>
+<p>margin-left:10px; /*左边界值*/</p>
+<p>CSS 属性： 字体样式(Font Style)</p>
+<p>序号 中文说明 标记语法</p>
+<p>1 字体样式 {font:font-style font-variant font-weight font-size font-family}</p>
+<p>2 字体类型 {font-family:”字体1”,”字体2”,”字体3”,…}</p>
+<p>3 字体大小 {font-size:数值inherit medium large larger x-large xx-large small smaller x-small xx-small}</p>
+<p>4 字体风格 {font-style:inherititalicnormaloblique}</p>
+<p>5 字体粗细 {font-weight:100-900boldbolderlighternormal;}</p>
+<p>6 字体颜色 {color:数值;}</p>
+<p>7 阴影颜色 {text-shadow:16位色值}</p>
+<p>8 字体行高 {line-height:数值inheritnormal;}</p>
+<p>9 字 间 距 {letter-spacing:数值inheritnormal}</p>
+<p>10 单词间距 {word-spacing:数值inheritnormal}</p>
+<p>11 字体变形 {font-variant:inheritnormalsmall-cps }</p>
+<p>12 英文转换 {text-transform:inheritnonecapitalizeuppercaselowercase}</p>
+<p>13 字体变形 {font-size-adjust:inheritnone}</p>
+<p>14 字体 {font-stretch:condensedexpandedextra-condensedextra-expandedinheritnarrowernormal semi-condensedsemi-expandedultra-condensedultra-expandedwider}</p>
+<p>文本样式(Text Style)</p>
+<p>序号 中文说明 标记语法</p>
+<p>1 行 间 距 {line-height:数值inheritnormal;}</p>
+<p>2 文本修饰 {text-decoration:inheritnoneunderlineoverlineline-throughblink}</p>
+<p>3 段首空格 {text-indent:数值inherit}</p>
+<p>4 水平对齐 {text-align:leftrightcenterjustify}</p>
+<p>5 垂直对齐 {vertical-align:inherittopbottomtext-toptext-bottombaselinemiddlesubsuper}</p>
+<p>6 书写方式 {writing-mode:lr-tbtb-rl}</p>
+<p>背景样式</p>
+<p>序号 中文说明 标记语法</p>
+<p>1 背景颜色 {background-color:数值}</p>
+<p>2 背景图片 {background-image: url(URL)none}</p>
+<p>3 背景重复 {background-repeat:inheritno-repeatrepeatrepeat-xrepeat-y}</p>
+<p>4 背景固定 {background-attachment:fixedscroll}</p>
+<p>5 背景定位 {background-position:数值topbottomleftrightcenter}</p>
+<p>6 背影样式 {background:背景颜色背景图象背景重复背景附件背景位置}</p>
+<p>框架样式(Box Style)</p>
+<p>序号 中文说明 标记语法</p>
+<p>1 边界留白 {margin:margin-top margin-right margin-bottom margin-left}</p>
+<p>2 补　　白 {padding:padding-top padding-right padding-bottom padding-left}</p>
+<p>3 边框宽度 {border-width:border-top-width border-right-width border-bottom-width border-left-width}</p>
+<p>宽度值： thinmediumthick数值</p>
+<p>4 边框颜色 {border-color:数值 数值 数值 数值}　　数值：分别代表top、right、bottom、left颜色值</p>
+<p>5 边框风格 {border-style:nonehiddeninheritdashedsoliddoubleinsetoutsetridgegroove}</p>
+<p>6 边　　框 {border:border-width border-style color}</p>
+<p>上 边 框 {border-top:border-top-width border-style color}</p>
+<p>右 边 框 {border-right:border-right-width border-style color}</p>
+<p>下 边 框 {border-bottom:border-bottom-width border-style color}</p>
+<p>左 边 框 {border-left:border-left-width border-style color}</p>
+<p>7 宽　　度 {width:长度百分比 auto}</p>
+<p>8 高　　度 {height:数值auto}</p>
+<p>9 漂　　浮 {float:leftrightnone}</p>
+<p>10 清　　除 {clear:noneleftrightboth}</p>
+<p><strong>分类列表</strong></p>
+<p>序号 中文说明 标记语法</p>
+<p>1 控制显示 {display:noneblockinlinelist-item}</p>
+<p>2 控制空白 {white-space:normalprenowarp}</p>
+<p>3 符号列表 {list-style-type:disccirclesquaredecimallower-romanupper-romanlower-alphaupper-alphanone}</p>
+<p>4 图形列表 {list-style-image:URL}</p>
+<p>5 位置列表 {list-style-position:insideoutside}</p>
+<p>6 目录列表 {list-style:目录样式类型目录样式位置url}</p>
+<p>7 鼠标形状 {cursor:handcrosshairtextwaitmovehelpe-resizenw-resizew-resizes-resizese-resizesw-resize}</p>
+<p>-———————————————————————————————————–</p>
+<p><strong>HTML代码在这：<a target="_blank" rel="noopener" href="http://199604.com/?post=80">点击地址</a></strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/461/" title="css样式">http://erbi.me/461/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/css/" rel="tag"># css</a>
+              <a href="/tags/HTML/" rel="tag"># HTML</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/458/" rel="prev" title="青春，是一场远行">
+                  <i class="fa fa-chevron-left"></i> 青春，是一场远行
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/462/" rel="next" title="学校的比赛。">
+                  学校的比赛。 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

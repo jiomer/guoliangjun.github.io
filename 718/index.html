@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="如果springmvc-config.xml文件和web.xml文件一样，都放在WEB-INF目录下的话。 在web.xml中springmvc最好这样配置一下 12345678910111213141516&lt;!-- SpringMVC配置 --&gt;&lt;servlet&gt;	&lt;servlet-name&gt;springmvc&lt;&#x2F;servlet-name&gt;	&amp;lt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ssm搭建一些笔记">
+<meta property="og:url" content="http://erbi.me/718/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="如果springmvc-config.xml文件和web.xml文件一样，都放在WEB-INF目录下的话。 在web.xml中springmvc最好这样配置一下 12345678910111213141516&lt;!-- SpringMVC配置 --&gt;&lt;servlet&gt;	&lt;servlet-name&gt;springmvc&lt;&#x2F;servlet-name&gt;	&amp;lt">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-10-22T16:15:34.000Z">
+<meta property="article:modified_time" content="2021-06-10T06:00:46.684Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="mybatis">
+<meta property="article:tag" content="spring">
+<meta property="article:tag" content="springmvc">
+<meta property="article:tag" content="ssm">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/718/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;718&#x2F;&quot;,&quot;path&quot;:&quot;718&#x2F;&quot;,&quot;title&quot;:&quot;ssm搭建一些笔记&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>ssm搭建一些笔记 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/718/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ssm搭建一些笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-10-23 00:15:34" itemprop="dateCreated datePublished" datetime="2017-10-23T00:15:34+08:00">2017-10-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 14:00:46" itemprop="dateModified" datetime="2021-06-10T14:00:46+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>如果springmvc-config.xml文件和web.xml文件一样，都放在WEB-INF目录下的话。</p>
+<p>在web.xml中springmvc最好这样配置一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- SpringMVC配置 --&gt;</span><br><span class="line">&lt;servlet&gt;</span><br><span class="line">	&lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</span><br><span class="line">	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;</span><br><span class="line">	&lt;init-param&gt;</span><br><span class="line">		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">		&lt;param-value&gt;/WEB-INF/springmvc.xml&lt;/param-value&gt;</span><br><span class="line">	&lt;/init-param&gt;</span><br><span class="line">	&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</span><br><span class="line">&lt;/servlet&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Map all requests to the DispatcherServlet for handling --&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">	&lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</span><br><span class="line">	&lt;url-pattern&gt;/&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果<code>&lt;param-value&gt;/WEB-INF/springmvc.xml&lt;/param-value&gt;</code></p>
+<p>改为<code>&lt;param-value&gt;classpath:springmvc.xml&lt;/param-value&gt;</code></p>
+<p>可能会出现-&gt;classpath指向的地址，与需要的文件不一致，报错很明显了。文件不存在</p>
+<blockquote>
+<ol>
+<li>警告: No mapping found for HTTP request with URI</li>
+<li>class path resource [springmvc.xml] cannot be opened because it does not exist</li>
+</ol>
+</blockquote>
+<p>那么就顺便记录下web.xml中或者spring配置文件中classpath和classpath*的区别吧</p>
+<blockquote>
+<ol>
+<li>【classpath:】此配置表示告诉web容器去classpath（WEB-INF/classes和WEB-INF/lib）中去加载指定名称的配置文件，若是有同名文件，则只会加载一个。</li>
+<li>【classpath*:】此配置表示告诉web容器去classpath（WEB-INF/classes和WEB-INF/lib）中去加载指定名称的配置文件，若是有同名文件则会全部加载。</li>
+</ol>
+</blockquote>
+<p>即</p>
+<ul>
+<li>classpath：只会到你的class路径中查找找文件;</li>
+<li>classpath*：不仅包含class路径，还包括jar文件中(class路径)进行查找.</li>
+</ul>
+<p>可以理解成就在/WEB-INF/classes/</p>
+<p>因此classpath或者classpath*，编译之后会在/项目名/build/classes下找你的文件</p>
+<p>而当你在WEB-INF目录下放置springmvc-config.xml文件和web.xml文件。</p>
+<p>那么需要写成<code>&lt;param-value&gt;/WEB-INF/springmvc.xml&lt;/param-value&gt;</code></p>
+<p>注意：</p>
+<ol>
+<li>用classpath*:需要遍历所有的classpath，所以加载速度是很慢的，因此，在规划的时候，应该尽可能规划好资源文件所在的路径，尽量避免使用classpath*。</li>
+<li>在多个classpath中存在同名资源时候，都需要加载，但是用classpath:只会加载第一个。</li>
+<li>lib和classes下文件访问优先级的问题:? lib&gt;classes</li>
+</ol>
+<p>总结的有点乱…希望日后自己可以理解一半吧</p>
+<hr>
+<p>基于(spring+springmvc+mybatis)ssm搭建测试(不是基于maven搭建)</p>
+<ul>
+<li><p>创建表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE IF EXISTS `tb_user`;</span><br><span class="line">CREATE TABLE `tb_user` (</span><br><span class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(18) DEFAULT NULL,</span><br><span class="line">  `sex` char(2) DEFAULT NULL,</span><br><span class="line">  `age` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line">-- ----------------------------</span><br><span class="line">-- Records of tb_user</span><br><span class="line">-- ----------------------------</span><br><span class="line">INSERT INTO `tb_user` VALUES (&#x27;1&#x27;, &#x27;admin&#x27;, &#x27;女&#x27;, &#x27;21&#x27;);</span><br><span class="line">INSERT INTO `tb_user` VALUES (&#x27;3&#x27;, &#x27;修改后的&#x27;, &#x27;女&#x27;, &#x27;21&#x27;);</span><br><span class="line">INSERT INTO `tb_user` VALUES (&#x27;4&#x27;, &#x27;admin&#x27;, &#x27;女&#x27;, &#x27;21&#x27;);</span><br><span class="line">INSERT INTO `tb_user` VALUES (&#x27;2&#x27;, &#x27;update&#x27;, &#x27;女&#x27;, &#x27;21&#x27;);</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>db.properties</strong></p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.driver=com.mysql.jdbc.Driver</span><br><span class="line">jdbc.url=jdbc:mysql://localhost:3307/ssm?characterEncoding=utf8</span><br><span class="line">jdbc.username=root</span><br><span class="line">jdbc.password=root</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>pojo</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package com.glj.pojo;</span><br><span class="line"></span><br><span class="line">import java.io.Serializable;</span><br><span class="line"></span><br><span class="line">public class User implements Serializable&#123;</span><br><span class="line">	private Integer id;</span><br><span class="line">	private String name;</span><br><span class="line">	private String sex;</span><br><span class="line">	private Integer age;</span><br><span class="line">//省略set和get...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>UserMapper</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line"> PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span><br><span class="line"> &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line"> &lt;mapper namespace=&quot;com.glj.dao.UserMapper&quot;&gt;</span><br><span class="line">	&lt;!-- 	public List&lt;User&gt; getUser(); --&gt; </span><br><span class="line">	&lt;select id=&quot;getUserList&quot; resultType=&quot;com.glj.pojo.User&quot;&gt;</span><br><span class="line">		select * from tb_user</span><br><span class="line">	&lt;/select&gt;</span><br><span class="line"> &lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>UserMapper接口</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package com.glj.dao;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import com.glj.pojo.User;</span><br><span class="line"></span><br><span class="line">public interface UserMapper &#123;</span><br><span class="line">	public List&lt;User&gt; getUserList();</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>UserService</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package com.glj.service;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import com.glj.pojo.User;</span><br><span class="line"></span><br><span class="line">public interface UserService &#123;</span><br><span class="line">	List&lt;User&gt; getUserList();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>UserServiceImpl</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package com.glj.service.impl;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line">import com.glj.dao.UserMapper;</span><br><span class="line">import com.glj.pojo.User;</span><br><span class="line">import com.glj.service.UserService;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class UserServiceImpl implements UserService&#123;</span><br><span class="line">	@Autowired</span><br><span class="line">	private UserMapper userMapper;</span><br><span class="line">	</span><br><span class="line">	@Override</span><br><span class="line">	public List&lt;User&gt; getUserList() &#123;</span><br><span class="line">		return userMapper.getUserList();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>UserController</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">package com.glj.controller;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line">import com.glj.pojo.User;</span><br><span class="line">import com.glj.service.UserService;</span><br><span class="line"></span><br><span class="line">@Controller</span><br><span class="line">public class UserController &#123;</span><br><span class="line">	@Autowired</span><br><span class="line">	private UserService userService;</span><br><span class="line">	</span><br><span class="line">	@RequestMapping(&quot;/listUser&quot;)</span><br><span class="line">	public ModelAndView listToUser()&#123;</span><br><span class="line">		ModelAndView mav = new ModelAndView();</span><br><span class="line">		List&lt;User&gt; users = userService.getUserList();</span><br><span class="line">		mav.addObject(&quot;users&quot;, users);</span><br><span class="line">		return mav;</span><br><span class="line">	&#125;</span><br><span class="line">//	@RequestMapping(value=&quot;/&#123;fromName&#125;&quot;)</span><br><span class="line">//	public String fromName(@PathVariable String fromName)&#123;</span><br><span class="line">//		return &quot;fromName&quot;;</span><br><span class="line">//	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在WEB-INF目录下新增加web.xml，这个web.xml有两个作用：</li>
+</ul>
+<ol>
+<li>通过ContextLoaderListener在web app启动的时候，获取contextConfigLocation配置文件的文件名applicationContext.xml，并进行Spring相关初始化工作</li>
+<li>有任何访问，都被DispatcherServlet所拦截，这就是Spring MVC那套工作机制了。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span><br><span class="line">	id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;</span><br><span class="line">	</span><br><span class="line">	  &lt;!--Spring配置： needed for ContextLoaderListener --&gt;</span><br><span class="line">	&lt;context-param&gt;</span><br><span class="line">		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">		&lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;</span><br><span class="line">	&lt;/context-param&gt;</span><br><span class="line">	&lt;listener&gt;</span><br><span class="line">		&lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</span><br><span class="line">	&lt;/listener&gt;</span><br><span class="line">	&lt;!-- SpringMVC配置 --&gt;</span><br><span class="line">	&lt;servlet&gt;</span><br><span class="line">		&lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</span><br><span class="line">		&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;</span><br><span class="line">		&lt;init-param&gt;</span><br><span class="line">			&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">			&lt;param-value&gt;/WEB-INF/springmvc.xml&lt;/param-value&gt;</span><br><span class="line">		&lt;/init-param&gt;</span><br><span class="line">		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</span><br><span class="line">	&lt;/servlet&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- Map all requests to the DispatcherServlet for handling --&gt;</span><br><span class="line">	&lt;servlet-mapping&gt;</span><br><span class="line">		&lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</span><br><span class="line">		&lt;url-pattern&gt;/&lt;/url-pattern&gt;</span><br><span class="line">	&lt;/servlet-mapping&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>在src目录下新建applicationContext.xml文件，这是Spring的配置文件，其作用</li>
+</ul>
+<ol>
+<li>通过注解，将com.glj.*的生命周期纳入Spring的管理</li>
+<li>?配置数据源</li>
+<li>扫描存放SQL语句的UserMapper.xml</li>
+<li>扫描Mapper接口，并将其生命周期纳入Spring的管理</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">	xmlns:mybatis-spring=&quot;http://mybatis.org/schema/mybatis-spring&quot;</span><br><span class="line">	xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd</span><br><span class="line">		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd</span><br><span class="line">		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd&quot;&gt;</span><br><span class="line">	&lt;!-- Spring希望管理所有的业务逻辑组件，等。。。 --&gt;</span><br><span class="line">	&lt;context:annotation-config /&gt;</span><br><span class="line">	&lt;context:component-scan base-package=&quot;com.glj&quot;&gt;</span><br><span class="line">		&lt;context:exclude-filter type=&quot;annotation&quot;</span><br><span class="line">			expression=&quot;org.springframework.stereotype.Controller&quot; /&gt;</span><br><span class="line">	&lt;/context:component-scan&gt;</span><br><span class="line">	&lt;!-- 引入数据库的配置文件 --&gt;</span><br><span class="line">	&lt;context:property-placeholder location=&quot;classpath:db.properties&quot;/&gt;</span><br><span class="line">	&lt;!-- Spring用来控制业务逻辑。数据源、事务控制、aop --&gt;</span><br><span class="line">	&lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;jdbcUrl&quot; value=&quot;$&#123;jdbc.url&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">		&lt;property name=&quot;driverClass&quot; value=&quot;$&#123;jdbc.driver&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">		&lt;property name=&quot;user&quot; value=&quot;$&#123;jdbc.username&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">		&lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc.password&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;!-- spring事务管理 --&gt;</span><br><span class="line">	&lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;!-- 开启基于注解的事务 --&gt;</span><br><span class="line">	&lt;tx:annotation-driven transaction-manager=&quot;dataSourceTransactionManager&quot;/&gt;</span><br><span class="line">	&lt;!--创建出SqlSessionFactory对象  --&gt;</span><br><span class="line">	&lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;typeAliasesPackage&quot; value=&quot;com.glj.pojo&quot; /&gt;</span><br><span class="line">		&lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;</span><br><span class="line">		&lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis-config.xml&quot; /&gt;</span><br><span class="line">		&lt;property name=&quot;mapperLocations&quot; value=&quot;classpath:com/glj/mapper/*.xml&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;!-- 扫描所有的mapper接口的实现自动注入；</span><br><span class="line">		&lt;mybatis-spring:scan base-package=&quot;com.glj.dao&quot;/&gt;</span><br><span class="line">	 --&gt;</span><br><span class="line">	&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;</span><br><span class="line">                &lt;!-- 可以不用指定，因为MapperScannerConfigurer会自动装配</span><br><span class="line">                &lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;sqlSessionFactory&quot; /&gt;  --&gt;</span><br><span class="line">		&lt;property name=&quot;basePackage&quot; value=&quot;com.glj.dao&quot;&gt;&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>在src目录下新建<strong>mybatis-config.xml</strong>文件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">  PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span><br><span class="line">  &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 配置全局属性 --&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">        &lt;!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 --&gt;</span><br><span class="line">        &lt;setting name=&quot;useGeneratedKeys&quot; value=&quot;true&quot; /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 使用列别名替换列名 默认:true --&gt;</span><br><span class="line">        &lt;setting name=&quot;useColumnLabel&quot; value=&quot;true&quot; /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 开启驼峰命名转换:Table&#123;create_time&#125; -&gt; Entity&#123;createTime&#125; --&gt;</span><br><span class="line">        &lt;setting name=&quot;mapUnderscoreToCamelCase&quot; value=&quot;true&quot; /&gt;</span><br><span class="line">    &lt;/settings&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在WEB-INF目录下新建springMVC.xml(也可以在src目录下创建,然后就可以用classpath:springMVC.xml即可)</li>
+</ul>
+<ol>
+<li>?扫描Controller,并将其生命周期纳入Spring管理</li>
+<li>注解驱动</li>
+<li>静态页面，如html,css,js,images可以访问</li>
+<li>视图定位到/WEB/INF/jsp 这个目录下</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">	xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd</span><br><span class="line">		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd&quot;&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 只扫描Controller,并将其生命周期纳入Spring管理 --&gt;</span><br><span class="line">	&lt;context:component-scan base-package=&quot;com.glj&quot; use-default-filters=&quot;false&quot;&gt;</span><br><span class="line">		&lt;context:include-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Controller&quot;/&gt;</span><br><span class="line">	&lt;/context:component-scan&gt;</span><br><span class="line">	&lt;context:annotation-config/&gt;</span><br><span class="line">	&lt;!-- 注解驱动 --&gt;</span><br><span class="line">	&lt;mvc:annotation-driven /&gt;</span><br><span class="line">	&lt;!--静态页面，如html,css,js,images可以访问   --&gt;</span><br><span class="line">	&lt;mvc:default-servlet-handler /&gt; </span><br><span class="line">	&lt;!-- 视图定位 --&gt;</span><br><span class="line">	&lt;bean  class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;viewClass&quot;</span><br><span class="line">            value=&quot;org.springframework.web.servlet.view.JstlView&quot; /&gt;</span><br><span class="line">		&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot;&gt;&lt;/property&gt;</span><br><span class="line">		&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;&gt;&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在WEB-INF下创建jsp目录，并创建文件listUser.jsp</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot;%&gt;    </span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;table align=&#x27;center&#x27; border=&#x27;1&#x27; cellspacing=&#x27;0&#x27;&gt;</span><br><span class="line">    &lt;tr&gt;</span><br><span class="line">        &lt;td&gt;id&lt;/td&gt;</span><br><span class="line">        &lt;td&gt;name&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">    &lt;c:forEach items=&quot;$&#123;users&#125;&quot; var=&quot;c&quot; varStatus=&quot;st&quot;&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;$&#123;c.id&#125;&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;$&#123;c.name&#125;&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">    &lt;/c:forEach&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/718/" title="ssm搭建一些笔记">http://erbi.me/718/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/mybatis/" rel="tag"># mybatis</a>
+              <a href="/tags/spring/" rel="tag"># spring</a>
+              <a href="/tags/springmvc/" rel="tag"># springmvc</a>
+              <a href="/tags/ssm/" rel="tag"># ssm</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/709/" rel="prev" title="Mybatis中collection和association的使用区别">
+                  <i class="fa fa-chevron-left"></i> Mybatis中collection和association的使用区别
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/727/" rel="next" title="Java中final、finally、finalize的区别">
+                  Java中final、finally、finalize的区别 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

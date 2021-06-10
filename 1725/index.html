@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="12实例*15node多实例集群部署方案资源   ip host    10.209.18.201 pod3-mmp1-a-13   10.209.18.202 pod3-mmp1-a-14   10.209.18.205 pod3-mmp1-a-18   10.209.18.208 pod3-mmp1-a-39   10.209.18.21 pod3-mmp1-e-26   10.209.18.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="clickhouse部署记录手札">
+<meta property="og:url" content="http://erbi.me/1725/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="12实例*15node多实例集群部署方案资源   ip host    10.209.18.201 pod3-mmp1-a-13   10.209.18.202 pod3-mmp1-a-14   10.209.18.205 pod3-mmp1-a-18   10.209.18.208 pod3-mmp1-a-39   10.209.18.21 pod3-mmp1-e-26   10.209.18.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-07T13:32:09.000Z">
+<meta property="article:modified_time" content="2021-06-10T07:11:26.722Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="clickhouse">
+<meta property="article:tag" content="CH">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/1725/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1725&#x2F;&quot;,&quot;path&quot;:&quot;1725&#x2F;&quot;,&quot;title&quot;:&quot;clickhouse部署记录手札&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>clickhouse部署记录手札 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#12%E5%AE%9E%E4%BE%8B-15node%E5%A4%9A%E5%AE%9E%E4%BE%8B%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">12实例*15node多实例集群部署方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B5%84%E6%BA%90"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">配置</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1725/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          clickhouse部署记录手札
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-05-07 21:32:09" itemprop="dateCreated datePublished" datetime="2021-05-07T21:32:09+08:00">2021-05-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 15:11:26" itemprop="dateModified" datetime="2021-06-10T15:11:26+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/clickhouse/" itemprop="url" rel="index"><span itemprop="name">clickhouse</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="12实例-15node多实例集群部署方案"><a href="#12实例-15node多实例集群部署方案" class="headerlink" title="12实例*15node多实例集群部署方案"></a>12实例*15node多实例集群部署方案</h1><h4 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h4><table>
+<thead>
+<tr>
+<th align="center">ip</th>
+<th>host</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">10.209.18.201</td>
+<td>pod3-mmp1-a-13</td>
+</tr>
+<tr>
+<td align="center">10.209.18.202</td>
+<td>pod3-mmp1-a-14</td>
+</tr>
+<tr>
+<td align="center">10.209.18.205</td>
+<td>pod3-mmp1-a-18</td>
+</tr>
+<tr>
+<td align="center">10.209.18.208</td>
+<td>pod3-mmp1-a-39</td>
+</tr>
+<tr>
+<td align="center">10.209.18.21</td>
+<td>pod3-mmp1-e-26</td>
+</tr>
+<tr>
+<td align="center">10.209.18.212</td>
+<td>pod3-mmp1-a-32</td>
+</tr>
+<tr>
+<td align="center">10.209.18.219</td>
+<td>pod3-mmp1-a-21</td>
+</tr>
+<tr>
+<td align="center">10.209.18.22</td>
+<td>pod3-mmp1-e-6</td>
+</tr>
+<tr>
+<td align="center">10.209.18.23</td>
+<td>pod3-mmp1-d-4</td>
+</tr>
+<tr>
+<td align="center">10.209.18.24</td>
+<td>pod3-mmp1-e-17</td>
+</tr>
+<tr>
+<td align="center">10.209.18.25</td>
+<td>pod3-mmp1-d-12</td>
+</tr>
+<tr>
+<td align="center">10.209.18.26</td>
+<td>pod3-mmp1-e-7</td>
+</tr>
+<tr>
+<td align="center">10.209.18.27</td>
+<td>pod3-mmp1-d-28</td>
+</tr>
+<tr>
+<td align="center">10.209.18.28</td>
+<td>pod3-mmp1-d-29</td>
+</tr>
+<tr>
+<td align="center">10.209.18.29</td>
+<td>pod3-mmp1-e-22</td>
+</tr>
+</tbody></table>
+<p><strong>依赖</strong> zk三台:</p>
+<ul>
+<li>  10.209.18.201</li>
+<li>  10.209.18.202</li>
+<li>  10.209.18.205</li>
+</ul>
+<p>  <strong>安装包</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rpm包 https://github.com/ClickHouse/ClickHouse/</span></span><br><span class="line">chmod <span class="number">755</span> /data0/software/clickhouse/*</span><br><span class="line"></span><br><span class="line">clickho<span class="built_in">use-client</span><span class="literal">-21</span>.<span class="number">1.2</span>.<span class="number">15</span><span class="literal">-2</span>.noarch.rpm</span><br><span class="line">clickho<span class="built_in">use-server</span><span class="literal">-21</span>.<span class="number">1.2</span>.<span class="number">15</span><span class="literal">-2</span>.noarch.rpm</span><br><span class="line">clickho<span class="built_in">use-common</span><span class="literal">-static</span><span class="literal">-21</span>.<span class="number">1.2</span>.<span class="number">15</span><span class="literal">-2</span>.x86_64.rpm</span><br><span class="line">clickho<span class="built_in">use-common</span><span class="literal">-static</span><span class="literal">-dbg</span><span class="literal">-21</span>.<span class="number">1.2</span>.<span class="number">15</span><span class="literal">-2</span>.x86_64.rpm</span><br><span class="line"></span><br><span class="line">yum <span class="literal">-y</span> install expect</span><br><span class="line">yum install <span class="literal">-y</span> perl perl<span class="literal">-devel</span> autoconf libaio</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装包路径</span></span><br><span class="line">/data0/software/clickhouse/</span><br><span class="line"><span class="comment"># 数据路径</span></span><br><span class="line">/data0/clickhouse_data</span><br><span class="line"><span class="comment"># 配置文件路径</span></span><br><span class="line">/data0/software/clickhouse/config</span><br><span class="line"><span class="comment"># 日志路径</span></span><br><span class="line">/data0/clickhouse_data/logs/</span><br></pre></td></tr></table></figure>
+
+<p> </p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">rpm -ivh /data0/software/clickhouse/clickhouse-common-static-21.1.2.15-2.x86_64.rpm</span><br><span class="line">rpm -ivh /data0/software/clickhouse/clickhouse-common-static-dbg-21.1.2.15-2.x86_64.rpm</span><br><span class="line">rpm -ivh /data0/software/clickhouse/clickhouse-server-21.1.2.15-2.noarch.rpm</span><br><span class="line">rpm -ivh /data0/software/clickhouse/clickhouse-client-21.1.2.15-2.noarch.rpm</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置文件</span></span><br><span class="line">/data0/software/clickhouse/config/config_node0.xml~config_node11.xml</span><br><span class="line">/data0/software/clickhouse/config/metrika_node0.xml~metrika_node11.xml</span><br><span class="line">/data0/software/clickhouse/config/user.xml</span><br></pre></td></tr></table></figure>
+
+<p> </p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> config.xml 端口改动</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 9000 tcp</span></span><br><span class="line">netstat -ntlpgrep 9001</span><br><span class="line">netstat -ntlpgrep 9002</span><br><span class="line">netstat -ntlpgrep 9003</span><br><span class="line">netstat -ntlpgrep 9004</span><br><span class="line">netstat -ntlpgrep 9005</span><br><span class="line">netstat -ntlpgrep 9006</span><br><span class="line">netstat -ntlpgrep 9007</span><br><span class="line">netstat -ntlpgrep 9008</span><br><span class="line">netstat -ntlpgrep 9009</span><br><span class="line">netstat -ntlpgrep 9010</span><br><span class="line">netstat -ntlpgrep 9011</span><br><span class="line">netstat -ntlpgrep 9012</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 9004 interserver_http</span></span><br><span class="line">netstat -ntlpgrep 9021</span><br><span class="line">netstat -ntlpgrep 9022</span><br><span class="line">netstat -ntlpgrep 9023</span><br><span class="line">netstat -ntlpgrep 9024</span><br><span class="line">netstat -ntlpgrep 9025</span><br><span class="line">netstat -ntlpgrep 9026</span><br><span class="line">netstat -ntlpgrep 9027</span><br><span class="line">netstat -ntlpgrep 9028</span><br><span class="line">netstat -ntlpgrep 9029</span><br><span class="line">netstat -ntlpgrep 9030</span><br><span class="line">netstat -ntlpgrep 9031</span><br><span class="line">netstat -ntlpgrep 9032</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 8123 http</span></span><br><span class="line">netstat -ntlpgrep 8121</span><br><span class="line">netstat -ntlpgrep 8122</span><br><span class="line">netstat -ntlpgrep 8123</span><br><span class="line">netstat -ntlpgrep 8124</span><br><span class="line">netstat -ntlpgrep 8125</span><br><span class="line">netstat -ntlpgrep 8126</span><br><span class="line">netstat -ntlpgrep 8127</span><br><span class="line">netstat -ntlpgrep 8128</span><br><span class="line">netstat -ntlpgrep 8129</span><br><span class="line">netstat -ntlpgrep 8130</span><br><span class="line">netstat -ntlpgrep 8131</span><br><span class="line">netstat -ntlpgrep 8132</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 9363 prometheus</span></span><br><span class="line">netstat -ntlpgrep 9361</span><br><span class="line">netstat -ntlpgrep 9362</span><br><span class="line">netstat -ntlpgrep 9363</span><br><span class="line">netstat -ntlpgrep 9364</span><br><span class="line">netstat -ntlpgrep 9365</span><br><span class="line">netstat -ntlpgrep 9366</span><br><span class="line">netstat -ntlpgrep 9367</span><br><span class="line">netstat -ntlpgrep 9368</span><br><span class="line">netstat -ntlpgrep 9369</span><br><span class="line">netstat -ntlpgrep 9370</span><br><span class="line">netstat -ntlpgrep 9371</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 所有节点执行 创建数据目录 配置文件目录 所有的配置文件和日志在一个目录</span> </span><br><span class="line">mkdir -p /data0/clickhouse_data</span><br><span class="line">mkdir -p /data1/clickhouse_data</span><br><span class="line">mkdir -p /data2/clickhouse_data</span><br><span class="line">mkdir -p /data3/clickhouse_data</span><br><span class="line">mkdir -p /data4/clickhouse_data</span><br><span class="line">mkdir -p /data5/clickhouse_data</span><br><span class="line">mkdir -p /data6/clickhouse_data</span><br><span class="line">mkdir -p /data7/clickhouse_data</span><br><span class="line">mkdir -p /data8/clickhouse_data</span><br><span class="line">mkdir -p /data9/clickhouse_data</span><br><span class="line">mkdir -p /data10/clickhouse_data</span><br><span class="line">mkdir -p /data11/clickhouse_data</span><br><span class="line"></span><br><span class="line">mkdir -p /data0/software/clickhouse/config</span><br><span class="line"></span><br><span class="line">cp /etc/clickhouse-server/users.xml /data0/software/clickhouse/config/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 复制改名配置文件</span></span><br><span class="line">cp /etc/clickhouse-server/config.xml /data0/software/clickhouse/config/</span><br><span class="line">cp config.xml config_node0.xml</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改node0【修改不做记录，详见下个代码块配置文件】  并复制其他实例的配置文件</span></span><br><span class="line">cp config_node0.xml config_node1.xml</span><br><span class="line">cp config_node0.xml config_node2.xml</span><br><span class="line">cp config_node0.xml config_node3.xml</span><br><span class="line">cp config_node0.xml config_node4.xml</span><br><span class="line">cp config_node0.xml config_node5.xml</span><br><span class="line">cp config_node0.xml config_node6.xml</span><br><span class="line">cp config_node0.xml config_node7.xml</span><br><span class="line">cp config_node0.xml config_node8.xml</span><br><span class="line">cp config_node0.xml config_node9.xml</span><br><span class="line">cp config_node0.xml config_node10.xml</span><br><span class="line">cp config_node0.xml config_node11.xml</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 更改路径</span></span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data1/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node1.xml</span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data2/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node2.xml</span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data3/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node3.xml</span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data4/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node4.xml</span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data5/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node5.xml</span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data6/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node6.xml</span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data7/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node7.xml</span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data8/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node8.xml</span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data9/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node9.xml</span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data10/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node10.xml</span><br><span class="line">sed -i &quot;s:/data0/clickhouse_data:/data11/clickhouse_data:g&quot; /data0/software/clickhouse/config/config_node11.xml</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 更改端口</span></span><br><span class="line">sed -i &quot;s:8121:8122:g&quot; /data0/software/clickhouse/config/config_node1.xml</span><br><span class="line">sed -i &quot;s:8121:8123:g&quot; /data0/software/clickhouse/config/config_node2.xml</span><br><span class="line">sed -i &quot;s:8121:8124:g&quot; /data0/software/clickhouse/config/config_node3.xml</span><br><span class="line">sed -i &quot;s:8121:8125:g&quot; /data0/software/clickhouse/config/config_node4.xml</span><br><span class="line">sed -i &quot;s:8121:8126:g&quot; /data0/software/clickhouse/config/config_node5.xml</span><br><span class="line">sed -i &quot;s:8121:8127:g&quot; /data0/software/clickhouse/config/config_node6.xml</span><br><span class="line">sed -i &quot;s:8121:8128:g&quot; /data0/software/clickhouse/config/config_node7.xml</span><br><span class="line">sed -i &quot;s:8121:8129:g&quot; /data0/software/clickhouse/config/config_node8.xml</span><br><span class="line">sed -i &quot;s:8121:8130:g&quot; /data0/software/clickhouse/config/config_node9.xml</span><br><span class="line">sed -i &quot;s:8121:8131:g&quot; /data0/software/clickhouse/config/config_node10.xml</span><br><span class="line">sed -i &quot;s:8121:8132:g&quot; /data0/software/clickhouse/config/config_node11.xml</span><br><span class="line"></span><br><span class="line">sed -i &quot;s:9001:9002:g&quot; /data0/software/clickhouse/config/config_node1.xml</span><br><span class="line">sed -i &quot;s:9001:9003:g&quot; /data0/software/clickhouse/config/config_node2.xml</span><br><span class="line">sed -i &quot;s:9001:9004:g&quot; /data0/software/clickhouse/config/config_node3.xml</span><br><span class="line">sed -i &quot;s:9001:9005:g&quot; /data0/software/clickhouse/config/config_node4.xml</span><br><span class="line">sed -i &quot;s:9001:9006:g&quot; /data0/software/clickhouse/config/config_node5.xml</span><br><span class="line">sed -i &quot;s:9001:9007:g&quot; /data0/software/clickhouse/config/config_node6.xml</span><br><span class="line">sed -i &quot;s:9001:9008:g&quot; /data0/software/clickhouse/config/config_node7.xml</span><br><span class="line">sed -i &quot;s:9001:9009:g&quot; /data0/software/clickhouse/config/config_node8.xml</span><br><span class="line">sed -i &quot;s:9001:9010:g&quot; /data0/software/clickhouse/config/config_node9.xml</span><br><span class="line">sed -i &quot;s:9001:9011:g&quot; /data0/software/clickhouse/config/config_node10.xml</span><br><span class="line">sed -i &quot;s:9001:9012:g&quot; /data0/software/clickhouse/config/config_node11.xml</span><br><span class="line"></span><br><span class="line">sed -i &quot;s:9021:9022:g&quot; /data0/software/clickhouse/config/config_node1.xml</span><br><span class="line">sed -i &quot;s:9021:9023:g&quot; /data0/software/clickhouse/config/config_node2.xml</span><br><span class="line">sed -i &quot;s:9021:9024:g&quot; /data0/software/clickhouse/config/config_node3.xml</span><br><span class="line">sed -i &quot;s:9021:9025:g&quot; /data0/software/clickhouse/config/config_node4.xml</span><br><span class="line">sed -i &quot;s:9021:9026:g&quot; /data0/software/clickhouse/config/config_node5.xml</span><br><span class="line">sed -i &quot;s:9021:9027:g&quot; /data0/software/clickhouse/config/config_node6.xml</span><br><span class="line">sed -i &quot;s:9021:9028:g&quot; /data0/software/clickhouse/config/config_node7.xml</span><br><span class="line">sed -i &quot;s:9021:9029:g&quot; /data0/software/clickhouse/config/config_node8.xml</span><br><span class="line">sed -i &quot;s:9021:9030:g&quot; /data0/software/clickhouse/config/config_node9.xml</span><br><span class="line">sed -i &quot;s:9021:9031:g&quot; /data0/software/clickhouse/config/config_node10.xml</span><br><span class="line">sed -i &quot;s:9021:9032:g&quot; /data0/software/clickhouse/config/config_node11.xml</span><br><span class="line"></span><br><span class="line">sed -i &quot;s:node0:node1:g&quot; /data0/software/clickhouse/config/config_node1.xml</span><br><span class="line">sed -i &quot;s:node0:node2:g&quot; /data0/software/clickhouse/config/config_node2.xml</span><br><span class="line">sed -i &quot;s:node0:node3:g&quot; /data0/software/clickhouse/config/config_node3.xml</span><br><span class="line">sed -i &quot;s:node0:node4:g&quot; /data0/software/clickhouse/config/config_node4.xml</span><br><span class="line">sed -i &quot;s:node0:node5:g&quot; /data0/software/clickhouse/config/config_node5.xml</span><br><span class="line">sed -i &quot;s:node0:node6:g&quot; /data0/software/clickhouse/config/config_node6.xml</span><br><span class="line">sed -i &quot;s:node0:node7:g&quot; /data0/software/clickhouse/config/config_node7.xml</span><br><span class="line">sed -i &quot;s:node0:node8:g&quot; /data0/software/clickhouse/config/config_node8.xml</span><br><span class="line">sed -i &quot;s:node0:node9:g&quot; /data0/software/clickhouse/config/config_node9.xml</span><br><span class="line">sed -i &quot;s:node0:node10:g&quot; /data0/software/clickhouse/config/config_node10.xml</span><br><span class="line">sed -i &quot;s:node0:node11:g&quot; /data0/software/clickhouse/config/config_node11.xml</span><br><span class="line"></span><br><span class="line">sed -i &quot;s:9361:9362:g&quot; /data0/software/clickhouse/config/config_node1.xml</span><br><span class="line">sed -i &quot;s:9361:9363:g&quot; /data0/software/clickhouse/config/config_node2.xml</span><br><span class="line">sed -i &quot;s:9361:9364:g&quot; /data0/software/clickhouse/config/config_node3.xml</span><br><span class="line">sed -i &quot;s:9361:9365:g&quot; /data0/software/clickhouse/config/config_node4.xml</span><br><span class="line">sed -i &quot;s:9361:9366:g&quot; /data0/software/clickhouse/config/config_node5.xml</span><br><span class="line">sed -i &quot;s:9361:9367:g&quot; /data0/software/clickhouse/config/config_node6.xml</span><br><span class="line">sed -i &quot;s:9361:9368:g&quot; /data0/software/clickhouse/config/config_node7.xml</span><br><span class="line">sed -i &quot;s:9361:9369:g&quot; /data0/software/clickhouse/config/config_node8.xml</span><br><span class="line">sed -i &quot;s:9361:9370:g&quot; /data0/software/clickhouse/config/config_node9.xml</span><br><span class="line">sed -i &quot;s:9361:9371:g&quot; /data0/software/clickhouse/config/config_node10.xml</span><br><span class="line">sed -i &quot;s:9361:9372:g&quot; /data0/software/clickhouse/config/config_node11.xml</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- config_node0.xml --&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">yandex</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--日志--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">level</span>&gt;</span>trace<span class="tag">&lt;/<span class="name">level</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">log</span>&gt;</span>/data0/clickhouse_data/logs/clickhouse-node0.log<span class="tag">&lt;/<span class="name">log</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">errorlog</span>&gt;</span>/data0/clickhouse_data/logs/clickhouse-data0.err.log<span class="tag">&lt;/<span class="name">errorlog</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">size</span>&gt;</span>1000M<span class="tag">&lt;/<span class="name">size</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">count</span>&gt;</span>10<span class="tag">&lt;/<span class="name">count</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">logger</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--本地节点信息--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">http_port</span>&gt;</span>8121<span class="tag">&lt;/<span class="name">http_port</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tcp_port</span>&gt;</span>9001<span class="tag">&lt;/<span class="name">tcp_port</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">interserver_http_port</span>&gt;</span>9021<span class="tag">&lt;/<span class="name">interserver_http_port</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">interserver_http_host</span>&gt;</span>pod3-mmp1-a-13<span class="tag">&lt;/<span class="name">interserver_http_host</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--本机域名或IP--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--本地配置--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listen_host</span>&gt;</span>0.0.0.0<span class="tag">&lt;/<span class="name">listen_host</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">max_connections</span>&gt;</span>2048<span class="tag">&lt;/<span class="name">max_connections</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;receive_timeout&gt;800&lt;/receive_timeout&gt;</span></span><br><span class="line"><span class="comment">             &lt;send_timeout&gt;800&lt;/send_timeout&gt; --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">keep_alive_timeout</span>&gt;</span>3<span class="tag">&lt;/<span class="name">keep_alive_timeout</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--     &lt;grpc&gt;</span></span><br><span class="line"><span class="comment">                 &lt;enable_ssl&gt;false&lt;/enable_ssl&gt;</span></span><br><span class="line"><span class="comment">        &lt;ssl_cert_file&gt;/path/to/ssl_cert_file&lt;/ssl_cert_file&gt;</span></span><br><span class="line"><span class="comment">        &lt;ssl_key_file&gt;/path/to/ssl_key_file&lt;/ssl_key_file&gt;</span></span><br><span class="line"><span class="comment">        &lt;ssl_require_client_auth&gt;false&lt;/ssl_require_client_auth&gt;</span></span><br><span class="line"><span class="comment">        &lt;ssl_ca_cert_file&gt;/path/to/ssl_ca_cert_file&lt;/ssl_ca_cert_file&gt;</span></span><br><span class="line"><span class="comment">        &lt;compression&gt;deflate&lt;/compression&gt;</span></span><br><span class="line"><span class="comment">        &lt;compression_level&gt;medium&lt;/compression_level&gt;</span></span><br><span class="line"><span class="comment">        &lt;max_send_message_size&gt;-1&lt;/max_send_message_size&gt;</span></span><br><span class="line"><span class="comment">        &lt;max_receive_message_size&gt;-1&lt;/max_receive_message_size&gt;</span></span><br><span class="line"><span class="comment">        &lt;verbose_logs&gt;false&lt;/verbose_logs&gt;</span></span><br><span class="line"><span class="comment">    &lt;/grpc&gt; --&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">openSSL</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">server</span>&gt;</span> </span><br><span class="line">            <span class="tag">&lt;<span class="name">certificateFile</span>&gt;</span>/data0/clickhouse_data/server.crt<span class="tag">&lt;/<span class="name">certificateFile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">privateKeyFile</span>&gt;</span>/data0/clickhouse_data/server.key<span class="tag">&lt;/<span class="name">privateKeyFile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dhParamsFile</span>&gt;</span>/data0/clickhouse_data/dhparam.pem<span class="tag">&lt;/<span class="name">dhParamsFile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">verificationMode</span>&gt;</span>none<span class="tag">&lt;/<span class="name">verificationMode</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">loadDefaultCAFile</span>&gt;</span>true<span class="tag">&lt;/<span class="name">loadDefaultCAFile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">cacheSessions</span>&gt;</span>true<span class="tag">&lt;/<span class="name">cacheSessions</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">disableProtocols</span>&gt;</span>sslv2,sslv3<span class="tag">&lt;/<span class="name">disableProtocols</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">preferServerCiphers</span>&gt;</span>true<span class="tag">&lt;/<span class="name">preferServerCiphers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">client</span>&gt;</span> </span><br><span class="line">            <span class="tag">&lt;<span class="name">loadDefaultCAFile</span>&gt;</span>true<span class="tag">&lt;/<span class="name">loadDefaultCAFile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">cacheSessions</span>&gt;</span>true<span class="tag">&lt;/<span class="name">cacheSessions</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">disableProtocols</span>&gt;</span>sslv2,sslv3<span class="tag">&lt;/<span class="name">disableProtocols</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">preferServerCiphers</span>&gt;</span>true<span class="tag">&lt;/<span class="name">preferServerCiphers</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">invalidCertificateHandler</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">name</span>&gt;</span>RejectCertificateHandler<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">invalidCertificateHandler</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">client</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">openSSL</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">max_concurrent_queries</span>&gt;</span>100<span class="tag">&lt;/<span class="name">max_concurrent_queries</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">max_server_memory_usage</span>&gt;</span>0<span class="tag">&lt;/<span class="name">max_server_memory_usage</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">max_thread_pool_size</span>&gt;</span>10000<span class="tag">&lt;/<span class="name">max_thread_pool_size</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">max_server_memory_usage_to_ram_ratio</span>&gt;</span>0.9<span class="tag">&lt;/<span class="name">max_server_memory_usage_to_ram_ratio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">total_memory_profiler_step</span>&gt;</span>4194304<span class="tag">&lt;/<span class="name">total_memory_profiler_step</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">total_memory_tracker_sample_probability</span>&gt;</span>0<span class="tag">&lt;/<span class="name">total_memory_tracker_sample_probability</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uncompressed_cache_size</span>&gt;</span>8589934592<span class="tag">&lt;/<span class="name">uncompressed_cache_size</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mark_cache_size</span>&gt;</span>5368709120<span class="tag">&lt;/<span class="name">mark_cache_size</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span>&gt;</span>/data0/clickhouse_data/<span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tmp_path</span>&gt;</span>/data0/clickhouse_data/tmp/<span class="tag">&lt;/<span class="name">tmp_path</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- &lt;users_config&gt;/data/clickhouse/node1/users.xml&lt;/users_config&gt; --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">user_files_path</span>&gt;</span>/data0/clickhouse_data/user_files/<span class="tag">&lt;/<span class="name">user_files_path</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ldap_servers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ldap_servers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">user_directories</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">users_xml</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">path</span>&gt;</span>users.xml<span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">users_xml</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">local_directory</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">path</span>&gt;</span>/data0/clickhouse_data/access/<span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">local_directory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">user_directories</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">default_profile</span>&gt;</span>default<span class="tag">&lt;/<span class="name">default_profile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">default_database</span>&gt;</span>default<span class="tag">&lt;/<span class="name">default_database</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Perform mlockall after startup to lower first queries latency</span></span><br><span class="line"><span class="comment">                   and to prevent clickhouse executable from being paged out under high IO load.</span></span><br><span class="line"><span class="comment">         Enabling this option is recommended but will lead to increased startup time for up to a few seconds.</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mlock_executable</span>&gt;</span>true<span class="tag">&lt;/<span class="name">mlock_executable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">remap_executable</span>&gt;</span>false<span class="tag">&lt;/<span class="name">remap_executable</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--集群相关配置 对应metrika文件的标签名--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">remote_servers</span> <span class="attr">incl</span>=<span class="string">&quot;clickhouse_remote_servers&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">zookeeper</span> <span class="attr">incl</span>=<span class="string">&quot;zookeeper-servers&quot;</span> <span class="attr">optional</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">macros</span> <span class="attr">incl</span>=<span class="string">&quot;macros&quot;</span> <span class="attr">optional</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include_from</span>&gt;</span>/data0/software/clickhouse/config/metrika_node0.xml<span class="tag">&lt;/<span class="name">include_from</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">builtin_dictionaries_reload_interval</span>&gt;</span>3600<span class="tag">&lt;/<span class="name">builtin_dictionaries_reload_interval</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">max_session_timeout</span>&gt;</span>3600<span class="tag">&lt;/<span class="name">max_session_timeout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">default_session_timeout</span>&gt;</span>300<span class="tag">&lt;/<span class="name">default_session_timeout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">query_log</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">database</span>&gt;</span>system<span class="tag">&lt;/<span class="name">database</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span>&gt;</span>query_log<span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">partition_by</span>&gt;</span>toMonday(event_date)<span class="tag">&lt;/<span class="name">partition_by</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">flush_interval_milliseconds</span>&gt;</span>7500<span class="tag">&lt;/<span class="name">flush_interval_milliseconds</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">query_log</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">trace_log</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">database</span>&gt;</span>system<span class="tag">&lt;/<span class="name">database</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span>&gt;</span>trace_log<span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">partition_by</span>&gt;</span>toYYYYMM(event_date)<span class="tag">&lt;/<span class="name">partition_by</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">flush_interval_milliseconds</span>&gt;</span>7500<span class="tag">&lt;/<span class="name">flush_interval_milliseconds</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">trace_log</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">query_thread_log</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">database</span>&gt;</span>system<span class="tag">&lt;/<span class="name">database</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span>&gt;</span>query_thread_log<span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">partition_by</span>&gt;</span>toMonday(event_date)<span class="tag">&lt;/<span class="name">partition_by</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">flush_interval_milliseconds</span>&gt;</span>7500<span class="tag">&lt;/<span class="name">flush_interval_milliseconds</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">query_thread_log</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">metric_log</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">database</span>&gt;</span>system<span class="tag">&lt;/<span class="name">database</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span>&gt;</span>metric_log<span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">flush_interval_milliseconds</span>&gt;</span>7500<span class="tag">&lt;/<span class="name">flush_interval_milliseconds</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">collect_interval_milliseconds</span>&gt;</span>1000<span class="tag">&lt;/<span class="name">collect_interval_milliseconds</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">metric_log</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">asynchronous_metric_log</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">database</span>&gt;</span>system<span class="tag">&lt;/<span class="name">database</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span>&gt;</span>asynchronous_metric_log<span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">flush_interval_milliseconds</span>&gt;</span>60000<span class="tag">&lt;/<span class="name">flush_interval_milliseconds</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">asynchronous_metric_log</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">opentelemetry_span_log</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">engine</span>&gt;</span></span><br><span class="line">            engine MergeTree</span><br><span class="line">            partition by toYYYYMM(finish_date)</span><br><span class="line">            order by (finish_date, finish_time_us, trace_id)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">engine</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">database</span>&gt;</span>system<span class="tag">&lt;/<span class="name">database</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span>&gt;</span>opentelemetry_span_log<span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">flush_interval_milliseconds</span>&gt;</span>7500<span class="tag">&lt;/<span class="name">flush_interval_milliseconds</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">opentelemetry_span_log</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">crash_log</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">database</span>&gt;</span>system<span class="tag">&lt;/<span class="name">database</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span>&gt;</span>crash_log<span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">partition_by</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">flush_interval_milliseconds</span>&gt;</span>1000<span class="tag">&lt;/<span class="name">flush_interval_milliseconds</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">crash_log</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dictionaries_config</span>&gt;</span>*_dictionary.xml<span class="tag">&lt;/<span class="name">dictionaries_config</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">distributed_ddl</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- Path in ZooKeeper to queue with DDL queries --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span>&gt;</span>/clickhouse/task_queue/ddl<span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">distributed_ddl</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">graphite_rollup_example</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">pattern</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">regexp</span>&gt;</span>click_cost<span class="tag">&lt;/<span class="name">regexp</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">function</span>&gt;</span>any<span class="tag">&lt;/<span class="name">function</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">retention</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">age</span>&gt;</span>0<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">precision</span>&gt;</span>3600<span class="tag">&lt;/<span class="name">precision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">retention</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">retention</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">age</span>&gt;</span>86400<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">precision</span>&gt;</span>60<span class="tag">&lt;/<span class="name">precision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">retention</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">default</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">function</span>&gt;</span>max<span class="tag">&lt;/<span class="name">function</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">retention</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">age</span>&gt;</span>0<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">precision</span>&gt;</span>60<span class="tag">&lt;/<span class="name">precision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">retention</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">retention</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">age</span>&gt;</span>3600<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">precision</span>&gt;</span>300<span class="tag">&lt;/<span class="name">precision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">retention</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">retention</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">age</span>&gt;</span>86400<span class="tag">&lt;/<span class="name">age</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">precision</span>&gt;</span>3600<span class="tag">&lt;/<span class="name">precision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">retention</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">default</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">graphite_rollup_example</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">format_schema_path</span>&gt;</span>/data0/clickhouse_data/format_schemas/<span class="tag">&lt;/<span class="name">format_schema_path</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">query_masking_rules</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rule</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>hide encrypt/decrypt arguments<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">regexp</span>&gt;</span>((?:aes_)?(?:encryptdecrypt)(?:_mysql)?)\s*\(\s*(?:&#x27;(?:\\&#x27;.)+&#x27;.*?)\s*\)<span class="tag">&lt;/<span class="name">regexp</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">replace</span>&gt;</span>\1(???)<span class="tag">&lt;/<span class="name">replace</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">rule</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">query_masking_rules</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- &lt;merge_tree&gt;</span></span><br><span class="line"><span class="comment">                 &lt;parts_to_delay_insert&gt;300&lt;/parts_to_delay_insert&gt;</span></span><br><span class="line"><span class="comment">        &lt;parts_to_throw_insert&gt;600&lt;/parts_to_throw_insert&gt;</span></span><br><span class="line"><span class="comment">        &lt;max_delay_to_insert&gt;2&lt;/max_delay_to_insert&gt;</span></span><br><span class="line"><span class="comment">    &lt;/merge_tree&gt; --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">merge_tree</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">max_suspicious_broken_parts</span>&gt;</span>5<span class="tag">&lt;/<span class="name">max_suspicious_broken_parts</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">merge_tree</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 不限制drop表 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">max_table_size_to_drop</span>&gt;</span>0<span class="tag">&lt;/<span class="name">max_table_size_to_drop</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">max_partition_size_to_drop</span>&gt;</span>0<span class="tag">&lt;/<span class="name">max_partition_size_to_drop</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">send_crash_reports</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>false<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">anonymize</span>&gt;</span>false<span class="tag">&lt;/<span class="name">anonymize</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">endpoint</span>&gt;</span>https://6f33034cfe684dd7a3ab9875e57b1c8d@o388870.ingest.sentry.io/5226277<span class="tag">&lt;/<span class="name">endpoint</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">send_crash_reports</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">prometheus</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">endpoint</span>&gt;</span>/metrics<span class="tag">&lt;/<span class="name">endpoint</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span>&gt;</span>9361<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">metrics</span>&gt;</span>true<span class="tag">&lt;/<span class="name">metrics</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">events</span>&gt;</span>true<span class="tag">&lt;/<span class="name">events</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">asynchronous_metrics</span>&gt;</span>true<span class="tag">&lt;/<span class="name">asynchronous_metrics</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">status_info</span>&gt;</span>true<span class="tag">&lt;/<span class="name">status_info</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">prometheus</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">timezone</span>&gt;</span>Asia/Shanghai<span class="tag">&lt;/<span class="name">timezone</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">yandex</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 由于sed -i 修改了日志目录,重新把日志目录改回来</span></span><br><span class="line">sed -i &quot;s:/data1/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node1.xml</span><br><span class="line">sed -i &quot;s:/data2/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node2.xml</span><br><span class="line">sed -i &quot;s:/data3/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node3.xml</span><br><span class="line">sed -i &quot;s:/data4/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node4.xml</span><br><span class="line">sed -i &quot;s:/data5/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node5.xml</span><br><span class="line">sed -i &quot;s:/data6/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node6.xml</span><br><span class="line">sed -i &quot;s:/data7/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node7.xml</span><br><span class="line">sed -i &quot;s:/data8/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node8.xml</span><br><span class="line">sed -i &quot;s:/data9/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node9.xml</span><br><span class="line">sed -i &quot;s:/data10/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node10.xml</span><br><span class="line">sed -i &quot;s:/data11/clickhouse_data/logs:/data0/clickhouse_data/logs:g&quot; /data0/software/clickhouse/config/config_node11.xml</span><br></pre></td></tr></table></figure>
+
+<p> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 配置文件改完后 scp到其他节点 由于met文件是本地改好上传的，此处将config文件放入config-dir 然后scp</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> WY<span class="comment">#cluster@2021</span></span></span><br><span class="line">scp -rp config-dir root@pod3-mmp1-a-14:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-a-18:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-a-39:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-e-26:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-a-32:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-a-21:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-e-6:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-d-4:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-e-17:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-d-12:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-e-7:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-d-28:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-d-29:/data0/software/clickhouse/config/</span><br><span class="line">scp -rp config-dir root@pod3-mmp1-e-22:/data0/software/clickhouse/config/</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 给每个节点更改host</span></span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-a-14:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-a-18:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-a-39:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-e-26:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-a-32:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-a-21:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-e-6:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-d-4:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-e-17:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-d-12:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-e-7:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-d-28:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-d-29:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br><span class="line">sed -i &quot;s:pod3-mmp1-a-13:pod3-mmp1-e-22:g&quot; /data0/software/clickhouse/config/config-dir/*</span><br></pre></td></tr></table></figure>
+
+<p>   </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 操作所有窗口</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 编辑启动脚本</span></span><br><span class="line">vim /data0/software/clickhouse/start.sh</span><br><span class="line"></span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node0.xml --pid-file=/data0/software/clickhouse/config/config_node0.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node1.xml --pid-file=/data0/software/clickhouse/config/config_node1.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node2.xml --pid-file=/data0/software/clickhouse/config/config_node2.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node3.xml --pid-file=/data0/software/clickhouse/config/config_node3.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node4.xml --pid-file=/data0/software/clickhouse/config/config_node4.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node5.xml --pid-file=/data0/software/clickhouse/config/config_node5.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node6.xml --pid-file=/data0/software/clickhouse/config/config_node6.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node7.xml --pid-file=/data0/software/clickhouse/config/config_node7.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node8.xml --pid-file=/data0/software/clickhouse/config/config_node8.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node9.xml --pid-file=/data0/software/clickhouse/config/config_node9.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node10.xml --pid-file=/data0/software/clickhouse/config/config_node10.pid &amp;</span><br><span class="line">nohup /usr/bin/clickhouse-server -C=/data0/software/clickhouse/config/config_node11.xml --pid-file=/data0/software/clickhouse/config/config_node11.pid &amp;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存退出</span></span><br><span class="line">chmod +x /data0/software/clickhouse/start.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动</span></span><br><span class="line">/data0/software/clickhouse/start.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 检查 应当有看门狗和程序server俩服务 加上ps供25个</span></span><br><span class="line">ps -efgrep click</span><br><span class="line">ps -efgrep clickwc -l</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 验证客户端</span></span><br><span class="line">clickhouse-client --host pod3-mmp1-a-13 --port 9001</span><br><span class="line">select * from system.clusters;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建集群表要指定集群名 集群名为metr*文件中的标签名ch_cluster_all</span></span><br><span class="line">create database jikewang on cluster perftest_3shards_1replicas;</span><br><span class="line">CREATE TABLE log_test ON CLUSTER perftest_3shards_1replicas</span><br><span class="line">(</span><br><span class="line">    `ts` DateTime,</span><br><span class="line">    `uid` String,</span><br><span class="line">    `biz` String</span><br><span class="line">)</span><br><span class="line">ENGINE = ReplicatedMergeTree(&#x27;/clickhouse/tables/&#123;shard&#125;/log_test&#x27;, &#x27;&#123;replica&#125;&#x27;)</span><br><span class="line">PARTITION BY toYYYYMMDD(ts)</span><br><span class="line">ORDER BY ts;</span><br></pre></td></tr></table></figure>
+
+<p>  <strong>参考文档:</strong> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/161444526">ClickHouse最佳实战之Clickhouse服务配置文件config.xml详解</a> <a target="_blank" rel="noopener" href="https://blog.csdn.net/ashic/article/details/105901792">ClickHouse集群多实例部署</a> <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/22a4687c422a">ClickHouse 多实例环境安装</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1725/" title="clickhouse部署记录手札">http://erbi.me/1725/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/clickhouse/" rel="tag"># clickhouse</a>
+              <a href="/tags/CH/" rel="tag"># CH</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1722/" rel="prev" title="ip地址后边加个/8(16,24,32)含义">
+                  <i class="fa fa-chevron-left"></i> ip地址后边加个/8(16,24,32)含义
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1727/" rel="next" title="python中 os.linesep 用法">
+                  python中 os.linesep 用法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

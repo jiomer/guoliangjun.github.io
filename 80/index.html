@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1.结构性定义 文件类型  （放在档案的开头与结尾） 文件主题  （必须放在「文头」区块内） 文头  （描述性资料，像是「主题」） 文体  （文件本体） （由浏览器控制的显示风格） 标题 &lt;H?&gt;&lt;&#x2F;H?&gt; （从1到6，有六层选择） 标题的对齐 &lt;H? ALIGN&#x3D;LEFTCENTERRIGHT&gt;&lt;&#x2F;H?&gt; 区分  区分的对齐  引文区块  （通常会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML代码大全">
+<meta property="og:url" content="http://erbi.me/80/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="1.结构性定义 文件类型  （放在档案的开头与结尾） 文件主题  （必须放在「文头」区块内） 文头  （描述性资料，像是「主题」） 文体  （文件本体） （由浏览器控制的显示风格） 标题 &lt;H?&gt;&lt;&#x2F;H?&gt; （从1到6，有六层选择） 标题的对齐 &lt;H? ALIGN&#x3D;LEFTCENTERRIGHT&gt;&lt;&#x2F;H?&gt; 区分  区分的对齐  引文区块  （通常会">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="file:///C:DOCUME~1ADMINI~1LOCALS~1TempOOY5$4OW5H%608%609%(9$)T67M.gif">
+<meta property="og:image" content="file:///C:DOCUME~1ADMINI~1LOCALS~1TempOOY5$4OW5H%608%609%(9$)T67M.gif">
+<meta property="article:published_time" content="2012-12-29T22:03:05.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:13.786Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="郭良俊,郭良俊只狗,郭小俊,小俊,狗俊,小俊的博客,jiomer,记忆,角落,记忆角落,成长记忆,生活,回忆">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="file:///C:DOCUME~1ADMINI~1LOCALS~1TempOOY5$4OW5H%608%609%(9$)T67M.gif">
+
+
+<link rel="canonical" href="http://erbi.me/80/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;80&#x2F;&quot;,&quot;path&quot;:&quot;80&#x2F;&quot;,&quot;title&quot;:&quot;HTML代码大全&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>HTML代码大全 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HTML代码大全
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2012-12-30 06:03:05" itemprop="dateCreated datePublished" datetime="2012-12-30T06:03:05+08:00">2012-12-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:13" itemprop="dateModified" datetime="2021-06-10T09:36:13+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%BA%E7%94%9F%E5%9B%9E%E5%BF%86/" itemprop="url" rel="index"><span itemprop="name">人生回忆</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>1.结构性定义 <br>文件类型 <HTML></HTML> （放在档案的开头与结尾） <br>文件主题 <TITLE></TITLE> （必须放在「文头」区块内） <br>文头 <HEAD></HEAD> （描述性资料，像是「主题」） <br>文体 <BODY></BODY> （文件本体） <br>（由浏览器控制的显示风格） <br>标题 &lt;H?&gt;&lt;/H?&gt; （从1到6，有六层选择） <br>标题的对齐 &lt;H? ALIGN=LEFTCENTERRIGHT&gt;&lt;/H?&gt; <br>区分 <DIV></DIV> <br>区分的对齐 <DIV ALIGN=LEFTRIGHTCENTERJUSTIFY></DIV> <br>引文区块 <BLOCKQUOTE></BLOCKQUOTE> （通常会内缩） <br>强调 <EM></EM> （通常会以斜体显示） <br>特别强调 <STRONG></STRONG> （通常会以加粗显示） <br>引文 <CITE></CITE> （通常会以斜体显示） <br>码 <CODE></CODE> （显示原始码之用） <br>样本 <SAMP></SAMP> <br>键盘输入 <KBD></KBD> <br>变数 <VAR></VAR> <br>定义 <DFN></DFN> （有些浏览器不提供） <br>地址 <ADDRESS></ADDRESS> <br>大字 <BIG></BIG> <br>小字 <SMALL></SMALL> <br>与外观相关的标签（作者自订的表现方式） <br>加粗 <B></B> <br>斜体 <I></I> <br>底线 <U></U> （尚有些浏览器不提供） <br>删除线 <S></S> （尚有些浏览器不提供） <br>下标 <SUB></SUB> <br>上标 <SUP></SUP> <br>打字机体 <TT></TT> （用单空格字型显示） <br>预定格式 <PRE></PRE> （保留文件中空格的大小） <br>预定格式的宽度 <PRE WIDTH=?></PRE>（以字元计算） <br>向中看齐 <CENTER></CENTER> （文字与图片都可以） <br>闪耀 <BLINK></BLINK> （有史以来最被嘲弄的标签） <br>字体大小 <FONT SIZE=?></FONT>（从1到7） <br>改变字体大小 <FONT SIZE=+-?></FONT> <br>基本字体大小 <BASEFONT SIZE=?> （从1到7; 内定为3） <br>字体颜色 <FONT COLOR="#$$$$$$"></FONT> <br>2.连结与图形 <br>连结 <A HREF="URL"></A> <br>连结到锚点 <A HREF="URL#\*\*\*"></A>（如果锚点在另一个档案） <br><A HREF="#\*\*\*"></A> （如果锚点目前的档案） <br>连结到目的视框 &lt;A HREF=”URL” 黑吧=”***“&gt;</A> <br>设定锚点 <A NAME="\*\*\*"></A> <br>图形 <IMG SRC="URL"> <br>图形看齐方式 <IMG SRC="URL" ALIGN=TOPBOTTOMMIDDLE> <br>图形看齐方式 <IMG SRC="URL"   
+ALIGN=LEFTRIGHTTEXTTOPABSMIDDLEBASELINEABSBOTTOM> <br>取代文字 <IMG SRC="URL" ALT="\*\*\*"> （如果没有办法显示图形则显示此文字） <br>点选图 <IMG SRC="URL" ISMAP> （需要CGI程式） <br>N2.0 点选图 <IMG SRC="URL" USEMAP="URL"> <br>N2.0 地图 <MAP NAME="\*\*\*"></MAP>（描述地图） <br>N2.0 段落 &lt;AREA SHAPE=”RECT” COORDS=”,,,” HREF=”URL”NOHREF&gt; <br>3.0 大小 <IMG SRC="URL" WIDTH="?" HEIGHT="?">（以pixels为单位） N1.0 图形边缘 <IMG SRC="URL" BORDER=?> （以pixels为单位） <br>N1.0 图形边缘空间 <IMG SRC="URL" HSPACE=? VSPACE=?> （以pixels为单位） <br>N1.0 低解析度图形 <IMG SRC="URL" LOWSRC="URL"> <br>N1.1 用户端拉 <META HTTP-EQUIV="Refresh" CONTENT="?; URL=URL">（使用端自动更新 ） <br>N2.0 内嵌物件 <EMBED SRC="URL"> （将物件插入页面） <br>N2.0 内嵌物件大小 <EMBED SRC="URL" WIDTH="?" HEIGHT="?"> <br>3.分隔 <br>段落 <P> （通常是两个return） <br>3.0 段落 <P></P> （新定义成容器型标签） <br>3.0 文字看齐方式 <P ALIGN=LEFTCENTERRIGHT></P> <br>换行 <BR> （一个return） <br>N1.0 文字部份看齐方式<BR CLEAR=LEFTRIGHTALL>（与图形合用时） <br>横线 <HR> <br>N1.0 横线对齐 <HR ALIGN=LEFTRIGHTCENTER> <br>N1.0 横线厚度 <HR SIZE=?> （以pixels为单位） <br>N1.0 横线宽度 <HR WIDTH=?> （以pixels为单位） <br>N1.0 横线比率宽度 <HR WIDTH=%> （以页宽为100%） <br>N1.0 实线 <HR NOSHADE> （没有立体效果） <br>N1.0 不可换行 <NOBR>&lt;<img src="file:///C:DOCUME~1ADMINI~1LOCALS~1TempOOY5$4OW5H`8`9%(9$)T67M.gif">BR&gt; （不换行） <br>N1.0 可换行处 <WBR> （如果需要，可在此断行） <br>列举 （可以巢状列举） <br>无次序式列举 <UL><LI></UL> （<LI> 放在每一项前） <br>N1.0 公布式列举 <UL TYPE=DISCCIRCLESQUARE>（定义全部的列举项） <br><LI TYPE=DISCCIRCLESQUARE>（定义这个及其後的列举项） <br>有次序式列举 <OL><LI></OL> （<LI> 放在每一项前） <br>N1.0 数标型态 <OL TYPE=AaIi1> （定义全部的列举项） <br><LI TYPE=AaIi1> （定义这个及其後的列举项） <br>N1.0 起始数字 <OL value=?> （定义全部的列举项） <br><LI value=?> （定义这个及其後的列举项） <br>定义式列举 <DL><DT><DD></DL>（<DT>项目, <DD>定义） <br>表单式列举 <MENU><LI></MENU>（<LI> 放在每一项前） <br>目录式列举 <DIR><LI></DIR> （<LI> 放在每一项前） <br>背景与颜色 <br>3.0 重复排列的背景 <BODY BACKGROUND="URL"> <br>N1.1+ 背景颜色 <BODY BGCOLOR="#$$$$$$"> （依序为红、绿、蓝） <br>N1.1+ 文字颜色 <BODY TEXT="#$$$$$$"> <br>N1.1+ 连结颜色 <BODY LINK="#$$$$$$"> <br>N1.1+ 看过的连结 <BODY VLINK="#$$$$$$"> <br>N1.1 使用中的连结 <BODY ALINK="#$$$$$$"> <br>4.特殊字元（以下标签需用小写） <br>特别符号 &amp;#?; （其中 ? 代表 ISO 8859-1 的编码） <br>&lt; &lt; &gt; &gt; &amp; &amp; “ “ <br>注册商标TM ? <br>N1.0+ 注册商标TM ? <br>著作权符号 ? <br>N1.0+ 著作权符号 ? <br>5.表单 （通常需要与CGI程式配合） <br>定义表单 <FORM ACTION="URL" METHOD=GETPOST></FORM> <br>N2.0 上传档案 &lt;FORM ENCTYPE=”multipart/form-data&gt;</FORM> <br>输入栏位 <INPUT TYPE="TEXTPASSWORDCHECKBOXRADIOIMAGEHIDDENSUBMITRESET"> <br>栏位名称 <INPUT NAME="\*\*\*"> <br>栏位内定值 <INPUT value="\*\*\*"> <br>已选定 <INPUT CHECKED> （适用於checkboxes与 radio boxes） <br>栏位宽度 <INPUT SIZE=?> （以字元数为单位） <br>最长字数 <INPUT MAXLENGTH=?> （以字元数为单位） <br>下拉式选单 <SELECT></SELECT> <br>下拉式选单名称 <SELECT NAME="\*\*\*"></SELECT> <br>选单项目数量 <SELECT SIZE=?></SELECT> <br>多选式选单 <SELECT MULTIPLE> （多选） <br>选项 <OPTION> <br>内定选项 <OPTION SELECTED> <br>文字输入区 <TEXTAREA ROWS=? COLS=?></TEXTAREA> <br>输入区名称 <TEXTAREA NAME="\*\*\*"></TEXTAREA> <br>N2.0 输入区换行方式 <TEXTAREA WRAP=OFFVIRTUALPHYSICAL></TEXTAREA> <br>6.表格 <br>3.0 定义表格 <TABLE></TABLE> <br>3.0 表格框线 <TABLE BORDER></TABLE> （有或没有） <br>N1.1 表格框线 <TABLE BORDER=?></TABLE>（可以设定数值） <br>N1.1 储存格左右留白 <TABLE CELLSPACING=?> <br>N1.1 储存格上下留白 <TABLE CELLPADDING=?> <br>N1.1 表格宽度 <TABLE WIDTH=?> （以pixels为单位） <br>N1.1 宽度比率 <TABLE WIDTH=%> （页宽为100%） <br>3.0 表格列 <TR></TR> <br>3.0 表格列内容看齐 <TR ALIGN=LEFTRIGHTCENTER VALIGN=TOPMIDDLEBOTTOM> <br>3.0 储存格 <TD></TD> （须与列并用） <br>3.0 储存格内容看齐 <TD ALIGN=LEFTRIGHTCENTER VALIGN=TOPMIDDLEBOTTOM> <br>3.0 不换行 <TD NOWRAP> <br>N3.0 储存格背景颜色 <TD BGCOLOR=#$$$$$$> <br>3.0 储存格横向连接 <TD COLSPAN=?> <br>3.0 储存格纵向连接 <TD ROWSPAN=?> <br>N1.1 储存格宽度 <TD WIDTH=?> （以pixels为单位） <br>N1.1 储存格宽度比率 <TD WIDTH=%> （页宽为100%） <br>3.0 表格标题 <TH></TH> （跟<TD>一样，不过会对中并加粗） <br>3.0 表格标题对齐 <TH ALIGN=LEFTRIGHTCENTER VALIGN=TOPMIDDLEBOTTOM> <br>3.0 表格标题不换行 <TH NOWRAP> <br>3.0 表格标题占几栏 <TH COLSPAN=?> <br>3.0 表格标题占几列 <TH ROWSPAN=?> <br>N1.1 表格标题宽度 <TH WIDTH=?> （以pixels为单位） <br>N1.1 表格标题比率宽度<TH WIDTH=%> （页宽为100%） <br>3.0 表格抬头 <CAPTION></CAPTION> <br>3.0 表格抬头看齐 <CAPTION ALIGN=TOPBOTTOM>（在表格之上/之下） <br>视框 （定义与控制萤幕上的特定区域） <br>N2.0 视框格式总定义 <FRAMESET></FRAMESET> （取代<BODY>） <br>N2.0 视框行长度分配 <FRAMESET ROWS=,,,></FRAMESET>（pixels 或 %） <br>N2.0 视框行长度分配 <FRAMESET ROWS=\*></FRAMESET> （* = 相对大小） <br>N2.0 视框栏宽度分配 <FRAMESET COLS=,,,></FRAMESET>（pixels 或 %） <br>N2.0 视框栏宽度分配 <FRAMESET COLS=\*></FRAMESET> （* =相对大小） <br>N2.0 定义个别视框 <FRAME> （定义个别视框） <br>N2.0 个别视框内容 <FRAME SRC="URL"> <br>N2.0 个别视框名称 &lt;FRAME NAME=”***“_blank_self_parent_top&gt; <br>N2.0 边缘宽度 <FRAME MARGINWIDTH=?> （「左」与「右」边界） <br>N2.0 边缘高度 <FRAME MARGINHEIGHT=?> （「天顶」与「地底」边界） <br>N2.0 卷动条 <FRAME SCROLLING="YESNOAUTO"> <br>N2.0 不可改变大小 <FRAME NORESIZE> <br>N2.0 无视框时的内容 <NOFRAMES>&lt;<img src="file:///C:DOCUME~1ADMINI~1LOCALS~1TempOOY5$4OW5H`8`9%(9$)T67M.gif">FRAMES&gt;（如果浏览器不提供视框功能的话） <br>7.杂项 <br>说明 <!-- \*\*\* --> （浏览器不会显示）  </p>
+<p>-——————————————————————————-  </p>
+<p>　  </p>
+<!--修改滚动条-->  
+<style type="text/css">  
+body {  
+scrollbar-face-color: #330033;  
+scrollbar-shadow-color: #FFFFFF;  
+scrollbar-highlight-color: #FFFFFF;  
+scrollbar-3dlight-color: #FFFFFF;  
+scrollbar-darkshadow-color: #FFFFFF;   
+scrollbar-track-color: #330033;  
+scrollbar-arrow-color: #FFFFFF;  
+}  
+</style>  
+<!--修改滚动条结束-->  
+<p>将上面的代码放在叶子代码的<head></head>之间,颜色可根据自己的需要修改。  </p>
+<p>滚动条的代码意思如下：   </p>
+<p>Scrollbar-Face-Color为滚动条表面颜色设定；<br>Scrollbar-Track-Color为滚动条底板颜色设定；<br>Scrollbar-Darkshadow为滚动条下边和右边边沿颜色设定；<br>Scrollbar-Highlight-Color为滚动条上斜面和左斜面颜色设定；<br>Scrollbar-Shadow-Color为滚动条下斜面和右斜面颜色设定；<br>Scrollbar-3Dlight-Color为滚动条上边和左边的边沿颜色设定；<br>Scrollbar-Arrow-Color为滚动条两端箭头颜色设定。  </p>
+<p>-——————————————————————————-  </p>
+<p>&lt;!&gt; 跑?? <br><marquee>…</marquee>普通?? <br><marquee behavior=slide>…</marquee>滑? <br><marquee behavior=scroll>…</marquee>???? <br><marquee behavior=alternate>…</marquee>?回?? <br><marquee direction=down>…</marquee>向下?? <br><marquee direction=up>…</marquee>向上?? <br><marquee direction=right></marquee>向右?? <br><marquee direction=’left’></marquee>向左?? <br><marquee loop=2>…</marquee>??次? <br><marquee width=180>…</marquee>?定?度 <br><marquee height=30>…</marquee>?定高度 <br><marquee bgcolor=FF0000>…</marquee>?定背景?色 <br><marquee scrollamount=30>…</marquee>?定??距? <br><marquee scrolldelay=300>…</marquee>?定????</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/80/" title="HTML代码大全">http://erbi.me/80/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/322/" rel="prev" title="好了博客再次重生了">
+                  <i class="fa fa-chevron-left"></i> 好了博客再次重生了
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/78/" rel="next" title="我,我消失好不好?">
+                  我,我消失好不好? <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="postgreSQL之开窗函数用法以下是自己结合postgreSQL文档手册总结整理的入门手札，如有不严谨，请到官方文档手册查看：http:&#x2F;&#x2F;www.postgres.cn&#x2F;docs&#x2F;10&#x2F;index.html  开窗函数语法相关12&lt;窗口函数&gt;OVER (PARTITION BY &lt;列清单&gt; ORDER BY &lt;排序用列清单&gt;) 1.over 表示窗口函数关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="postgreSQL之开窗函数用法">
+<meta property="og:url" content="http://erbi.me/1335/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="postgreSQL之开窗函数用法以下是自己结合postgreSQL文档手册总结整理的入门手札，如有不严谨，请到官方文档手册查看：http:&#x2F;&#x2F;www.postgres.cn&#x2F;docs&#x2F;10&#x2F;index.html  开窗函数语法相关12&lt;窗口函数&gt;OVER (PARTITION BY &lt;列清单&gt; ORDER BY &lt;排序用列清单&gt;) 1.over 表示窗口函数关">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-18T08:43:53.000Z">
+<meta property="article:modified_time" content="2021-06-10T06:18:27.033Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="postgresql">
+<meta property="article:tag" content="pg">
+<meta property="article:tag" content="pgsql">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/1335/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1335&#x2F;&quot;,&quot;path&quot;:&quot;1335&#x2F;&quot;,&quot;title&quot;:&quot;postgreSQL之开窗函数用法&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>postgreSQL之开窗函数用法 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#postgreSQL%E4%B9%8B%E5%BC%80%E7%AA%97%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">postgreSQL之开窗函数用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E7%AA%97%E5%87%BD%E6%95%B0%E8%AF%AD%E6%B3%95%E7%9B%B8%E5%85%B3"><span class="nav-number">1.1.</span> <span class="nav-text">开窗函数语法相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E4%BD%9C%E4%B8%BA%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.1.</span> <span class="nav-text">可作为窗口函数的函数分类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#avg-over"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">avg() over()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sum-over"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">sum() over()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#count-over"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">count() over()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#max-over"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">max() over()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#min-over"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">min() over()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#row-number"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">row_number()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rank"><span class="nav-number">1.1.1.7.</span> <span class="nav-text">rank()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dense-rank"><span class="nav-number">1.1.1.8.</span> <span class="nav-text">dense_rank()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#percent-rank"><span class="nav-number">1.1.1.9.</span> <span class="nav-text">percent_rank()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cume-dist"><span class="nav-number">1.1.1.10.</span> <span class="nav-text">cume_dist()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#first-value"><span class="nav-number">1.1.1.11.</span> <span class="nav-text">first_value()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#last-value"><span class="nav-number">1.1.1.12.</span> <span class="nav-text">last_value()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#nth-value"><span class="nav-number">1.1.1.13.</span> <span class="nav-text">nth_value()</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0%E5%88%AB%E5%90%8D%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">窗口函数别名的使用</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1335/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          postgreSQL之开窗函数用法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-18 16:43:53" itemprop="dateCreated datePublished" datetime="2019-10-18T16:43:53+08:00">2019-10-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 14:18:27" itemprop="dateModified" datetime="2021-06-10T14:18:27+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="postgreSQL之开窗函数用法"><a href="#postgreSQL之开窗函数用法" class="headerlink" title="postgreSQL之开窗函数用法"></a>postgreSQL之开窗函数用法</h2><p>以下是自己结合postgreSQL文档手册总结整理的入门手札，如有不严谨，请到官方文档手册查看：<a target="_blank" rel="noopener" href="http://www.postgres.cn/docs/10/index.html">http://www.postgres.cn/docs/10/index.html</a></p>
+<hr>
+<h3 id="开窗函数语法相关"><a href="#开窗函数语法相关" class="headerlink" title="开窗函数语法相关"></a>开窗函数语法相关</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;窗口函数&gt;</span><br><span class="line">OVER (PARTITION BY &lt;列清单&gt; ORDER BY &lt;排序用列清单&gt;)</span><br></pre></td></tr></table></figure>
+<p>1.over 表示窗口函数关键字</p>
+<p>2.partition by 对查询返回的结果集进行分组</p>
+<p>3.order by 设定结果集的分组数据排序</p>
+<hr>
+<h4 id="可作为窗口函数的函数分类"><a href="#可作为窗口函数的函数分类" class="headerlink" title="可作为窗口函数的函数分类"></a>可作为窗口函数的函数分类</h4><p>1.聚合函数：<br>SUM、AVG、COUNT、MAX、MIN</p>
+<p>2.内置函数：RANK、DENSE_RANK、ROW_NUMBER 等专用窗口函数</p>
+<hr>
+<h5 id="avg-over"><a href="#avg-over" class="headerlink" title="avg() over()"></a>avg() over()</h5><p>演示avg()聚合函数后接over属性的窗口函数，此窗口函数用来计算分组后数据的平均值。</p>
+<p>先创建一张成绩表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE score_demo (</span><br><span class="line">	id serial PRIMARY KEY,</span><br><span class="line">	subject character varying(32),</span><br><span class="line">	stu_name character varying(32),</span><br><span class="line">	score numeric(3, 0)</span><br><span class="line">);</span><br><span class="line">INSERT INTO score_demo (subject, stu_name, score)</span><br><span class="line">VALUES (&#x27;Chinese&#x27;, &#x27;francs&#x27;, 70);</span><br><span class="line">INSERT INTO score_demo (subject, stu_name, score)</span><br><span class="line">VALUES (&#x27;Chinese&#x27;, &#x27;matiler&#x27;, 70);</span><br><span class="line">INSERT INTO score_demo (subject, stu_name, score)</span><br><span class="line">VALUES (&#x27;Chinese&#x27;, &#x27;tutu&#x27;, 80);</span><br><span class="line">INSERT INTO score_demo (subject, stu_name, score)</span><br><span class="line">VALUES (&#x27;English&#x27;, &#x27;matiler&#x27;, 75);</span><br><span class="line">INSERT INTO score_demo (subject, stu_name, score)</span><br><span class="line">VALUES (&#x27;English&#x27;, &#x27;francs&#x27;, 90);</span><br><span class="line">INSERT INTO score_demo (subject, stu_name, score)</span><br><span class="line">VALUES (&#x27;English&#x27;, &#x27;tutu&#x27;, 60);</span><br><span class="line">INSERT INTO score_demo (subject, stu_name, score)</span><br><span class="line">VALUES (&#x27;Math&#x27;, &#x27;francs&#x27;, 80);</span><br><span class="line">INSERT INTO score_demo (subject, stu_name, score)</span><br><span class="line">VALUES (&#x27;Math&#x27;, &#x27;matiler&#x27;, 99);</span><br><span class="line">INSERT INTO score_demo (subject, stu_name, score)</span><br><span class="line">VALUES (&#x27;Math&#x27;, &#x27;tutu&#x27;, 65);</span><br></pre></td></tr></table></figure>
+<p>查询每名学生学习成绩并且显示课程的平均分。请问我自己会怎么做呢?如果是不用窗口函数先做的话，我能想到是这样：<br>1.先计算出课程的平均分。<br>2.然后用成绩表与平均分表关联<br>如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">select d.subject,d.stu_name,d.score,&quot;temp&quot;.avg_score from score_demo d</span><br><span class="line">LEFT JOIN (</span><br><span class="line">	select subject,avg(score) avg_score from score_demo </span><br><span class="line">	group by subject</span><br><span class="line">) temp on d.subject = temp.subject</span><br><span class="line">-----</span><br><span class="line">subject	stu_name	score	avg_score</span><br><span class="line">Chinese	francs	70	73.3333333333333</span><br><span class="line">Chinese	matiler	70	73.3333333333333</span><br><span class="line">Chinese	tutu	80	73.3333333333333</span><br><span class="line">English	matiler	75	75</span><br><span class="line">English	francs	90	75</span><br><span class="line">English	tutu	60	75</span><br><span class="line">Math	francs	80	81.3333333333333</span><br><span class="line">Math	matiler	99	81.3333333333333</span><br><span class="line">Math	tutu	65	81.3333333333333</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>而使用窗口函数，基本上一句搞掂:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select subject,stu_name,score,avg(score)over(partition by subject) from score_demo</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">subject	stu_name	score	avg</span><br><span class="line">Chinese	francs	70	73.3333333333333</span><br><span class="line">Chinese	matiler	70	73.3333333333333</span><br><span class="line">Chinese	tutu	80	73.3333333333333</span><br><span class="line">English	matiler	75	75</span><br><span class="line">English	francs	90	75</span><br><span class="line">English	tutu	60	75</span><br><span class="line">Math	francs	80	81.3333333333333</span><br><span class="line">Math	matiler	99	81.3333333333333</span><br><span class="line">Math	tutu	65	81.3333333333333</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="sum-over"><a href="#sum-over" class="headerlink" title="sum() over()"></a>sum() over()</h5><p>演示sum()聚合函数后接over属性的窗口函数，此窗口函数用来计算分组后数据的总分值</p>
+<p>例如：查询每名学生学习成绩并且显示课程的总分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select subject,stu_name,score,sum(score)over(partition by subject) from score_demo</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line">subject	stu_name	score	sum</span><br><span class="line">Chinese	francs	70	220</span><br><span class="line">Chinese	matiler	70	220</span><br><span class="line">Chinese	tutu	80	220</span><br><span class="line">English	matiler	75	225</span><br><span class="line">English	francs	90	225</span><br><span class="line">English	tutu	60	225</span><br><span class="line">Math	francs	80	244</span><br><span class="line">Math	matiler	99	244</span><br><span class="line">Math	tutu	65	244</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="count-over"><a href="#count-over" class="headerlink" title="count() over()"></a>count() over()</h5><p>演示count()聚合函数后接over属性的窗口函数，此窗口函数用来计算分组后数据的总条数值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select subject,stu_name,score,COUNT(score)over(partition by subject) from score_demo</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">subject	stu_name	score	count</span><br><span class="line">Chinese	francs	70	3</span><br><span class="line">Chinese	matiler	70	3</span><br><span class="line">Chinese	tutu	80	3</span><br><span class="line">English	matiler	75	3</span><br><span class="line">English	francs	90	3</span><br><span class="line">English	tutu	60	3</span><br><span class="line">Math	francs	80	3</span><br><span class="line">Math	matiler	99	3</span><br><span class="line">Math	tutu	65	3</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="max-over"><a href="#max-over" class="headerlink" title="max() over()"></a>max() over()</h5><p>演示max()聚合函数后接over属性的窗口函数，此窗口函数用来计算分组后数据的最大值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select subject,stu_name,score,MAX(score)over(partition by subject) from score_demo</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">subject	stu_name	score	max</span><br><span class="line">Chinese	francs	70	80</span><br><span class="line">Chinese	matiler	70	80</span><br><span class="line">Chinese	tutu	80	80</span><br><span class="line">English	matiler	75	90</span><br><span class="line">English	francs	90	90</span><br><span class="line">English	tutu	60	90</span><br><span class="line">Math	francs	80	99</span><br><span class="line">Math	matiler	99	99</span><br><span class="line">Math	tutu	65	99</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="min-over"><a href="#min-over" class="headerlink" title="min() over()"></a>min() over()</h5><p>演示min()聚合函数后接over属性的窗口函数，此窗口函数用来计算分组后数据的最小值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select subject,stu_name,score,min(score)over(partition by subject) from score_demo</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">subject	stu_name	score	min</span><br><span class="line">Chinese	francs	70	70</span><br><span class="line">Chinese	matiler	70	70</span><br><span class="line">Chinese	tutu	80	70</span><br><span class="line">English	matiler	75	60</span><br><span class="line">English	francs	90	60</span><br><span class="line">English	tutu	60	60</span><br><span class="line">Math	francs	80	65</span><br><span class="line">Math	matiler	99	65</span><br><span class="line">Math	tutu	65	65</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="row-number"><a href="#row-number" class="headerlink" title="row_number()"></a>row_number()</h5><p>row_number()窗口函数对结果集分组后的数据标注行号，从1开始的..</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select row_number() over(partition by subject order by score desc),* from score_demo</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line">row_number	id	subject	stu_name	score</span><br><span class="line">1	3	Chinese	tutu	80</span><br><span class="line">2	1	Chinese	francs	70</span><br><span class="line">3	2	Chinese	matiler	70</span><br><span class="line">1	5	English	francs	90</span><br><span class="line">2	4	English	matiler	75</span><br><span class="line">3	6	English	tutu	60</span><br><span class="line">1	8	Math	matiler	99</span><br><span class="line">2	7	Math	francs	80</span><br><span class="line">3	9	Math	tutu	65</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果不指定partition属性，row_number()就类似于oracle的rownum记录所有行号。如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">select row_number() over(order by id) rownum,* from score_demo</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line">1	1	Chinese	francs	70</span><br><span class="line">2	2	Chinese	matiler	70</span><br><span class="line">3	3	Chinese	tutu	80</span><br><span class="line">4	4	English	matiler	75</span><br><span class="line">5	5	English	francs	90</span><br><span class="line">6	6	English	tutu	60</span><br><span class="line">7	7	Math	francs	80</span><br><span class="line">8	8	Math	matiler	99</span><br><span class="line">9	9	Math	tutu	65</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="rank"><a href="#rank" class="headerlink" title="rank()"></a>rank()</h5><p>rank()窗口函数和row_number()函数类似，<br>主要区分为当组内某行字段值相同，行号重复并且行号产生间隙，如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select rank() over(partition by subject order by score) ,* from score_demo</span><br><span class="line"></span><br><span class="line">-----</span><br><span class="line"></span><br><span class="line">rank	id	subject	stu_name	score</span><br><span class="line">1	2	Chinese	matiler	70</span><br><span class="line">1	1	Chinese	francs	70</span><br><span class="line">3	3	Chinese	tutu	80</span><br><span class="line">1	6	English	tutu	60</span><br><span class="line">2	4	English	matiler	75</span><br><span class="line">3	5	English	francs	90</span><br><span class="line">1	9	Math	tutu	65</span><br><span class="line">2	7	Math	francs	80</span><br><span class="line">3	8	Math	matiler	99</span><br></pre></td></tr></table></figure>
+<p>从返回结果看到..第一二行都是1，第三行就3了，产生了间隙…</p>
+<hr>
+<h5 id="dense-rank"><a href="#dense-rank" class="headerlink" title="dense_rank()"></a>dense_rank()</h5><p>dese_rank()函数和rank()函数类似，主要区别为当组内某个字段值相同时，虽然行号重复，但行号不产生间隙。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select dense_rank() over(partition by subject order by score),* from score_demo</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">dense_rank	id	subject	stu_name	score</span><br><span class="line">1	2	Chinese	matiler	70</span><br><span class="line">1	1	Chinese	francs	70</span><br><span class="line">2	3	Chinese	tutu	80</span><br><span class="line">1	6	English	tutu	60</span><br><span class="line">2	4	English	matiler	75</span><br><span class="line">3	5	English	francs	90</span><br><span class="line">1	9	Math	tutu	65</span><br><span class="line">2	7	Math	francs	80</span><br><span class="line">3	8	Math	matiler	99</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="percent-rank"><a href="#percent-rank" class="headerlink" title="percent_rank()"></a>percent_rank()</h5><p>percent_rank()函数：当前行的相对排名： (rank- 1) / (总行数 - 1)，得到的数在0-1之间[0,1)，<br>例如：限制序号在0~1之间(0作为第一个序)–&gt;[0,1):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select percent_rank() over(partition by subject order by score),* from score_demo</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line">percent_rank	id	subject	stu_name	score</span><br><span class="line">0	2	Chinese	matiler	70</span><br><span class="line">0	1	Chinese	francs	70</span><br><span class="line">1	3	Chinese	tutu	80</span><br><span class="line">0	6	English	tutu	60</span><br><span class="line">0.5	4	English	matiler	75</span><br><span class="line">1	5	English	francs	90</span><br><span class="line">0	9	Math	tutu	65</span><br><span class="line">0.5	7	Math	francs	80</span><br><span class="line">1	8	Math	matiler	99</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="cume-dist"><a href="#cume-dist" class="headerlink" title="cume_dist()"></a>cume_dist()</h5><p>cume_dist()函数：当前行的相对排名： (当前行前面的行数 或 与当前行同等的行的行数)/(总行数)</p>
+<p>注意:上面的percernt_rank()函数默认是从0开始排序的，如果需要使用相对0<del>1之间(0,1)的排名<br>例如，限制序号在0</del>1之间相对排名(0,1)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select cume_dist() over(partition by subject order by score),* from score_demo</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">cume_dist	id	subject	stu_name	score</span><br><span class="line">0.666666666666667	2	Chinese	matiler	70</span><br><span class="line">0.666666666666667	1	Chinese	francs	70</span><br><span class="line">1	3	Chinese	tutu	80</span><br><span class="line">0.333333333333333	6	English	tutu	60</span><br><span class="line">0.666666666666667	4	English	matiler	75</span><br><span class="line">1	5	English	francs	90</span><br><span class="line">0.333333333333333	9	Math	tutu	65</span><br><span class="line">0.666666666666667	7	Math	francs	80</span><br><span class="line">1	8	Math	matiler	99</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="first-value"><a href="#first-value" class="headerlink" title="first_value()"></a>first_value()</h5><p>first_value()函数用来取结果集每一个分组的第一行数的字段值。如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select first_value(score) over(partition by subject ),* from score_demo</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">first_value	id	subject	stu_name	score</span><br><span class="line">70	1	Chinese	francs	70</span><br><span class="line">70	2	Chinese	matiler	70</span><br><span class="line">70	3	Chinese	tutu	80</span><br><span class="line">75	4	English	matiler	75</span><br><span class="line">75	5	English	francs	90</span><br><span class="line">75	6	English	tutu	60</span><br><span class="line">80	7	Math	francs	80</span><br><span class="line">80	8	Math	matiler	99</span><br><span class="line">80	9	Math	tutu	65</span><br></pre></td></tr></table></figure>
+
+<p>所以通过first_value()函数很容易查询到分组数据的最大值和最小值。例如查询成绩表按课程分组同时取每门课程的最高分，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">select first_value(score) over(partition by subject order by score desc) max_score,* from score_demo</span><br><span class="line">----</span><br><span class="line">max_score	id	subject	stu_name	score</span><br><span class="line">80	3	Chinese	tutu	80</span><br><span class="line">80	1	Chinese	francs	70</span><br><span class="line">80	2	Chinese	matiler	70</span><br><span class="line">90	5	English	francs	90</span><br><span class="line">90	4	English	matiler	75</span><br><span class="line">90	6	English	tutu	60</span><br><span class="line">99	8	Math	matiler	99</span><br><span class="line">99	7	Math	francs	80</span><br><span class="line">99	9	Math	tutu	65</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="last-value"><a href="#last-value" class="headerlink" title="last_value()"></a>last_value()</h5><p>last_value函数用来取结果集每一个分组的最后一行数据的字段值。<br>如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">select last_value(score) over(partition by subject ),* from score_demo</span><br><span class="line">---</span><br><span class="line">last_value	id	subject	stu_name	score</span><br><span class="line">80	1	Chinese	francs	70</span><br><span class="line">80	2	Chinese	matiler	70</span><br><span class="line">80	3	Chinese	tutu	80</span><br><span class="line">60	4	English	matiler	75</span><br><span class="line">60	5	English	francs	90</span><br><span class="line">60	6	English	tutu	60</span><br><span class="line">65	7	Math	francs	80</span><br><span class="line">65	8	Math	matiler	99</span><br><span class="line">65	9	Math	tutu	65</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="nth-value"><a href="#nth-value" class="headerlink" title="nth_value()"></a>nth_value()</h5><p>nth_value()函数用来取结果集每一个分组的指定行数据的字段值，语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nth_value(value any,nth integer)</span><br><span class="line"></span><br><span class="line">其中：</span><br><span class="line">1.value 指定表的字段</span><br><span class="line">2.nth 指定结果集分组数据的第几行，如不存在则返回空..</span><br></pre></td></tr></table></figure>
+<p>例如成绩表按课程分组后去分组的第三行分数，如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">select nth_value(score,3) over(partition by subject),* from score_demo</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">nth_value	id	subject	stu_name	score</span><br><span class="line">80	1	Chinese	francs	70</span><br><span class="line">80	2	Chinese	matiler	70</span><br><span class="line">80	3	Chinese	tutu	80</span><br><span class="line">60	4	English	matiler	75</span><br><span class="line">60	5	English	francs	90</span><br><span class="line">60	6	English	tutu	60</span><br><span class="line">65	7	Math	francs	80</span><br><span class="line">65	8	Math	matiler	99</span><br><span class="line">65	9	Math	tutu	65</span><br></pre></td></tr></table></figure>
+
+<h4 id="窗口函数别名的使用"><a href="#窗口函数别名的使用" class="headerlink" title="窗口函数别名的使用"></a>窗口函数别名的使用</h4><p>如果sql中需要多次使用到窗口函数，可以使用窗口函数别名，语法如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select .. from .. WINDOW window_name as (window_definiton)</span><br></pre></td></tr></table></figure>
+<p>WINDOW 属性指定表的别名为window_name,可以给over属性引用，如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">select avg(score) over(r),sum(score) over(r) ,* from score_demo WINDOW r as (PARTITION by subject)</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">avg	sum	id	subject	stu_name	score</span><br><span class="line">73.3333333333333	220	1	Chinese	francs	70</span><br><span class="line">73.3333333333333	220	2	Chinese	matiler	70</span><br><span class="line">73.3333333333333	220	3	Chinese	tutu	80</span><br><span class="line">75	225	4	English	matiler	75</span><br><span class="line">75	225	5	English	francs	90</span><br><span class="line">75	225	6	English	tutu	60</span><br><span class="line">81.3333333333333	244	7	Math	francs	80</span><br><span class="line">81.3333333333333	244	8	Math	matiler	99</span><br><span class="line">81.3333333333333	244	9	Math	tutu	65</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<p>好了<del>终于写完常用的窗口函数了</del>啊呜…要不打个赏?–&gt;郭良俊博客：<a target="_blank" rel="noopener" href="https://199604.com/">https://199604.com/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1335/" title="postgreSQL之开窗函数用法">http://erbi.me/1335/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/postgresql/" rel="tag"># postgresql</a>
+              <a href="/tags/pg/" rel="tag"># pg</a>
+              <a href="/tags/pgsql/" rel="tag"># pgsql</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1330/" rel="prev" title="JavaScript面试78题">
+                  <i class="fa fa-chevron-left"></i> JavaScript面试78题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1339/" rel="next" title="postgreSQL之raise用法">
+                  postgreSQL之raise用法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

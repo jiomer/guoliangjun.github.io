@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="MVC框架——基于java web简单开发（作业）我的JSP作业要求： 练习要求如下： 1.按照*.bmp做好客户端login.jsp文件 2.在客户端login.jsp文件中用javascript实现登陆验证,要求非空字符，非空对象等验证。 3.在服务器端口checkLogin.jsp文件中进行分类执行 1)学生用户:用户名为：本人姓名,密码为：本人学号，登陆成功后用response跳转到stu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MVC框架——基于java web简单开发">
+<meta property="og:url" content="http://erbi.me/166/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="MVC框架——基于java web简单开发（作业）我的JSP作业要求： 练习要求如下： 1.按照*.bmp做好客户端login.jsp文件 2.在客户端login.jsp文件中用javascript实现登陆验证,要求非空字符，非空对象等验证。 3.在服务器端口checkLogin.jsp文件中进行分类执行 1)学生用户:用户名为：本人姓名,密码为：本人学号，登陆成功后用response跳转到stu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/ser1.jpg">
+<meta property="og:image" content="http://qn.199604.com/ser2.jpg">
+<meta property="og:image" content="http://erbi.me/166/imgs/login-top.gif">
+<meta property="og:image" content="http://erbi.me/166/imgs/login-button2.gif">
+<meta property="og:image" content="http://erbi.me/166/imgs/line.gif">
+<meta property="og:image" content="http://erbi.me/166/imgs/quan.gif">
+<meta property="og:image" content="http://erbi.me/166/imgs/login-foot.gif">
+<meta property="og:image" content="http://qn.199604.com/ser3.jpg">
+<meta property="og:image" content="http://erbi.me/166/imgs/back.jpg">
+<meta property="og:image" content="http://qn.199604.com/ser4.jpg">
+<meta property="og:image" content="http://qn.199604.com/ser5.jpg">
+<meta property="article:published_time" content="2016-11-18T16:05:51.000Z">
+<meta property="article:modified_time" content="2021-06-10T01:36:14.464Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="javaweb">
+<meta property="article:tag" content="jsp">
+<meta property="article:tag" content="MVC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/ser1.jpg">
+
+
+<link rel="canonical" href="http://erbi.me/166/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;166&#x2F;&quot;,&quot;path&quot;:&quot;166&#x2F;&quot;,&quot;title&quot;:&quot;MVC框架——基于java web简单开发&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>MVC框架——基于java web简单开发 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8Ejava-web%E7%AE%80%E5%8D%95%E5%BC%80%E5%8F%91%EF%BC%88%E4%BD%9C%E4%B8%9A%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">MVC框架——基于java web简单开发（作业）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">我来逛一圈，马上走！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">登录失败！请确认账号密码</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/166/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MVC框架——基于java web简单开发
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-11-19 00:05:51" itemprop="dateCreated datePublished" datetime="2016-11-19T00:05:51+08:00">2016-11-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 09:36:14" itemprop="dateModified" datetime="2021-06-10T09:36:14+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="MVC框架——基于java-web简单开发（作业）"><a href="#MVC框架——基于java-web简单开发（作业）" class="headerlink" title="MVC框架——基于java web简单开发（作业）"></a>MVC框架——基于java web简单开发（作业）</h2><p>我的JSP作业要求： 练习要求如下： 1.按照*.bmp做好客户端login.jsp文件 2.在客户端login.jsp文件中用javascript实现登陆验证,要求非空字符，非空对象等验证。 3.在服务器端口checkLogin.jsp文件中进行分类执行 1)学生用户:用户名为：本人姓名,密码为：本人学号，登陆成功后用response跳转到student.jsp页，输出个人信息。提醒：1.session应用；2.注意中文乱码处理。 2)管理员用户:用户名为：admin,密码为：admin，登陆成功后用jsp:forward跳转到student.jsp页，输出目前有多少人登陆服务器页面。提醒：application应用。 3)来宾账户:用户名为：guest,密码为：guest，登陆成功后输出“我来逛一圈，马上走！”。用超级链接跳转到客户端页。</p>
+<hr>
+<p>MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写，一种软件设计典范，用于组织代码用一种业务逻辑和数据显示分离的方法。 哎呀，这些对我这个新手只能百度吧。 闲话少说了，下面开始手把手记录一下如何搭建MVC框架，作为例子，展示的是一个最（超级）简单的登录流程。</p>
+<ul>
+<li>  第一步：创建项目</li>
+</ul>
+<p>创建项目的工具我推荐MyEclipse，毕竟MyEclipse可以加载强大的插件,缺点就是吃资源-&gt;创建项目完毕之后，我们可以立刻启动项目。 <img src="http://qn.199604.com/ser1.jpg"> 启动项目完毕之后，MyEclipse自带的浏览器会向我们展示这么一个简单到不能再简单的页面 <img src="http://qn.199604.com/ser2.jpg"> 看到项目的文件结构，不难在WebRoot文件夹下找到名为index.jsp这一文件。浏览器所展示的页面，就是此文件经过处理过后的结果。 点开之后，修改<body></body>之间的内容，例如改成This is My MVC project.。重新启动项目后，告诉我你看到了什么。 好了，解决完页面来源问题之后，接下来就是解答为什么会展示这么一个页面的问题了。我们点WebRoot文件夹节点，再点击WEB-INF文件夹节点，找到web.xml文件并且双击打开，然后看看里面的内容</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<p><web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee   http://java.sun.com/xml/ns/javaee/web-app\_2\_5.xsd"></p>
+ <welcome-file-list>
+  <welcome-file>index.jsp</welcome-file>
+ </welcome-file-list>
+
+<p>看到第7行的代码中的index.jsp，是不是觉得似曾相识呢？没错，它就是我们刚才一直在讨论的那个页面。这里设置的就是项目启动后浏览器展示的第一个页面，以后我们可以试着再WebRoot目录下添加一个HTML文件或JSP文件，然后将这里的index.jsp改成所添加的文件名，重新启动项目，你就会发现哪里就改成你的默认首页页面。web.xml文件，用处还不止一点，因为我自己也不怎么懂！哈哈哈 前面已经创建完项目了，那么下面一个步骤就是逐一新建在MVC框架中负责V（视图）、C（控制器）、M（模型）的对应文件。</p>
+<ul>
+<li>  第二步：新建负责V（视图）的JSP文件</li>
+</ul>
+<p>在文件夹Web-Root下新建名为login.jsp的JSP文件，代码如下：</p>
+<p>&lt;%@ page language=”java” import=”java.util.*“ pageEncoding=”UTF-8” errorPage=”404.jsp”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    <title>统一身份认证平台</title>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<link href="login.css" type="text/css" rel="stylesheet">
+<script type="text/javascript">
+function checkLoginForm() {
+var username = document.getElementById("username");
+    var password = document.getElementById("password");
+    if(username.value == ""  password.value == "") {
+        alert("用户名或密码不能为空");
+        return false;
+    }
+}
+
+<p> function toUpperCase(obj)<br> {<br> obj.value = obj.value.toLowerCase();<br> }<br>function resetLogin(){<br>var username = document.getElementById(“username”);<br>    var password = document.getElementById(“password”);<br>    if(username.value!=null  username.value!=””) {<br>        username.value=””;<br>    }<br>    if(password.value!=null  password.value!=””) {<br>        password.value=””;<br>    }<br>}<br></script><br>  </head></p>
+<body>
+<div id="pagebody">
+<div id="loginbox">
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+<tbody>
+<tr>
+<td><img src="imgs/login-top.gif" width="262" height="34"></td>
+</tr>
+<tr>
+<td>
+<form id="fm1" name="fm1" action="MyServlet/checkLogin" method="post" onsubmit="return checkLoginForm()">
+<div class="box" id="login">
+<table border="0" cellspacing="0" cellpadding="0" width="92%" align="center">
+<tbody>
+<tr>
+<td colspan="2">&nbsp; </td>
+</tr>
+<tr>
+<td align="right">用户名：</td>
+<td>
+<input id="username" name="username" class="username" type="text" placeholder="请输入你的账号" size="25" onkeyup="toUpperCase(this)" />
+</td>
+</tr>
+<tr>
+<td colspan="2">&nbsp; </td>
+</tr>
+<tr>
+<td align="right">密&nbsp;&nbsp;码：</td>
+<td>
+<input id="password" name="password" class="password" type="password" placeholder="请输入你的密码" size="25" onkeyup="toUpperCase(this)" />
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<table border="0" cellspacing="6" cellpadding="5" width="100%">
+<tbody>
+<tr>
+<td align="right"><input alt="\[按钮\]" src="imgs/login-buttom.gif" type="image" name="imageField" /></td>
+<td>
+<a href="login.jsp"><img border="0" src="imgs/login-button2.gif" width="93" height="30" onclick="resetLogin()"></a>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+
+<tr>
+<td height="25" valign="bottom" colspan="2" align="left" style="padding-left:30px;"><a target="\_blank" href="LoginFailed.jsp">
+<font color="#ff0000"><strong>疑难问题解答</strong></font>
+</a>&nbsp; &nbsp; <a target="\_blank" href="LoginFailed.jsp">忘记密码？</a>
+<br>
+<a target="\_blank" href="LoginFailed.jsp">关于身份认证</a>
+</td>
+</tr>
+<tr>
+<td colspan="2"><!--  <div align="center"><img border="0" src="imgs/line.gif" width="227" height="2"></div>\*/-->
+<div class="box-1"></div>
+</td>
+</tr>
+<tr>
+<td colspan="2"  class="xx"><img border="0" src="imgs/quan.gif" width="18" height="15">河源职业技术学院信息中心</td>
+</tr>
+</tbody>
+</table>
+</div>
+</form>
+</td>
+</tr>
+<tr>
+<td><img src="imgs/login-foot.gif" width="262" height="10"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="info">
+<ul>
+<li>这是校园的内部门户站点。您可以登录校园信息服务综合平台，通过同一个账户名/密码。
+<font color="#ff0000">学生帐号为学号，初始密码为身份证号后六位或888888；教工帐号为新六位工号，初始密码为身份证号后六位。如果您的身份证号最后一位是字母，请尝试用大写的字母登录（具体情况以人事档案中大小写为准）。
+</font>
+访问校园网的各种网络应用系统和信息资源。 
+</li>
+<li>统一身份认证是当用户进入信息门户系统时对用户的统一认证，教职工和学生只用一个帐号，登录一次门户，就可以进入所有有权限访问的应用系统，不必重复登录。
+</li>
+<li>如有问题请联系：3800078</li>
+<li>网络报障电话：3800202</li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+<p>提交的表单，action为”MyServlet/checkLogin”，发出请求是post,具体请看代码 下面是login.css代码：</p>
+<p>@charset “utf-8”;</p>
+<p>body {<br>font:12px Tahoma;<br>margin:0px;<br>background:#eaeaea;<br>}<br>a:link,a:visited {<br>font-size:12px;<br>text-decoration:none;<br>color:#000;<br>}<br>.xx{<br>font-size:12px;<br>padding-left: 10px;<br>}<br>a:hover{<br>color: #3399cc;<br>text-decoration: underline;<br>}</p>
+<p>.en{<br>font-family:Verdana;<br>font-size:10px;<br>}</p>
+<p>a.yellowlink:link,a.yellowlink:visited,.yellow {<br>color: #ff6600;<br>}<br>a.yellowlink:hover{<br>color: #3399cc;<br>text-decoration: underline;<br>}<br>.username,.password{<br>width:176px;<br>font-size:14px;<br>height:20px;<br>line-height: 20px;<br>}<br>.input{<br>border: 1px solid #cccccc;<br>height: 18px;<br>padding: 3px 2px 0px 2px;<br>font: 12px Verdana;<br>}</p>
+<p>#pagebody {<br>width:1024px;<br>height: 550px;<br>   margin:0px auto;<br>background: url(imgs/bg.jpg) top no-repeat;<br>background-color: #fff;<br>}</p>
+<p>#loginbox {<br>position: relative;<br>overflow:hidden;<br>float:left;<br>clear:left;<br>top:265px;<br>left: 60px;<br>width:262px;<br>background: url(../imgs/login-bg.gif) repeat-y;<br>border:10px solid #f0ffff;<br>}<br>.box-1{<br>border:1px solid #f0ffff;<br>padding-top: 10px;<br>}</p>
+<p>#info {<br>position: relative;<br>right:80px;<br>top: 245px;<br> width:560px;<br> float:right;<br> overflow:hidden;<br> padding-top:28px;<br> clear:right;</p>
+<p>}</p>
+<p>#info ul {<br>margin: 5px 5px 10px 20px;<br>list-style:url(../imgs/icon.gif)  disc;<br>}</p>
+<p>#info  ul li{<br>font:14px/22px sans-serif;<br>padding: 2px;<br>list-style-image:url(../imgs/star.png);<br>}</p>
+<p>#Footer {<br>   margin:0px auto;<br>display: block;<br>width: 1024px;<br>height:80px;<br>background: #ffffff url(../imgs/footer.jpg)  repeat-x;<br>background-color: #fff;<br>color: #666;<br>}<br>#footer tr td {<br>background:#FFFFFF;<br>}</p>
+<p>这个文件的文件名login.jsp。（建议初学者做完这个步骤之后先运行一遍项目，看看效果如何，再看看有没有出错的地方） 如果运行的效果如下图，那应该就没什么问题了。 <img src="http://qn.199604.com/ser3.jpg"> 所谓的V（视图），通俗地来讲，就是用户所看到的内容。具体到这个Java web项目，就是用户所看到的页面。</p>
+<ul>
+<li>  第三步：新建负责C（控制器）的Servlet</li>
+</ul>
+<p>首先，要在src目录下新建一个包，包名为MyServlet然后，再在该包下新建一个servlet文件，名为checkLogin，代码如下：</p>
+<p>package MyServlet;</p>
+<p>import java.io.IOException;<br>import java.io.PrintWriter;</p>
+<p>import javax.servlet.ServletException;<br>import javax.servlet.http.HttpServlet;<br>import javax.servlet.http.HttpServletRequest;<br>import javax.servlet.http.HttpServletResponse;<br>import javax.servlet.http.HttpSession;</p>
+<p>import Uers.user;</p>
+<p>public class checkLogin extends HttpServlet {</p>
+<p>public checkLogin(){<br>super();<br>}</p>
+<p>/**<br> * Destruction of the servlet. <br><br> */<br>public void destroy() {<br>super.destroy(); // Just puts “destroy” string in log<br>// Put your code here<br>}</p>
+<p>public void doGet(HttpServletRequest request, HttpServletResponse response)<br>throws ServletException, IOException {<br>doPost(request,response);<br>}</p>
+<p>/**<br> * The doPost method of the servlet. <br><br> *<br> * This method is called when a form has its tag value method equals to post.<br> *<br> * @param request the request send by the client to the server<br> * @param response the response send by the server to the client<br> * @throws ServletException if an error occurred<br> * @throws IOException if an error occurred<br> */<br>public void doPost(HttpServletRequest request, HttpServletResponse response)<br>throws ServletException, IOException {<br>boolean s=false;<br>boolean a=false;<br>boolean g=false;<br>request.setCharacterEncoding(“utf-8”);<br>user user = new user();<br>String username=request.getParameter(“username”);<br>String password=request.getParameter(“password”);</p>
+<p>s=user.student(username, password);//使用模型对账号和密码进行验证，返回一个boolean类型的对象<br>a=user.admin(username, password);<br>g=user.guest(username, password);</p>
+<p>if(s){  //如果验证结果为真，跳转至登录成功页面<br>            response.sendRedirect(“../student.jsp”);<br>            HttpSession session = request.getSession();<br>            session.setAttribute(“username”,request.getParameter(“username”));<br>            session.setAttribute(“password”,request.getParameter(“password”));<br>     }else if(a){  //如果验证结果为真，跳转至登录成功页面<br>            response.sendRedirect(“../admin.jsp”);<br>            HttpSession session = request.getSession();<br>            session.setAttribute(“username”,request.getParameter(“username”));<br>     }else if(g){  //如果验证结果为真，跳转至登录成功页面<br>            response.sendRedirect(“../guest.jsp”);<br>     }else{<br>    // response.sendRedirect(“../LoginFailed.jsp”);<br>     response.sendRedirect(“../404.jsp”);<br>      }</p>
+<p>}</p>
+<p>/**<br> * Initialization of the servlet. <br><br> *<br> * @throws ServletException if an error occurs<br> */<br>public void init() throws ServletException {<br>// Put your code here<br>}</p>
+<p>}</p>
+<p>控制器(C）的作用，就是对流程的控制，接收视图传来的参数，交由模型进行处理，再根据处理的结果决定下一步的操作。具体到本项目，servlet接收jsp传来的参数username和password，交由user处理，根据返回的boolean结果跳转到登录成功（失败）的页面。</p>
+<ul>
+<li>  第四步：修改web.xml文件，注册servlet并且建立action与servlet之间的映射。</li>
+</ul>
+<p>前面说到，MyServlet.checkLogin会处理提交的请求，那么，为什么checkLogin会接收到这个请求呢？因为，我事先修改了web.xml文件，在里面添加了相应的代码。web.xml的完整代码如下：</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<p><web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee   http://java.sun.com/xml/ns/javaee/web-app\_2\_5.xsd"><br> <servlet><br>  <description>This is the description of my J2EE component</description><br>  <display-name>This is the display name of my J2EE component</display-name><br>  <servlet-name>login</servlet-name><br>  <servlet-class>MyServlet.login</servlet-class><br> </servlet><br>  <servlet><br>    <description>This is the description of my J2EE component</description><br>    <display-name>This is the display name of my J2EE component</display-name><br>    <servlet-name>checkLogin</servlet-name><br>    <servlet-class>MyServlet.checkLogin</servlet-class><br>  </servlet></p>
+ <servlet-mapping>
+  <servlet-name>login</servlet-name>
+  <url-pattern>/MyServlet/login</url-pattern>
+ </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>checkLogin</servlet-name>
+    <url-pattern>/MyServlet/checkLogin</url-pattern>
+  </servlet-mapping>
+ <welcome-file-list>
+  <welcome-file>login.jsp</welcome-file>
+ </welcome-file-list>
+ <login-config>
+  <auth-method>BASIC</auth-method>
+ </login-config>
+</web-app>
+
+<p>看到关于action的那一行XML代码，是否想到了什么呢？没错，就是jsp表单中所定义的action。试着修改，看看会有什么效果？</p>
+<ul>
+<li>  第五步：新建M（模型）的user文件</li>
+</ul>
+<p>首先，在src文件下新建包，包名为Uers。然后在该包下新建class文件，名为user。 为了让读者，尤其是初学者更快地理解MVC，而不是将精力耗费在理解user以及数据库操作上面，我将user进行了尽可能的简化。代码如下：</p>
+<p>package Uers;</p>
+<p>public class user {<br>public boolean student(String username,String password){<br>if(username.equals(“郭良俊”)&amp;&amp;password.equals(“2015122297”)){//判断用户名以及密码是否与设定相符<br>return true;<br>}else {<br> return false;<br>}<br>}</p>
+<p>public boolean admin(String username,String password){<br>if(username.equals(“admin”)&amp;&amp;password.equals(“admin”)){//判断用户名以及密码是否与设定相符<br>return true;<br>}else {<br> return false;<br>}<br>}</p>
+<p>public boolean guest(String username,String password){<br>if(username.equals(“guest”)&amp;&amp;password.equals(“guest”)){//判断用户名以及密码是否与设定相符<br>return true;<br>}else {<br> return false;<br>}<br>}<br>}</p>
+<ul>
+<li>  第六步：新建V（视图）中的另外几个JSP文件</li>
+</ul>
+<p>代码如下：</p>
+<p>&lt;%@ page language=”java” import=”java.util.*“ pageEncoding=”UTF-8” errorPage=”404.jsp”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;admin.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+    <!-- JSP声明 -->  
+  <%! int i;  
+  %>  
+  <!-- 将i值自加后放入application的变量内 -->  
+  <%application.setAttribute("counter",String.valueOf(++i));%>   
+  <%--String username = (String)session.getAttribute("username"); --%>
+  <%-- <%=session.getAttribute("username") %>欢迎回来！</p>--%>
+  <p>利用EL表达式：${sessionScope.username}欢迎回来！</p>
+  <p>目前有<%=application.getAttribute("counter") %>人登陆服务器</p>
+  <jsp:forward page="student.jsp" />
+  </body>
+</html>
+
+<p>&lt;%@ page language=”java” import=”java.util.*“ pageEncoding=”UTF-8” errorPage=”404.jsp”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;guest.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+   <h2>我来逛一圈，马上走！</h2>
+   <a href="login.jsp">点击回到首页</a>
+  </body>
+</html>
+
+<p>&lt;%@ page language=”java” import=”java.util.*“ pageEncoding=”UTF-8” errorPage=”404.jsp”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;LoginFailed.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+    <h2>登录失败！请确认账号密码</h2>
+    <p>学生用户:用户名为：本人姓名,密码为：本人学号</p>
+    <p>管理员用户:用户名为：admin,密码为：admin</p>
+    <p>来宾账户:用户名为：guest,密码为：guest</p>
+    <a href="login.jsp">点击回到首页</a>
+  </body>
+</html>
+
+<p>&lt;%@ page language=”java” import=”java.util.*“ pageEncoding=”UTF-8” errorPage=”404.jsp”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;My JSP &#39;student.jsp&#39; starting page&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+
+  </head>
+  
+  <body>
+    <%
+   String username =(String)session.getAttribute("username");
+   String password =(String)session.getAttribute("password");
+     %>
+     <%-- 下面是stundent的任务--%>
+<p>我叫：<%=username %></p>
+<p>我的学号：<%=password %></p>
+<%-- 下面是admin的任务--%>
+ <%=session.getAttribute("username") %>欢迎回来！</p>
+<p>利用EL表达式：${sessionScope.username}欢迎回来！</p>
+<p>目前有<%=application.getAttribute("counter") %>人登陆服务器</p>
+<p>利用EL表达式：目前有${applicationScope.counter} 人登陆服务器</p>
+<a href="login.jsp">首页</a>
+  </body>
+</html>
+
+<p>&lt;%@ page language=”java” import=”java.util.*“ pageEncoding=”UTF-8” isErrorPage=”true”%&gt;<br>&lt;%<br>String path = request.getContextPath();<br>String basePath = request.getScheme()+”://“+request.getServerName()+”:”+request.getServerPort()+path+”/“;<br>%&gt;</p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+<pre><code>&lt;title&gt;这不是404页面&lt;/title&gt;
+</code></pre>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">    
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<link href="css/style.css" type="text/css" rel="stylesheet">
+<script type="text/javascript">
+var num=30;
+function redirect(){
+num--;
+document.getElementById("num").innerHTML=num;
+if(num<0){
+document.getElementById("num").innerHTML=0;
+//location.href="http://199604.com";
+document.location="login.jsp";
+}
+}
+setInterval("redirect()", 1000);
+</script>
+  </head>
+  
+  <body>
+    <div class="whole">
+<img src="imgs/back.jpg" />
+    <div class="mask"></div>
+</div>
+<div class="b">
+<p>
+登录失败！<br />
+如有疑问请咨询管理员<br />
+I<br />
+v<br />
+我一直问我自己我以后能做什么。<br />
+事实上我根本不需要，我只需要静静等待着。<br />
+因为，生活，一半是回忆、一半时继续。<br />
+
+<pre><code>        &lt;span id=&quot;num&quot;&gt;&lt;/span&gt;秒后自动跳转到主页
+</code></pre>
+</p>
+<a class="new" target="_blank" rel="noopener" href="http://199604.com">Go to 记忆角落</a>
+      <a class="old" href="login.jsp">首页</a>
+</div>
+  </body>
+</html>
+
+<p> </p>
+<ul>
+<li>  第七步：跑项目，看效果</li>
+</ul>
+<p>（1）输入账号：admin，密码：admin 将会跳转到页面如下： <img src="http://qn.199604.com/ser4.jpg"> （2）输入错误的账号或错误的密码，将会跳转到页面如下： <img src="http://qn.199604.com/ser5.jpg"> 其他的功能你可以去尝试！ 下面是整个MVC的代码还有素材 <a target="_blank" rel="noopener" href="http://qn.199604.com/MyProject.zip">点击下载</a></p>
+<hr>
+<p>这是小菜鸟半小时的作品，就是一些效果那些老师没有要求所以我就简单的接收数据就OK了。这个MVC是无数据库版的，嗯尽情的喷我挑转页面没有CSS和HTML且都很垃圾！其实我真的挺垃圾的!好了我现在就洗洗睡了！晚安了我的基友们!</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/166/" title="MVC框架——基于java web简单开发">http://erbi.me/166/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/javaweb/" rel="tag"># javaweb</a>
+              <a href="/tags/jsp/" rel="tag"># jsp</a>
+              <a href="/tags/MVC/" rel="tag"># MVC</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/137/" rel="prev" title="来一碗毒鸡汤">
+                  <i class="fa fa-chevron-left"></i> 来一碗毒鸡汤
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/174/" rel="next" title="Sun Nov 20 2016 08:00:00 GMT+0800 (中国标准时间)">
+                  Sun Nov 20 2016 08:00:00 GMT+0800 (中国标准时间) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

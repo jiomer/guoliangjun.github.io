@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="screen是什么?Screen是一个全屏窗口管理器，它可以在多个进程之间多路复用一个物理终端。Screen中有会话的概念，用户可以在一个会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telent&#x2F;SSH连接窗口那样。 通俗的讲，screen命令用于新建一个或多个“命令行窗口”，在新建的这些“窗口”中，可以执行命令，并且这些“窗口”都是独立并行的。 那么怎么使用这逼呢">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux screen命令">
+<meta property="og:url" content="http://erbi.me/1478/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="screen是什么?Screen是一个全屏窗口管理器，它可以在多个进程之间多路复用一个物理终端。Screen中有会话的概念，用户可以在一个会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telent&#x2F;SSH连接窗口那样。 通俗的讲，screen命令用于新建一个或多个“命令行窗口”，在新建的这些“窗口”中，可以执行命令，并且这些“窗口”都是独立并行的。 那么怎么使用这逼呢">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-17T03:24:43.000Z">
+<meta property="article:modified_time" content="2021-06-10T06:36:54.291Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="screen">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/1478/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1478&#x2F;&quot;,&quot;path&quot;:&quot;1478&#x2F;&quot;,&quot;title&quot;:&quot;Linux screen命令&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Linux screen命令 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#screen%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">screen是什么?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux%E5%AE%89%E8%A3%85screen"><span class="nav-number">2.</span> <span class="nav-text">linux安装screen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%9B%E5%BB%BA%E4%BC%9A%E8%AF%9D"><span class="nav-number">3.</span> <span class="nav-text">一、创建会话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%A6%BB%E5%BC%80%E4%BC%9A%E8%AF%9D"><span class="nav-number">4.</span> <span class="nav-text">二、离开会话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%81%A2%E5%A4%8D%E5%88%9B%E5%BB%BA%E7%9A%84%E4%BC%9A%E8%AF%9D"><span class="nav-number">5.</span> <span class="nav-text">三、恢复创建的会话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9F%A5%E7%9C%8B%E5%B7%B2%E5%88%9B%E5%BB%BA%E7%9A%84%E4%BC%9A%E8%AF%9D"><span class="nav-number">6.</span> <span class="nav-text">四、查看已创建的会话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%80%80%E5%87%BAscreen"><span class="nav-number">7.</span> <span class="nav-text">五、退出screen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">六、其他命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%83%E3%80%81screen%E5%8F%82%E6%95%B0"><span class="nav-number">9.</span> <span class="nav-text">七、screen参数</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1478/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux screen命令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-17 11:24:43" itemprop="dateCreated datePublished" datetime="2020-04-17T11:24:43+08:00">2020-04-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 14:36:54" itemprop="dateModified" datetime="2021-06-10T14:36:54+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">linux总结</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="screen是什么"><a href="#screen是什么" class="headerlink" title="screen是什么?"></a>screen是什么?</h4><p>Screen是一个全屏窗口管理器，它可以在多个进程之间多路复用一个物理终端。Screen中有会话的概念，用户可以在一个会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telent/SSH连接窗口那样。</p>
+<p>通俗的讲，screen命令用于新建一个或多个“命令行窗口”，在新建的这些“窗口”中，可以执行命令，并且这些“窗口”都是独立并行的。</p>
+<p>那么怎么使用这逼呢?</p>
+<h4 id="linux安装screen"><a href="#linux安装screen" class="headerlink" title="linux安装screen"></a>linux安装screen</h4><p>1.yum install -y screen</p>
+<p>2.源码安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">https://ftp.gnu.org/gnu/screen/下载gz包到本地，解压至/usr/local下</span><br><span class="line">cd /usr/local/screen</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">如果提示安装 etc/etcscreenrc ，需要在安装</span><br><span class="line">install -m 644 etc/etcscreenrc /etc/screenrc</span><br><span class="line">然后查看是否安装成功</span><br><span class="line">which screen 会显示安装成功</span><br><span class="line">/bin/screen</span><br></pre></td></tr></table></figure>
+
+<p>3.rpm -ivh screen-4.0.3-19.el6.x86_64.rpm</p>
+<h4 id="一、创建会话"><a href="#一、创建会话" class="headerlink" title="一、创建会话"></a>一、创建会话</h4><p>最简单的就是直接输入screen然后回车，一个新的会话就创建完成了。</p>
+<p>但如果有多个会话就无法很快地根据窗口名称进行切换，很尴尬的，所以建议用:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">screen -S name   创建screen</span><br><span class="line"></span><br><span class="line">-----demo------</span><br><span class="line">screen -S myScreen</span><br></pre></td></tr></table></figure>
+
+<p>上面命令就是新创建一个名称为myScreen的会话，创建完成后就可以在该会话窗口输入其他命令。</p>
+<h4 id="二、离开会话"><a href="#二、离开会话" class="headerlink" title="二、离开会话"></a>二、离开会话</h4><p>ctrl+a+d:按住键盘上的ctrl，然后依次按a和d,这时候就又回到主会话了（即离开当前的screen会话）</p>
+<h4 id="三、恢复创建的会话"><a href="#三、恢复创建的会话" class="headerlink" title="三、恢复创建的会话"></a>三、恢复创建的会话</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">screen -r “id”</span><br><span class="line"></span><br><span class="line">-----demo-------</span><br><span class="line">screen -r myScreen</span><br></pre></td></tr></table></figure>
+
+<p>这个命令的意思就是恢复名称为myScreen的会话,但如果你只有一个会话，直接输入screen -r 即可</p>
+<h4 id="四、查看已创建的会话"><a href="#四、查看已创建的会话" class="headerlink" title="四、查看已创建的会话"></a>四、查看已创建的会话</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">screen -list</span><br><span class="line">或者</span><br><span class="line">screen -ls</span><br></pre></td></tr></table></figure>
+
+<p>上面的命令意思就是可以查看本机已经创建的会话，可以看到会话的名称和会话ID，恢复的时候可以使用ID代替名称。</p>
+<p>当恢复会话是出现：There is no screen to be resumed matching ****，我们可强制进入，命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">screen -d id</span><br><span class="line">----demo-----</span><br><span class="line">screen -D -RR 13366</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="五、退出screen"><a href="#五、退出screen" class="headerlink" title="五、退出screen"></a>五、退出screen</h4><p>使用screen会耗费一定的系统资源，所以当screen中的命令执行完毕之后，直接输入命令：exit</p>
+<h4 id="六、其他命令"><a href="#六、其他命令" class="headerlink" title="六、其他命令"></a>六、其他命令</h4><p>杀掉一个screen(退出detach)：screen -X -S 24322 quit</p>
+<p>执行之后 再次 screen -ls 已经不存在 24322的 screen窗口</p>
+<h4 id="七、screen参数"><a href="#七、screen参数" class="headerlink" title="七、screen参数"></a>七、screen参数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">screen参数</span><br><span class="line">　-A 将所有的视窗都调整为目前终端机的大小。</span><br><span class="line">　　-d&lt;作业名称&gt; 将指定的screen作业离线。</span><br><span class="line">　　-h&lt;行数&gt; 指定视窗的缓冲区行数。</span><br><span class="line">　　-m 即使目前已在作业中的screen作业，仍强制建立新的screen作业。</span><br><span class="line">　　-r&lt;作业名称&gt; 恢复离线的screen作业。</span><br><span class="line">　　-R 先试图恢复离线的作业。若找不到离线的作业，即建立新的screen作业。</span><br><span class="line">　　-s 指定建立新视窗时，所要执行的shell。</span><br><span class="line">　　-S&lt;作业名称&gt; 指定screen作业的名称。</span><br><span class="line">　　-v 显示版本信息。</span><br><span class="line">　　-x 恢复之前离线的screen作业。</span><br><span class="line">　　-ls或--list 显示目前所有的screen作业。</span><br><span class="line">　　-wipe 检查目前所有的screen作业，并删除已经无法使用的screen作业。</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1478/" title="Linux screen命令">http://erbi.me/1478/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/screen/" rel="tag"># screen</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1472/" rel="prev" title="IntelliJ IDEA文件全部红色的解决办法">
+                  <i class="fa fa-chevron-left"></i> IntelliJ IDEA文件全部红色的解决办法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1485/" rel="next" title="centos下使用autossh命令">
+                  centos下使用autossh命令 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

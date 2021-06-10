@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="下载文档在文章末，直接复制上来实在太难看了…算了睡觉了一些搭建的手札罢了  1. *服务器环境配置*所有配置均使用****root****用户操作完成 1.1. *资源准备*三台服务器，操作系统为：*CentOS release 6.8* IP为别为： 10.0.109.99 10.0.109.100 10.0.109.101">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tez-On-Hive环境搭建手札">
+<meta property="og:url" content="http://erbi.me/1164/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="下载文档在文章末，直接复制上来实在太难看了…算了睡觉了一些搭建的手札罢了  1. *服务器环境配置*所有配置均使用****root****用户操作完成 1.1. *资源准备*三台服务器，操作系统为：*CentOS release 6.8* IP为别为： 10.0.109.99 10.0.109.100 10.0.109.101">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/img1-1024x410.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/img3-1024x369.png">
+<meta property="og:image" content="http://qn.199604.com/typoraImg/img4-1024x206.png">
+<meta property="article:published_time" content="2019-07-05T05:04:49.000Z">
+<meta property="article:modified_time" content="2021-06-10T05:55:50.946Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="郭良俊,郭良俊只狗,郭小俊,小俊,狗俊,小俊的博客,jiomer,记忆,角落,记忆角落,成长记忆,生活,回忆">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qn.199604.com/typoraImg/img1-1024x410.png">
+
+
+<link rel="canonical" href="http://erbi.me/1164/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1164&#x2F;&quot;,&quot;path&quot;:&quot;1164&#x2F;&quot;,&quot;title&quot;:&quot;Tez-On-Hive环境搭建手札&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Tez-On-Hive环境搭建手札 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">1. *服务器环境配置*</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E8%B5%84%E6%BA%90%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. *资源准备*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. *修改主机名*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%AE%89%E8%A3%85JDK"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. *安装JDK*</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-%E5%8D%B8%E8%BD%BDopenJDK"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1. *卸载openJDK*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-%E5%AE%89%E8%A3%85oracle-JDK"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2. *安装oracle JDK*</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E9%85%8D%E7%BD%AE%E6%97%A0%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86"><span class="nav-number">1.4.</span> <span class="nav-text">1.4. *配置无密码登陆*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">1.5.</span> <span class="nav-text">1.5. *关闭防火墙*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-NTP-%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="nav-number">1.6.</span> <span class="nav-text">1.6. *NTP**时间同步*</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-H-adoop%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">2. *H**adoop安装配置*</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E8%8E%B7%E5%8F%96%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. *获取安装包*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. *设置环境变量*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. *创建目录*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. *修改配置文件*</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-%E4%BF%AE%E6%94%B9-slaves-%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. *修改**slaves**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-%E4%BF%AE%E6%94%B9-core-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. *修改**core-site.xml**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-%E4%BF%AE%E6%94%B9-hdfs-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3. *修改**hdfs-site.xml**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-4-%E4%BF%AE%E6%94%B9-mapred-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.4.</span> <span class="nav-text">2.4.4. *修改**mapred-site.xml**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-5-%E4%BF%AE%E6%94%B9-yarn-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.5.</span> <span class="nav-text">2.4.5. *修改**yarn-site.xml**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-6-%E4%BF%AE%E6%94%B9-hadoop-env-sh-%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.6.</span> <span class="nav-text">2.4.6. *修改**hadoop-env.sh**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-7-%E4%BF%AE%E6%94%B9-yarn-env-sh-%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.7.</span> <span class="nav-text">2.4.7. *修改**yarn-env.sh**文件*</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-%E5%90%AF%E5%8A%A8Hadoop"><span class="nav-number">2.5.</span> <span class="nav-text">2.5. *启动Hadoop*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-%E9%AA%8C%E8%AF%81-Hadoop"><span class="nav-number">2.6.</span> <span class="nav-text">2.6. *验证**Hadoop*</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jps59024-Jps153505-ResourceManager152951-NameNode156206-RunJar153247-SecondaryNameNode"><span class="nav-number">3.</span> <span class="nav-text">jps59024 Jps153505 ResourceManager152951 NameNode156206 RunJar153247 SecondaryNameNode</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-H-ive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">3. *H**ive安装配置*</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E8%8E%B7%E5%8F%96%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">4.1.</span> <span class="nav-text">3.1. *获取安装包*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">4.2.</span> <span class="nav-text">3.2. *设置环境变量*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%88%9B%E5%BB%BAmetastore%E5%BA%93"><span class="nav-number">4.3.</span> <span class="nav-text">3.3. *创建metastore库*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">4.4.</span> <span class="nav-text">3.4. *创建目录*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.5.</span> <span class="nav-text">3.5. *修改配置文件*</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-1-%E4%BF%AE%E6%94%B9-hive-env-sh-%E6%96%87%E4%BB%B6"><span class="nav-number">4.5.1.</span> <span class="nav-text">3.5.1. *修改**hive**-env.sh**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-2-%E4%BF%AE%E6%94%B9-hive-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">4.5.2.</span> <span class="nav-text">3.5.2. *修改**hive-site.xml**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-3-%E4%BF%AE%E6%94%B9-hive-log4j2-properties-%E6%96%87%E4%BB%B6"><span class="nav-number">4.5.3.</span> <span class="nav-text">3.5.3. *修改**hive-log4j2.properties**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-4-%E4%BF%AE%E6%94%B9-hive-exec-log4j2-properties-%E6%96%87%E4%BB%B6"><span class="nav-number">4.5.4.</span> <span class="nav-text">3.5.4. *修改**hive-exec-log4j2.properties**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-5-%E4%BF%AE%E6%94%B9-core-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">4.5.5.</span> <span class="nav-text">3.5.5. *修改**core-site.xml**文件*</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-6-%E5%90%AF%E5%8A%A8Hive"><span class="nav-number">4.6.</span> <span class="nav-text">3.6. *启动Hive*</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-1-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">4.6.1.</span> <span class="nav-text">3.6.1. *初始化*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-2-CLI%E5%90%AF%E5%8A%A8Hive"><span class="nav-number">4.6.2.</span> <span class="nav-text">3.6.2. *CLI启动Hive*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-3-%E4%BD%BF%E7%94%A8beeline"><span class="nav-number">4.6.3.</span> <span class="nav-text">3.6.3. *使用beeline*</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-T-ez%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">4. *T**ez安装配置*</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E8%8E%B7%E5%8F%96%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">5.1.</span> <span class="nav-text">4.1. *获取安装包*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E4%B8%8A%E4%BC%A0%E8%BF%90%E8%A1%8C%E5%8C%85"><span class="nav-number">5.2.</span> <span class="nav-text">4.2. *上传运行包*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">5.3.</span> <span class="nav-text">4.3. *修改配置文件*</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-1-%E6%96%B0%E5%BB%BA-tez-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">5.3.1.</span> <span class="nav-text">4.3.1. *新建**tez-site.xml**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-2-%E4%BF%AE%E6%94%B9-mapred-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">5.3.2.</span> <span class="nav-text">4.3.2. *修改**mapred-site.xml**文件*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-3-%E4%BF%AE%E6%94%B9-hadoop-env-sh-%E6%96%87%E4%BB%B6"><span class="nav-number">5.3.3.</span> <span class="nav-text">4.3.3. *修改**hadoop-env.sh**文件*</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-%E6%B5%8B%E8%AF%95Tez"><span class="nav-number">5.4.</span> <span class="nav-text">4.4. *测试Tez*</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-number">6.</span> <span class="nav-text">5. 测试用例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%A4%87%E6%B3%A8"><span class="nav-number">7.</span> <span class="nav-text">6. 备注</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1164/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Tez-On-Hive环境搭建手札
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-07-05 13:04:49" itemprop="dateCreated datePublished" datetime="2019-07-05T13:04:49+08:00">2019-07-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 13:55:50" itemprop="dateModified" datetime="2021-06-10T13:55:50+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>下载文档在文章末，直接复制上来实在太难看了…算了睡觉了一些搭建的手札罢了</p>
+<hr>
+<h1 id="1-服务器环境配置"><a href="#1-服务器环境配置" class="headerlink" title="1. *服务器环境配置*"></a><strong>1.</strong> <em><strong>*服务器环境配置*</strong></em></h1><p>所有配置均使用****root****用户操作完成</p>
+<h2 id="1-1-资源准备"><a href="#1-1-资源准备" class="headerlink" title="1.1. *资源准备*"></a><strong>1.1.</strong> <em><strong>*资源准备*</strong></em></h2><p>三台服务器，操作系统为：<em><strong>*CentOS release 6.8*</strong></em></p>
+<p>IP为别为：</p>
+<p>10.0.109.99</p>
+<p>10.0.109.100</p>
+<p>10.0.109.101</p>
+<h2 id="1-2-修改主机名"><a href="#1-2-修改主机名" class="headerlink" title="1.2. *修改主机名*"></a><strong>1.2.</strong> <em><strong>*修改主机名*</strong></em></h2><p>修改三台服务器主机名，修改****/etc/sysconfig/network****文件</p>
+<p>master节点：<em><strong>*jttda-master*</strong></em></p>
+<p>slave节点1：<em><strong>*jttda-slave*</strong></em><em><strong>*1*</strong></em></p>
+<p>slave节点2：<em><strong>*jttda-slave*</strong></em><em><strong>*2*</strong></em></p>
+<p>每台服务器都修改****/etc/hosts****文件，添加如下域名映射</p>
+<p>10.0.109.99 jttda-master10.0.109.100 jttda-slave110.0.109.101 jttda-slave2</p>
+<h2 id="1-3-安装JDK"><a href="#1-3-安装JDK" class="headerlink" title="1.3. *安装JDK*"></a><strong>1.3.</strong> <em><strong>*安装JDK*</strong></em></h2><h3 id="1-3-1-卸载openJDK"><a href="#1-3-1-卸载openJDK" class="headerlink" title="1.3.1. *卸载openJDK*"></a><strong>1.3.1.</strong> <em><strong>*卸载openJDK*</strong></em></h3><p>查看centos已安装的jdk</p>
+<p><em><strong>*rpm –qa | grep gcj*</strong></em></p>
+<p><em><strong>*rpm –qa | grep jdk*</strong></em></p>
+<p>删除查询到的openJDK相关的安装包</p>
+<p><em><strong>*rpm -e –nodeps ****</strong></em></p>
+<h3 id="1-3-2-安装oracle-JDK"><a href="#1-3-2-安装oracle-JDK" class="headerlink" title="1.3.2. *安装oracle JDK*"></a><strong>1.3.2.</strong> <em><strong>*安装oracle JDK*</strong></em></h3><p>Oracle官网下载安装包<em><strong>*jdk-*</strong></em><em><strong>*8*</strong></em><em><strong>*u*</strong></em><em><strong>*152*</strong></em><em><strong>*-linux-x*</strong></em><em><strong>*64*</strong></em><em><strong>*.tar.gz*</strong></em></p>
+<p>将安装包解压到指定目录</p>
+<p><em><strong>*tar –zxvf*</strong></em> <em><strong>*jdk-*</strong></em><em><strong>*8*</strong></em><em><strong>*u*</strong></em><em><strong>*152*</strong></em><em><strong>*-linux-x*</strong></em><em><strong>*64*</strong></em><em><strong>*.tar.gz*</strong></em> <em><strong>*–C /usr/local/*</strong></em></p>
+<p>修改<em><strong>*/etc/*</strong></em>****profile****，添加如下配置</p>
+<p>export JAVA_HOME=/usr/local/jdk1.8.0_152export PATH=$PATH:$JAVA_HOME/bin</p>
+<h2 id="1-4-配置无密码登陆"><a href="#1-4-配置无密码登陆" class="headerlink" title="1.4. *配置无密码登陆*"></a><strong>1.4.</strong> <em><strong>*配置无密码登陆*</strong></em></h2><p>在master节点上面按照如下顺序执行：</p>
+<p>****ssh-keygen****，一路回车到执行结束</p>
+<p>****ssh-copy-id root@jttda-slave1*<em><strong>，输入</strong></em>*yes****，回车</p>
+<p>****ssh-copy-id root@jttda-slave2*<em><strong>，输入</strong></em>*yes****，回车</p>
+<h2 id="1-5-关闭防火墙"><a href="#1-5-关闭防火墙" class="headerlink" title="1.5. *关闭防火墙*"></a><strong>1.5.</strong> <em><strong>*关闭防火墙*</strong></em></h2><p>关闭防火墙</p>
+<p><em><strong>*service iptables stop*</strong></em></p>
+<p>设置开机不启动</p>
+<p><em><strong>*chkconfig iptables off*</strong></em></p>
+<h2 id="1-6-NTP-时间同步"><a href="#1-6-NTP-时间同步" class="headerlink" title="1.6. *NTP**时间同步*"></a><strong>1.6.</strong> <em><strong>*NTP*</strong></em><em><strong>*时间同步*</strong></em></h2><p>设置提供ntp同步的服务器，修改各节点****/etc/ntp.conf****文件</p>
+<p>开启ntp服务</p>
+<p><em><strong>*service ntpd start*</strong></em></p>
+<p>设置开机启动</p>
+<p><em><strong>*chkconfig ntpd on*</strong></em></p>
+<p>查看ntp同步状态</p>
+<p><em><strong>*ntpstat*</strong></em></p>
+<h1 id="2-H-adoop安装配置"><a href="#2-H-adoop安装配置" class="headerlink" title="2. *H**adoop安装配置*"></a><strong>2.</strong> <em><strong>*H*</strong></em><em><strong>*adoop安装配置*</strong></em></h1><h2 id="2-1-获取安装包"><a href="#2-1-获取安装包" class="headerlink" title="2.1. *获取安装包*"></a><strong>2.1.</strong> <em><strong>*获取安装包*</strong></em></h2><p><img src="http://qn.199604.com/typoraImg/img1-1024x410.png" alt="img"></p>
+<p>如上图所示，选择所需版本，下载得到压缩包：<em><strong>*hadoop*</strong></em><em><strong>*-2.7.5.tar.gz*</strong></em></p>
+<p>将压缩包解压到选定的目录：<em><strong>*tar -zxvf hadoop-2.7.5.tar.gz -C /home/hadoop/install/*</strong></em></p>
+<h2 id="2-2-设置环境变量"><a href="#2-2-设置环境变量" class="headerlink" title="2.2. *设置环境变量*"></a><strong>2.2.</strong> <em><strong>*设置环境变量*</strong></em></h2><p>在****每个节点*<em><strong>的</strong></em>*/etc/profile****文件中添加如下内容</p>
+<p>export HADOOP_HOME=/home/hadoop/install/hadoop-2.7.5export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/nativeexport HADOOP_OPTS=”-Djava.library.path=$HADOOP_HOME/lib:$HADOOP_COMMON_LIB_NATIVE_DIR”export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</p>
+<h2 id="2-3-创建目录"><a href="#2-3-创建目录" class="headerlink" title="2.3. *创建目录*"></a><strong>2.3.</strong> <em><strong>*创建目录*</strong></em></h2><p>在每台服务器本地创建目录：</p>
+<p><em><strong>*mkdir -p /home/mmds/hadoopdata/dfs/data*</strong></em></p>
+<p><em><strong>*mkdir -p /home/mmds/hadoopdata/dfs/name*</strong></em></p>
+<p><em><strong>*mkdir -p /home/mmds/hadoopdata/tmp*</strong></em></p>
+<h2 id="2-4-修改配置文件"><a href="#2-4-修改配置文件" class="headerlink" title="2.4. *修改配置文件*"></a><strong>2.4.</strong> <em><strong>*修改配置文件*</strong></em></h2><p>进入****$HADOOP_HOME/etc/hadoop****目录</p>
+<h3 id="2-4-1-修改-slaves-文件"><a href="#2-4-1-修改-slaves-文件" class="headerlink" title="2.4.1. *修改**slaves**文件*"></a><strong>2.4.1.</strong> <em><strong>*修改*</strong></em><em><strong>*slaves*</strong></em><em><strong>*文件*</strong></em></h3><p>添加DataNode主机名列表，每个主机名一行</p>
+<p>jttda-slave1jttda-slave2</p>
+<h3 id="2-4-2-修改-core-site-xml-文件"><a href="#2-4-2-修改-core-site-xml-文件" class="headerlink" title="2.4.2. *修改**core-site.xml**文件*"></a><strong>2.4.2.</strong> <em><strong>*修改*</strong></em><em><strong>*core-site.xml*</strong></em><em><strong>*文件*</strong></em></h3><p><configuration><property><name>fs.defaultFS</name><value>hdfs://jttda-master:9000</value></property><property><name>hadoop.tmp.dir</name><value>file:/data/hadoop/tmp</value></property><property><name>io.file.buffer.size</name><value>131702</value></property></configuration></p>
+<h3 id="2-4-3-修改-hdfs-site-xml-文件"><a href="#2-4-3-修改-hdfs-site-xml-文件" class="headerlink" title="2.4.3. *修改**hdfs-site.xml**文件*"></a><strong>2.4.3.</strong> <em><strong>*修改*</strong></em><em><strong>*hdfs-site.xml*</strong></em><em><strong>*文件*</strong></em></h3><p><configuration><property><name>dfs.namenode.name.dir</name><value>file:/data/hadoop/dfs/name</value></property><property><name>dfs.datanode.data.dir</name><value>file:/data/hadoop/dfs/data</value></property><property><name>dfs.replication</name><value>2</value></property><property><name>dfs.namenode.secondary.http-address</name><value>jttda-master:9001</value></property><property><name>dfs.webhdfs.enabled</name><value>true</value></property><property><name>dfs.balance.bandwidthPerSec</name><value>10485760</value></property></configuration></p>
+<h3 id="2-4-4-修改-mapred-site-xml-文件"><a href="#2-4-4-修改-mapred-site-xml-文件" class="headerlink" title="2.4.4. *修改**mapred-site.xml**文件*"></a><strong>2.4.4.</strong> <em><strong>*修改*</strong></em><em><strong>*mapred-site.xml*</strong></em><em><strong>*文件*</strong></em></h3><p>修改模版文件名</p>
+<p><em><strong>*mv mapred-site.xml.template mapred-site.xml*</strong></em></p>
+<p><configuration><property><name>mapreduce.framework.name</name><value>yarn</value></property><property><name>mapreduce.jobhistory.address</name><value>jttda-master:10020</value></property><property><name>mapreduce.jobhistory.webapp.address</name><value>jttda-master:19888</value></property><property><name>mapreduce.map.memory.mb</name><value>2048</value></property><property><name>mapreduce.reduce.memory.mb</name><value>2048</value></property><property><name>mapreduce.map.java.opts</name><value>-Xmx1536M</value></property><property><name>mapreduce.reduce.java.opts</name><value>-Xmx1536M</value></property><property><name>mapred.tasktracker.map.tasks.maximum</name><value>8</value></property><property><name>mapred.tasktracker.reduce.tasks.maximum</name><value>12</value></property></configuration></p>
+<h3 id="2-4-5-修改-yarn-site-xml-文件"><a href="#2-4-5-修改-yarn-site-xml-文件" class="headerlink" title="2.4.5. *修改**yarn-site.xml**文件*"></a><strong>2.4.5.</strong> <em><strong>*修改*</strong></em><em><strong>*yarn-site.xml*</strong></em><em><strong>*文件*</strong></em></h3><p><configuration><property><name>yarn.resourcemanager.hostname</name><value>jttda-master</value></property><property><name>yarn.nodemanager.aux-services</name><value>mapreduce_shuffle</value></property><property><name>yarn.nodemanager.resource.memory-mb</name><value>51200</value></property><property><name>yarn.scheduler.minimum-allocation-mb</name><value>2048</value></property><property><name>yarn.scheduler.maximum-allocation-mb</name><value>10240</value></property></configuration></p>
+<h3 id="2-4-6-修改-hadoop-env-sh-文件"><a href="#2-4-6-修改-hadoop-env-sh-文件" class="headerlink" title="2.4.6. *修改**hadoop-env.sh**文件*"></a><strong>2.4.6.</strong> <em><strong>*修改*</strong></em><em><strong>*hadoop-env.sh*</strong></em><em><strong>*文件*</strong></em></h3><p>修改如下两个配置项</p>
+<p>export JAVA_HOME=/usr/local/jdk1.8.0_152export HADOOP_HEAPSIZE=2048</p>
+<h3 id="2-4-7-修改-yarn-env-sh-文件"><a href="#2-4-7-修改-yarn-env-sh-文件" class="headerlink" title="2.4.7. *修改**yarn-env.sh**文件*"></a><strong>2.4.7.</strong> <em><strong>*修改*</strong></em><em><strong>*yarn-env.sh*</strong></em><em><strong>*文件*</strong></em></h3><p>修改如下两个配置项</p>
+<p>export JAVA_HOME=/usr/local/jdk1.8.0_152export YARN_HEAPSIZE=2048</p>
+<p>配置完成：</p>
+<p><em><strong>*将*</strong></em><em><strong>*/usr/local/hadoop-2.7.5*</strong></em><em><strong>*整个目录复制到各节点机器上，放在*</strong></em><em><strong>*/usr/local/*</strong></em><em><strong>*目录下*</strong></em></p>
+<p><em><strong>*scp –r /home/hadoop/install/hadoop-2.7.5 jttda-slave50:/home/hadoop/install/hadoop-2.7.5*</strong></em></p>
+<h2 id="2-5-启动Hadoop"><a href="#2-5-启动Hadoop" class="headerlink" title="2.5. *启动Hadoop*"></a><strong>2.5.</strong> <em><strong>*启动Hadoop*</strong></em></h2><p>在jttda-master服务器上，进入$HADOOP_HOME目录</p>
+<p>格式化NameNode：<em><strong>*hdfs namenode -format*</strong></em></p>
+<p>启动NameNode和DataNode守护进程：<em><strong>*sbin/start-dfs.sh*</strong></em></p>
+<p>启动ResourceManager和NodeManager守护进程：<em><strong>*sbin/start-yarn.sh*</strong></em></p>
+<h2 id="2-6-验证-Hadoop"><a href="#2-6-验证-Hadoop" class="headerlink" title="2.6. *验证**Hadoop*"></a><strong>2.6.</strong> <em><strong>*验证*</strong></em><em><strong>*Hadoop*</strong></em></h2><p>执行****jps****命令，有如下进程，说明Hadoop启动正常</p>
+<h1 id="jps59024-Jps153505-ResourceManager152951-NameNode156206-RunJar153247-SecondaryNameNode"><a href="#jps59024-Jps153505-ResourceManager152951-NameNode156206-RunJar153247-SecondaryNameNode" class="headerlink" title="jps59024 Jps153505 ResourceManager152951 NameNode156206 RunJar153247 SecondaryNameNode"></a>jps59024 Jps153505 ResourceManager152951 NameNode156206 RunJar153247 SecondaryNameNode</h1><h1 id="3-H-ive安装配置"><a href="#3-H-ive安装配置" class="headerlink" title="3. *H**ive安装配置*"></a><strong>3.</strong> <em><strong>*H*</strong></em><em><strong>*ive安装配置*</strong></em></h1><h2 id="3-1-获取安装包"><a href="#3-1-获取安装包" class="headerlink" title="3.1. *获取安装包*"></a><strong>3.1.</strong> <em><strong>*获取安装包*</strong></em></h2><p><img src="http://qn.199604.com/typoraImg/img3-1024x369.png" alt="img"></p>
+<p>如上图所示，选择所需版本，下载得到压缩包：<em><strong>*apache-hive-2.2.0-bin.tar.gz*</strong></em></p>
+<p>将压缩包解压到选定的目录：</p>
+<p><em><strong>*tar -zxvf apache-hive-2.2.0-bin.tar.gz -C /home/hadoop/install/*</strong></em></p>
+<h2 id="3-2-设置环境变量"><a href="#3-2-设置环境变量" class="headerlink" title="3.2. *设置环境变量*"></a><strong>3.2.</strong> <em><strong>*设置环境变量*</strong></em></h2><p>在****master节点jttda-master*<em><strong>的</strong></em>*/etc/profile****文件中添加如下内容</p>
+<p>export HIVE_HOME=/usr/local/apache-hive-2.2.0-binexport PATH=$HIVE_HOME/bin:$PATH</p>
+<h2 id="3-3-创建metastore库"><a href="#3-3-创建metastore库" class="headerlink" title="3.3. *创建metastore库*"></a><strong>3.3.</strong> <em><strong>*创建metastore库*</strong></em></h2><p>使用Oracle Database 11g作为hive的metastore数据库，创建对应用户并授权</p>
+<p>CREATE USER <em><strong>*hive*</strong></em> IDENTIFIED BY <em><strong>*hive*</strong></em>;GRANT <em><strong>*SELECT_CATALOG_ROLE*</strong></em> TO <em><strong>*hive*</strong></em>;GRANT <em><strong>*CONNECT, RESOURCE*</strong></em> TO <em><strong>*hive*</strong></em>;</p>
+<p>在oracle官网下载JDBC驱动：<em><strong>*ojdbc*</strong></em>****6.jar*<em><strong>，将其放到</strong></em>*$HIVE_HOME/lib****目录下</p>
+<h2 id="3-4-创建目录"><a href="#3-4-创建目录" class="headerlink" title="3.4. *创建目录*"></a><strong>3.4.</strong> <em><strong>*创建目录*</strong></em></h2><p>在hdfs 中创建下面的目录 ，并且授权</p>
+<p>hdfs dfs -mkdir -p /user/hive/warehousehdfs dfs -mkdir -p /user/hive/tmphdfs dfs -chmod -R 777 /user/hive/warehousehdfs dfs -chmod -R 777 /user/hive/tmp</p>
+<p>创建本地目录，进入<em><strong>*$*</strong></em>****HIVE_HOME****目录</p>
+<p><em><strong>*mkdir log*</strong></em></p>
+<p><em><strong>*mkdir execlog*</strong></em></p>
+<p><em><strong>*mkdir tmp*</strong></em></p>
+<h2 id="3-5-修改配置文件"><a href="#3-5-修改配置文件" class="headerlink" title="3.5. *修改配置文件*"></a><strong>3.5.</strong> <em><strong>*修改配置文件*</strong></em></h2><p>进入****$HIVE_HOME/conf****目录，复制默认配置文件并改名</p>
+<p>cp hive-env.sh.template hive-env.shcp hive-default.xml.template hive-site.xmlcp hive-log4j2.properties.template hive-log4j2.propertiescp hive-exec-log4j2.properties.template hive-exec-log4j2.properties</p>
+<h3 id="3-5-1-修改-hive-env-sh-文件"><a href="#3-5-1-修改-hive-env-sh-文件" class="headerlink" title="3.5.1. *修改**hive**-env.sh**文件*"></a><strong>3.5.1.</strong> <em><strong>*修改*</strong></em><em><strong>*hive*</strong></em><em><strong>*-env.sh*</strong></em><em><strong>*文件*</strong></em></h3><p>修改以下配置项</p>
+<p>export JAVA_HOME=/usr/local/jdk1.8.0_152export HADOOP_HOME=/usr/local/hadoop-2.7.5export HIVE_HOME=/usr/local/apache-hive-2.2.0-binexport HIVE_CONF_DIR=/usr/local/apache-hive-2.2.0-bin/conf</p>
+<h3 id="3-5-2-修改-hive-site-xml-文件"><a href="#3-5-2-修改-hive-site-xml-文件" class="headerlink" title="3.5.2. *修改**hive-site.xml**文件*"></a><strong>3.5.2.</strong> <em><strong>*修改*</strong></em><em><strong>*hive-site.xml*</strong></em><em><strong>*文件*</strong></em></h3><p><configuration><property><name>hive.exec.scratchdir</name><value>/user/hive/tmp</value></property><property><name>hive.metastore.warehouse.dir</name><value>/user/hive/warehouse</value></property><property><name>hive.querylog.location</name><value>/usr/local/apache-hive-2.2.0-bin/tmp/${user.name}</value></property><property><name>javax.jdo.option.ConnectionURL</name><value>jdbc:oracle:thin:@10.0.109.8:1521:sjzx8</value></property><property><name>javax.jdo.option.ConnectionDriverName</name><value>oracle.jdbc.driver.OracleDriver</value></property><property><name>javax.jdo.option.ConnectionUserName</name><value>hive</value></property><property><name>javax.jdo.option.ConnectionPassword</name><value>hive</value></property></configuration></p>
+<p>并在****hive-site.xml****中</p>
+<p>所有<em><strong>*${system:java.io.tmpdir}*<em><strong>替换为</strong></em>*/usr/local/apache-hive-2.2.0-bin/tmp/*</strong></em></p>
+<p>所有<em><strong>*{system:user.name}*<em><strong>替换为</strong></em>*{user.name}*</strong></em></p>
+<h3 id="3-5-3-修改-hive-log4j2-properties-文件"><a href="#3-5-3-修改-hive-log4j2-properties-文件" class="headerlink" title="3.5.3. *修改**hive-log4j2.properties**文件*"></a><strong>3.5.3.</strong> <em><strong>*修改*</strong></em><em><strong>*hive-log4j2.properties*</strong></em><em><strong>*文件*</strong></em></h3><p>property.hive.log.dir = /usr/local/apache-hive-2.2.0-bin/log/${sys:user.name}</p>
+<h3 id="3-5-4-修改-hive-exec-log4j2-properties-文件"><a href="#3-5-4-修改-hive-exec-log4j2-properties-文件" class="headerlink" title="3.5.4. *修改**hive-exec-log4j2.properties**文件*"></a><strong>3.5.4.</strong> <em><strong>*修改*</strong></em><em><strong>*hive-exec-log4j2.properties*</strong></em><em><strong>*文件*</strong></em></h3><p>property.hive.log.dir = /usr/local/apache-hive-2.2.0-bin/execlog/${sys:user.name}</p>
+<h3 id="3-5-5-修改-core-site-xml-文件"><a href="#3-5-5-修改-core-site-xml-文件" class="headerlink" title="3.5.5. *修改**core-site.xml**文件*"></a><strong>3.5.5.</strong> <em><strong>*修改*</strong></em><em><strong>*core-site.xml*</strong></em><em><strong>*文件*</strong></em></h3><p>进入****$HADOOP_HOME/etc/hadoop****目录给beeline登录时的用户root配置权限，增加如下的配置项</p>
+<p><configuration><property><name>hadoop.proxyuser.root.groups</name><value>root</value></property><property><name>hadoop.proxyuser.root.hosts</name><value>*</value></property></configuration></p>
+<h2 id="3-6-启动Hive"><a href="#3-6-启动Hive" class="headerlink" title="3.6. *启动Hive*"></a><strong>3.6.</strong> <em><strong>*启动Hive*</strong></em></h2><h3 id="3-6-1-初始化"><a href="#3-6-1-初始化" class="headerlink" title="3.6.1. *初始化*"></a><strong>3.6.1.</strong> <em><strong>*初始化*</strong></em></h3><p><em><strong>*schematool -dbType*</strong></em> <em><strong>*mysql*</strong></em> <em><strong>*-initSchema*</strong></em></p>
+<h3 id="3-6-2-CLI启动Hive"><a href="#3-6-2-CLI启动Hive" class="headerlink" title="3.6.2. *CLI启动Hive*"></a><strong>3.6.2.</strong> <em><strong>*CLI启动Hive*</strong></em></h3><p>在命令行输入命令：<em><strong>*hive*</strong></em></p>
+<h3 id="3-6-3-使用beeline"><a href="#3-6-3-使用beeline" class="headerlink" title="3.6.3. *使用beeline*"></a><strong>3.6.3.</strong> <em><strong>*使用beeline*</strong></em></h3><p>启动hiveserver2：<em><strong>*nohup*</strong></em> <em><strong>*hive –service hiveserver2*</strong></em> &gt;/dev/null 2&gt;&amp;1 <em><strong>*&amp;*</strong></em></p>
+<p>查看hiveserver2启动状态：<em><strong>*netstat -nptl | grep 10000*</strong></em></p>
+<p>启动beeline</p>
+<p>在命令行输入命令：<em><strong>*beeline*</strong></em></p>
+<p>连接Hive：<em><strong>*!connect jdbc:hive2://localhost:10000 root root*</strong></em></p>
+<h1 id="4-T-ez安装配置"><a href="#4-T-ez安装配置" class="headerlink" title="4. *T**ez安装配置*"></a><strong>4.</strong> <em><strong>*T*</strong></em><em><strong>*ez安装配置*</strong></em></h1><h2 id="4-1-获取安装包"><a href="#4-1-获取安装包" class="headerlink" title="4.1. *获取安装包*"></a><strong>4.1.</strong> <em><strong>*获取安装包*</strong></em></h2><p><img src="http://qn.199604.com/typoraImg/img4-1024x206.png" alt="img"></p>
+<p>如上图所示，选择所需版本，下载得到压缩包：apache-tez-0.9.0-bin.tar.gz</p>
+<p>将压缩包解压到选定的目录：</p>
+<p><em><strong>*tar –zxvf apache- tez-0.9.0-bin.tar.gz –C /usr/local/*</strong></em></p>
+<h2 id="4-2-上传运行包"><a href="#4-2-上传运行包" class="headerlink" title="4.2. *上传运行包*"></a><strong>4.2.</strong> <em><strong>*上传运行包*</strong></em></h2><p>在****apache-tez-0.9.0-bin/share*<em><strong>下有个</strong></em>*tez.tar.gz****压缩包，把它上传到hdfs上面</p>
+<p><em><strong>*hadoop fs -mkdir -p /user/tez*</strong></em></p>
+<p><em><strong>*hadoop fs -put tez.tar.gz /user/tez*</strong></em></p>
+<h2 id="4-3-修改配置文件"><a href="#4-3-修改配置文件" class="headerlink" title="4.3. *修改配置文件*"></a><strong>4.3.</strong> <em><strong>*修改配置文件*</strong></em></h2><p>进入****$HADOOP_HOME/etc/hadoop****目录</p>
+<h3 id="4-3-1-新建-tez-site-xml-文件"><a href="#4-3-1-新建-tez-site-xml-文件" class="headerlink" title="4.3.1. *新建**tez-site.xml**文件*"></a><strong>4.3.1.</strong> <em><strong>*新建*</strong></em><em><strong>*tez-site.xml*</strong></em><em><strong>*文件*</strong></em></h3><p><configuration><property><name>tez.lib.uris</name><value>/user/tez/tez.tar.gz</value></property></configuration></p>
+<h3 id="4-3-2-修改-mapred-site-xml-文件"><a href="#4-3-2-修改-mapred-site-xml-文件" class="headerlink" title="4.3.2. *修改**mapred-site.xml**文件*"></a><strong>4.3.2.</strong> <em><strong>*修改*</strong></em><em><strong>*mapred-site.xml*</strong></em><em><strong>*文件*</strong></em></h3><p><configuration><property><name>mapreduce.framework.name</name><value>yarn-tez</value></property>&lt;/configuration</p>
+<h3 id="4-3-3-修改-hadoop-env-sh-文件"><a href="#4-3-3-修改-hadoop-env-sh-文件" class="headerlink" title="4.3.3. *修改**hadoop-env.sh**文件*"></a><strong>4.3.3.</strong> <em><strong>*修改*</strong></em><em><strong>*hadoop-env.sh*</strong></em><em><strong>*文件*</strong></em></h3><p>export TEZ_HOME=/usr/local/apache-tez-0.9.0-binfor jar in <code>ls $TEZ_HOME |grep jar</code>; doexport HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$TEZ_HOME/$jardonefor jar in <code>ls $TEZ_HOME/lib</code>; doexport HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$TEZ_HOME/lib/$jardone</p>
+<h2 id="4-4-测试Tez"><a href="#4-4-测试Tez" class="headerlink" title="4.4. *测试Tez*"></a><strong>4.4.</strong> <em><strong>*测试Tez*</strong></em></h2><p>在hdfs上创建****/tinput*<em><strong>和</strong></em>*/toutput****目录</p>
+<p>准备测试文件</p>
+<p><em><strong>*echo “Hello World Hello Tez” &gt; file01*</strong></em>  </p>
+<p><em><strong>*echo “Hello World Goodbye Tez” &gt; file02*</strong></em></p>
+<p>将测试文件file01和file02上传到hdfs上的****/tinput****目录</p>
+<p><em><strong>*hdfs dfs -mkdir /tinput*</strong></em></p>
+<p><em><strong>*hdfs dfs -put file0* /tinput*</strong></em></p>
+<p>执行如下命令测试tez是否配置成功，进去****$TEZ_HOME****目录</p>
+<p><em><strong>*hadoop jar tez-examples-0.9.0.jar orderedwordcount /tinput /toutput*</strong></em></p>
+<h1 id="5-测试用例"><a href="#5-测试用例" class="headerlink" title="5. 测试用例"></a>5. 测试用例</h1><h1 id="6-备注"><a href="#6-备注" class="headerlink" title="6. 备注"></a>6. 备注</h1><p>将$HIVE_HOME/lib/log4j-slf4j-impl-2.6.2.jar和$TEZ_HOME/lib/slf4j-log4j12-1.7.10.jar删除，否则会与$HADOOP_HOME/LIB/slf4j-log4j12-1.7.10.jar重复</p>
+<hr>
+<p>算了直接弄上来太难看了，弄成了文档–&gt;</p>
+<p><a target="_blank" rel="noopener" href="http://qn.199604.com/Tez-On-Hive%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.docx"><strong>下载地址1：七牛下载</strong></a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1164/" title="Tez-On-Hive环境搭建手札">http://erbi.me/1164/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1157/" rel="prev" title="JSoup小例子">
+                  <i class="fa fa-chevron-left"></i> JSoup小例子
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1175/" rel="next" title="最近受的教训有点多...">
+                  最近受的教训有点多... <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

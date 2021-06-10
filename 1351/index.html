@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;erbi.me&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="postgreSQL之存储过程以下是自己结合postgreSQL文档手册总结整理的入门手札，如有不严谨，请到官方文档手册查看：http:&#x2F;&#x2F;www.postgres.cn&#x2F;docs&#x2F;10&#x2F;index.html  基于SQL的存储过程什么是sql函数? SQL函数包体是一些可执行的SQL语言。同时包含1条以上的查询，但是函数只返回最后一个查询(必须是SELECT)的结果。 简单情况下，返回最后一条查">
+<meta property="og:type" content="article">
+<meta property="og:title" content="postgreSQL之存储过程">
+<meta property="og:url" content="http://erbi.me/1351/index.html">
+<meta property="og:site_name" content="记忆角落">
+<meta property="og:description" content="postgreSQL之存储过程以下是自己结合postgreSQL文档手册总结整理的入门手札，如有不严谨，请到官方文档手册查看：http:&#x2F;&#x2F;www.postgres.cn&#x2F;docs&#x2F;10&#x2F;index.html  基于SQL的存储过程什么是sql函数? SQL函数包体是一些可执行的SQL语言。同时包含1条以上的查询，但是函数只返回最后一个查询(必须是SELECT)的结果。 简单情况下，返回最后一条查">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-23T14:56:52.000Z">
+<meta property="article:modified_time" content="2021-06-10T06:19:04.944Z">
+<meta property="article:author" content="郭良俊只狗">
+<meta property="article:tag" content="postgresql">
+<meta property="article:tag" content="存储过程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://erbi.me/1351/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;erbi.me&#x2F;1351&#x2F;&quot;,&quot;path&quot;:&quot;1351&#x2F;&quot;,&quot;title&quot;:&quot;postgreSQL之存储过程&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>postgreSQL之存储过程 | 记忆角落</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?<46c2f95d60e43eb48d99ddf240e9771c>"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">记忆角落</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活,一半是回忆,一半是继续.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="/links/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>邻居</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#postgreSQL%E4%B9%8B%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">postgreSQL之存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8ESQL%E7%9A%84%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">基于SQL的存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFsql%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">什么是sql函数?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8EPL-PgSQL%E7%9A%84%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">基于PL&#x2F;PgSQL的存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#PL-PgSQL%E7%9A%84%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E5%9D%97%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">PL&#x2F;PgSQL的存储过程的块结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PL-PgSQL%E7%9A%84%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">PL&#x2F;PgSQL的存储过程的变量声明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PL-PgSQL%E7%9A%84%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">PL&#x2F;PgSQL的存储过程的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PL-PgSQL%E7%9A%84%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E6%B3%A8%E9%87%8A"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">PL&#x2F;PgSQL的存储过程的注释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AAPL-PgSQL%E7%9A%84%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%BE%8B%E5%AD%90"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">简单的一个PL&#x2F;PgSQL的存储过程例子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PL-PgSQL%E7%9A%84%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E5%BC%82%E5%B8%B8%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-number">1.2.0.6.</span> <span class="nav-text">PL&#x2F;PgSQL的存储过程的异常错误处理</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="郭良俊只狗"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">郭良俊只狗</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">392</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">255</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/guoliangjun17" title="Gitee → https:&#x2F;&#x2F;gitee.com&#x2F;guoliangjun17" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@199604.com" title="E-Mail → mailto:admin@199604.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/jiomer" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;jiomer" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://erbi.me/1351/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="郭良俊只狗">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="记忆角落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          postgreSQL之存储过程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-23 22:56:52" itemprop="dateCreated datePublished" datetime="2019-10-23T22:56:52+08:00">2019-10-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-10 14:19:04" itemprop="dateModified" datetime="2021-06-10T14:19:04+08:00">2021-06-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="postgreSQL之存储过程"><a href="#postgreSQL之存储过程" class="headerlink" title="postgreSQL之存储过程"></a>postgreSQL之存储过程</h2><p>以下是自己结合postgreSQL文档手册总结整理的入门手札，如有不严谨，请到官方文档手册查看：<a target="_blank" rel="noopener" href="http://www.postgres.cn/docs/10/index.html">http://www.postgres.cn/docs/10/index.html</a></p>
+<hr>
+<h3 id="基于SQL的存储过程"><a href="#基于SQL的存储过程" class="headerlink" title="基于SQL的存储过程"></a>基于SQL的存储过程</h3><h5 id="什么是sql函数"><a href="#什么是sql函数" class="headerlink" title="什么是sql函数?"></a>什么是sql函数?</h5><ol>
+<li>SQL函数包体是一些可执行的SQL语言。同时包含1条以上的查询，但是函数只返回最后一个查询(必须是SELECT)的结果。</li>
+<li>简单情况下，返回最后一条查询结果的第一行。</li>
+<li>如果最后一个查询正好根本不返回行，将会返回空值。</li>
+<li>除非SQL函数声明为返回void，否则最后一条语句必须是SELECT</li>
+<li>如果需要该函数返回最后一条SELECT语句的所有行，可以将函数的返回值定义为集合，即SETOF sometype，或者等效地声明它为RETURNS TABLE(columns)</li>
+</ol>
+<p>创建sql函数，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE FUNCTION function_name([ [ argmode ] [ argname ] argtype [ &#123; DEFAULT | = &#125; default_expr ] [, ...] ])</span><br><span class="line">[RETURNS rettype]</span><br><span class="line">AS $$</span><br><span class="line">    $BODY$;</span><br><span class="line">$$ LANGUAGE SQL;</span><br></pre></td></tr></table></figure>
+<p>接下来用一个例子，如最简单的SQL函数没有参数并且简单地返回一个基本类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE or replace FUNCTION one() </span><br><span class="line">	RETURNS  integer AS </span><br><span class="line">$body$</span><br><span class="line">    SELECT 1;</span><br><span class="line">$body$ </span><br><span class="line">LANGUAGE SQL;</span><br><span class="line">----------</span><br><span class="line">select one();</span><br><span class="line">------</span><br><span class="line">one</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>如创建一个add函数，返回两者的入参值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE or replace FUNCTION add(a integer,b integer) </span><br><span class="line">	RETURNS  integer AS </span><br><span class="line">$body$</span><br><span class="line">    SELECT a+b;</span><br><span class="line">$body$ </span><br><span class="line">LANGUAGE SQL;</span><br><span class="line">------</span><br><span class="line">select add(1,2)</span><br><span class="line">----</span><br><span class="line">add</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<p>还有另外一种方式，即能省掉参数名而使用数字$n,$n这样的标识符来使用参数,如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE or replace FUNCTION add(a integer,b integer) </span><br><span class="line">	RETURNS  integer AS </span><br><span class="line">$body$</span><br><span class="line">    SELECT $1+$2;</span><br><span class="line">$body$ </span><br><span class="line">LANGUAGE SQL;</span><br></pre></td></tr></table></figure>
+<p>但个人觉得这种方式不怎么友好，就是可读性鸡巴的差~</p>
+<p>上面的两个例子，都是只有入参，而没出参，接下来这个例子将同时包含输入参数和输出参数;由于存在输出参数；==这里不需要returns部分==，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE FUNCTION add1(in a integer, in b integer,out c integer)</span><br><span class="line">AS $body$</span><br><span class="line">    SELECT a+b;</span><br><span class="line">$body$ </span><br><span class="line">LANGUAGE SQL;</span><br><span class="line">-----------------</span><br><span class="line">select add1(1,2);</span><br><span class="line">---------------</span><br><span class="line">add1</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<p>还记得之前sql函数的介绍吗?sql函数包体是一些可执行的SQL语言。同时包含1条以上的查询，但是函数只返回最后一个查询(必须是SELECT)的结果。所以，在sql函数包体中，不一定是SELECT语句，可以是其它任意合法的SQL。但最后一条SQL必须是SELECT语句并且该SQL的结果将作为该函数的输出结果。接下来就做一个测试，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE FUNCTION add2(in a integer, in b integer,out c integer,out d integer)</span><br><span class="line">AS </span><br><span class="line">$body$</span><br><span class="line">	SELECT a+b,a*b;</span><br><span class="line">	delete from test_array where id =1;</span><br><span class="line">	SELECT a+b+a,a*b*a;</span><br><span class="line">		</span><br><span class="line">$body$ </span><br><span class="line">LANGUAGE SQL;</span><br><span class="line">--------</span><br><span class="line">select * from add2(1,2);</span><br><span class="line">---------</span><br><span class="line">c	d</span><br><span class="line">4	2</span><br></pre></td></tr></table></figure>
+<p>继续上面的sql函数介绍–&gt;除非SQL函数声明为返回void，否则最后一条语句必须是SELECT,接下来我这边就直接返回void，所以就可以没有select，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE FUNCTION delete_array(id integer)</span><br><span class="line">RETURNS void AS </span><br><span class="line">$body$</span><br><span class="line">	delete from test_array where id =id;</span><br><span class="line">$body$ </span><br><span class="line">LANGUAGE SQL;</span><br></pre></td></tr></table></figure>
+<p>还有就是，当一个表里面含有多条记录咋办呢?带着疑问看例子吧骚年:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE FUNCTION select_array_er()</span><br><span class="line">RETURNS integer AS </span><br><span class="line">$body$</span><br><span class="line">	select id from test_array_er;</span><br><span class="line">$body$ </span><br><span class="line">LANGUAGE SQL;</span><br><span class="line">------</span><br><span class="line">select  select_array_er();//我这边id就只有两条，1和2</span><br><span class="line">-------</span><br><span class="line">select_array_er</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<p>所以，实践的真理告诉我们，是返回最后结果行。<br>等等，你肯定会问，那么我要返回所有id怎么弄?来，叔叔带你去看金鱼：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE FUNCTION select_array_er2()</span><br><span class="line">RETURNS setof INTEGER AS </span><br><span class="line">$body$</span><br><span class="line">	select id from test_array_er;</span><br><span class="line">$body$ </span><br><span class="line">LANGUAGE SQL;</span><br><span class="line">-----</span><br><span class="line">select  select_array_er2();</span><br><span class="line">-----</span><br><span class="line">select_array_er2</span><br><span class="line">2</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<p>所以，如果需要返回该函数最后一条SELECT语句的所有行，可以将函数的返回值定义为集合，即SETOF sometype。</p>
+<hr>
+<h3 id="基于PL-PgSQL的存储过程"><a href="#基于PL-PgSQL的存储过程" class="headerlink" title="基于PL/PgSQL的存储过程"></a>基于PL/PgSQL的存储过程</h3><p>PL/pgSQL是一种用于PostgreSQL数据库系统的可载入的过程语言。PL/pgSQL的设计目标是创建一种这样的可载入过程语言：</p>
+<ul>
+<li>可以被用来创建函数和触发器过程</li>
+<li>对SQL语言增加控制结构</li>
+<li>可以执行复杂计算</li>
+<li>继承所有用户定义类型、函数和操作符</li>
+<li>可以被定义为受服务器信任</li>
+<li>便于使用</li>
+</ul>
+<h5 id="PL-PgSQL的存储过程的块结构"><a href="#PL-PgSQL的存储过程的块结构" class="headerlink" title="PL/PgSQL的存储过程的块结构"></a>PL/PgSQL的存储过程的块结构</h5><p>PL/pgSQL是一个块结构语言。函数定义的所有文本都必须是一个块。<br>一个块用下面的方法定义：</p>
+<ul>
+<li>PL/pgSQL程序由三个部分组成，即：<ul>
+<li>声明部分</li>
+<li>执行部分</li>
+<li>异常处理部分 </li>
+</ul>
+</li>
+</ul>
+<p>PL/pgSQ结构如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[ &lt;&lt;label&gt;&gt; ]</span><br><span class="line">[ DECLARE</span><br><span class="line">    declarations ]</span><br><span class="line">    --声明部分: 在此声明PL/SQL用到的变量,类型及游标.</span><br><span class="line">BEGIN</span><br><span class="line">    statements</span><br><span class="line">    -- 执行部分:  过程及SQL语句,即程序的主要部分</span><br><span class="line">EXCEPTION</span><br><span class="line">   -- 执行异常部分: 错误处理    </span><br><span class="line">END [ label ];</span><br></pre></td></tr></table></figure>
+<p>在一个块中的每一个声明和每一个语句都由一个分号终止。如上所示，出现在另一个块中的块必须有一个分号在END之后。不过最后一个结束函数体的END不需要一个分号。</p>
+<h5 id="PL-PgSQL的存储过程的变量声明"><a href="#PL-PgSQL的存储过程的变量声明" class="headerlink" title="PL/PgSQL的存储过程的变量声明"></a>PL/PgSQL的存储过程的变量声明</h5><p>变量声明的一般语法是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name [ CONSTANT ] type [ COLLATE collation_name ] [ NOT NULL ] [ &#123; DEFAULT | := | = &#125; expression ];</span><br></pre></td></tr></table></figure>
+<p>PL/pgSQL变量可以是任意 SQL 数据类型，例如integer、varchar和char。</p>
+<p>这跟oracle中的存储过程声明变量是一样的 例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">user_id integer;</span><br><span class="line">quantity numeric(5);</span><br><span class="line">url varchar;</span><br><span class="line">myrow tablename%ROWTYPE;--行类型</span><br><span class="line">myfield tablename.columnname%TYPE;--复制类型</span><br><span class="line">arow RECORD;--记录类型</span><br></pre></td></tr></table></figure>
+<h5 id="PL-PgSQL的存储过程的参数"><a href="#PL-PgSQL的存储过程的参数" class="headerlink" title="PL/PgSQL的存储过程的参数"></a>PL/PgSQL的存储过程的参数</h5><p>声明一个参数的语法如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name [in|out|in out] type</span><br></pre></td></tr></table></figure>
+<p>如果只指定输入参数类型，不指定参数名，则函数体里一般用$1，$n这样的标识符来使用参数。如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE FUNCTION demo(NUMERIC)</span><br><span class="line">RETURNS NUMERIC</span><br><span class="line">AS $$</span><br><span class="line">BEGIN</span><br><span class="line">    RETURN $1 * 0.8;</span><br><span class="line">END;</span><br><span class="line">$$ </span><br><span class="line">LANGUAGE PLPGSQL;</span><br></pre></td></tr></table></figure>
+<p>但该方法可读性不好,最后还是在声明参数类型时同时声明相应的参数名，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE FUNCTION demo(total NUMERIC)</span><br><span class="line">RETURNS NUMERIC</span><br><span class="line">AS $$</span><br><span class="line">BEGIN</span><br><span class="line">    RETURN total * 0.8;</span><br><span class="line">END;</span><br><span class="line">$$ </span><br><span class="line">LANGUAGE PLPGSQL;</span><br></pre></td></tr></table></figure>
+
+<h5 id="PL-PgSQL的存储过程的注释"><a href="#PL-PgSQL的存储过程的注释" class="headerlink" title="PL/PgSQL的存储过程的注释"></a>PL/PgSQL的存储过程的注释</h5><p>在PL/SQL里，可以使用两种符号来写注释，即：</p>
+<ol>
+<li>第一种是使用 双-(双减号)它的作用范围是只能在一行有效(类似java 单行注释//)</li>
+<li>第二种就是一行或多行注释，使用的是/* */表示</li>
+</ol>
+<h5 id="简单的一个PL-PgSQL的存储过程例子"><a href="#简单的一个PL-PgSQL的存储过程例子" class="headerlink" title="简单的一个PL/PgSQL的存储过程例子"></a>简单的一个PL/PgSQL的存储过程例子</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE FUNCTION somefunc() </span><br><span class="line">	RETURNS integer AS $body$</span><br><span class="line">DECLARE</span><br><span class="line">    somenum integer := 30;</span><br><span class="line">BEGIN</span><br><span class="line">    -- 这是单行注释</span><br><span class="line">    RAISE NOTICE &#x27;这是一条提示语 %&#x27;, somenum;</span><br><span class="line">    somenum := 50;</span><br><span class="line">	/*</span><br><span class="line">		这是多行注释</span><br><span class="line">	*/</span><br><span class="line">    RAISE NOTICE &#x27;somenum here is %&#x27;, somenum;</span><br><span class="line">    RETURN somenum;</span><br><span class="line">	--错误捕获</span><br><span class="line">	EXCEPTION</span><br><span class="line">		WHEN others THEN    </span><br><span class="line">		RAISE EXCEPTION &#x27;(%)&#x27;, SQLERRM;</span><br><span class="line">END;</span><br><span class="line">$body$</span><br><span class="line">LANGUAGE plpgsql;</span><br></pre></td></tr></table></figure>
+<h5 id="PL-PgSQL的存储过程的异常错误处理"><a href="#PL-PgSQL的存储过程的异常错误处理" class="headerlink" title="PL/PgSQL的存储过程的异常错误处理"></a>PL/PgSQL的存储过程的异常错误处理</h5><p>在上面例子，其实已经有了处理异常错误的语句了。具体它是干嘛的呢?</p>
+<p>其实阿，在PL/pgSQL函数中，如果没有异常捕获，函数会在发生错误时直接退出，与其相关的事物也会随之回滚。我们可以通过使用带有EXCEPTION子句的BEGIN块来捕获异常并使其从中恢复。见如下声明形式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[ &lt;&gt; ]</span><br><span class="line">CREATE OR REPLACE FUNCTION function_name([ [ argmode ] [ argname ] argtype [ &#123; DEFAULT | = &#125; default_expr ] [, ...] ])</span><br><span class="line">[RETURNS rettype]</span><br><span class="line">[ DECLARE</span><br><span class="line">    declarations ]</span><br><span class="line">BEGIN</span><br><span class="line">    statements</span><br><span class="line">EXCEPTION</span><br><span class="line">　　WHEN condition [ OR condition ... ] THEN</span><br><span class="line">            handler_statements</span><br><span class="line">　　WHEN condition [ OR condition ... ] THEN</span><br><span class="line">　　       handler_statements</span><br><span class="line">END;   </span><br></pre></td></tr></table></figure>
+<p>如果没有错误发生，只有BEGIN块中的statements会被正常执行，然而一旦这些语句中有任意一条发生错误，其后的语句都将被跳过，直接跳转到 EXCEPTION块的开始处。此时系统将搜索异常条件列表，寻找匹配该异常的第一个条件，如果找到匹配，则执行相应的 handler_statements，之后再执行END的下一条语句。如果没有找到匹配，该错误就会被继续向外抛出，其结果与没有EXCEPTION子 句完全等同。如果此时handler_statements中的语句发生新错误，它将不能被该EXCEPTION子句捕获，而是继续向外传播，交由其外层 的EXCEPTION子句捕获并处理。</p>
+<p>在PostgreSQL中可以利用RAISE语句报告信息和抛出错误，其声明形式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RAISE level &#x27;format&#x27; [, expression [, ...]];</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">raise notice &#x27;My name is %, I am a %.&#x27;, &#x27;glj&#x27;, &#x27;Handsome boy&#x27;;</span><br></pre></td></tr></table></figure>
+<p>更多可到：<a target="_blank" rel="noopener" href="https://199604.com/1339">https://199604.com/1339</a> 查看</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>只想买包辣条</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/weixin.png" alt="郭良俊只狗 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zhifubao.png" alt="郭良俊只狗 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>郭良俊只狗
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://erbi.me/1351/" title="postgreSQL之存储过程">http://erbi.me/1351/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-Hans" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/postgresql/" rel="tag"># postgresql</a>
+              <a href="/tags/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="tag"># 存储过程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1348/" rel="prev" title="Win10:VMware无法在Windows运行">
+                  <i class="fa fa-chevron-left"></i> Win10:VMware无法在Windows运行
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1353/" rel="next" title="postgreSQL之数据类型">
+                  postgreSQL之数据类型 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2012 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">郭良俊只狗</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
